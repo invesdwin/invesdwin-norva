@@ -61,6 +61,8 @@ Here `some` is the bean path root container, having a `SomeType getPath()` prope
 Using this framework, you can easily understand bean paths and handle static and dynamic information contained in them.
 They can be used to define models for generated UIs via the naked objects pattern. This framework does not do the UI generation part, instead it focuses on the reflection and basic functionality of a naked objects model and the processing of it. The actual naked objects framework can be built on top of this API, just like it is easy to create other code generators using this.
 
+The element classes of this API provide methods for easily understanding a few annotations and utility methods and the hierarchy of when which one should override another.
+
 ### Bean Annotations
 
 This framework handles the following annotations:
