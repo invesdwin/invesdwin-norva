@@ -73,7 +73,7 @@ This framework handles the following annotations:
 * `@Title`: can be used to set a title text for this element
 * `@Tooltip`: can be used to set a tooltip text for this element
 
-Also it is recommended to use BeanValidation annotations, the framework 
+The framework also understands `@NotNull` from the BeanValidation annotations and `@Column(nullable=false)` from the JPA annotations.
 
 ### Utility Methods
 
