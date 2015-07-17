@@ -24,6 +24,7 @@
 		<version.validation-api>1.1.0.Final</version.validation-api>
 		<version.guava>18.0</version.guava>
 		<version.jboss-logging-generator>1.0.0.CR5</version.jboss-logging-generator>
+		<version.junit>4.12</version.junit>
 	</properties>
 
 	<dependencies>
@@ -72,6 +73,11 @@
 			<groupId>org.jboss.logging</groupId>
 			<artifactId>jboss-logging-generator</artifactId>
 			<version>${version.jboss-logging-generator}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
 		</dependency>
 	</dependencies>
 
