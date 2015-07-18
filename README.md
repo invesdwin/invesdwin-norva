@@ -3,12 +3,22 @@ norva stands for **N**aked **O**bjects **R**eflection **V**isitor **A**PI
 
 A unified visitor pattern implementation for processing Objects, Classes and javax.model via reflection. Allowing simpler creation of code generators or UI binding frameworks following the principles of the naked objects pattern.
 
-## Maven Repository
+## Maven
 
 Releases and snapshots are deployed to this maven repository:
 ```
 http://invesdwin.de:8081/artifactory/invesdwin-oss
 ```
+
+Dependency declaration:
+```xml
+<dependency>
+	<groupId>de.invesdwin</groupId>
+	<artifactId>invesdwin-norva</artifactId>
+	<version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
 
 ## Sample Code Generators
 There are three sample annotation processors included that generate code by using this api:
