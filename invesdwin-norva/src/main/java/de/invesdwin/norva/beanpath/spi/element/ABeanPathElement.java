@@ -1,10 +1,7 @@
 package de.invesdwin.norva.beanpath.spi.element;
 
 import java.lang.annotation.AnnotationTypeMismatchException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -35,17 +32,17 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 @NotThreadSafe
 public abstract class ABeanPathElement implements IBeanPathElement {
 
-	/**
-	 * This will sort bean path elements ascending by bean path.
-	 */
+    /**
+     * This will sort bean path elements ascending by bean path.
+     */
     public static final Comparator<IBeanPathElement> COMPARATOR = new Comparator<IBeanPathElement>() {
-		@Override
-		public int compare(IBeanPathElement o1, IBeanPathElement o2) {
-			return o1.getBeanPath().compareTo(o2.getBeanPath());
-		}
-	};
-	
-	private final ABeanPathContext context;
+        @Override
+        public int compare(final IBeanPathElement o1, final IBeanPathElement o2) {
+            return o1.getBeanPath().compareTo(o2.getBeanPath());
+        }
+    };
+
+    private final ABeanPathContext context;
     private final IBeanPathContainer container;
     private final IBeanPathAccessor accessor;
     private final String beanPath;
@@ -168,7 +165,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                     if (hidden != null) {
                         if (!hidden.skip()) {
                             org.assertj.core.api.Assertions.assertThat(new HiddenBeanPathElement(this).accept(visitors))
-                            .isTrue();
+                                    .isTrue();
                         }
                         return false;
                     } else {
@@ -262,8 +259,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         final Title titlePropertyAnnotation = getAccessor().getAnnotation(Title.class);
         if (titlePropertyAnnotation != null) {
             org.assertj.core.api.Assertions.assertThat(BeanPathStrings.isNotBlank(titlePropertyAnnotation.value()))
-                    .as("@%s value on property [%s] must not be blank!", Title.class.getSimpleName(), getBeanPath())
-                    .isTrue();
+            .as("@%s value on property [%s] must not be blank!", Title.class.getSimpleName(), getBeanPath())
+            .isTrue();
             return titlePropertyAnnotation.value();
         }
         //3. title action on type
@@ -278,8 +275,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         final Title titleTypeAnnotation = getAccessor().getType().getAnnotation(Title.class);
         if (titleTypeAnnotation != null) {
             org.assertj.core.api.Assertions.assertThat(BeanPathStrings.isNotBlank(titleTypeAnnotation.value()))
-                    .as("@%s value on type [%s:%s] must not be blank!", Title.class.getSimpleName(), getBeanPath(),
-                            getAccessor().getType().getSimpleName())
+            .as("@%s value on type [%s:%s] must not be blank!", Title.class.getSimpleName(), getBeanPath(),
+                    getAccessor().getType().getSimpleName())
                     .isTrue();
             return titleTypeAnnotation.value();
         }
@@ -401,8 +398,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
             final Tooltip tooltipAnnotation = getAccessor().getAnnotation(Tooltip.class);
             if (tooltipAnnotation != null) {
                 org.assertj.core.api.Assertions.assertThat(BeanPathStrings.isNotBlank(tooltipAnnotation.value()))
-                .as("@%s value should not be null!", Tooltip.class.getSimpleName())
-                .isTrue();
+                        .as("@%s value should not be null!", Tooltip.class.getSimpleName())
+                        .isTrue();
                 return tooltipAnnotation.value();
             }
             return null;
@@ -446,5 +443,5 @@ public abstract class ABeanPathElement implements IBeanPathElement {
     public IBeanPathElement getParentElement() {
         return getContext().getElementRegistry().getElement(getContainer().getBeanPath());
     }
-    
+
 }
