@@ -1,0 +1,3 @@
+de.invesdwin.norva.apt.staticfacade.internal.StaticFacadeDefinitionAnnotationProcessor
+de.invesdwin.norva.apt.constants.internal.ConstantsAnnotationProcessor
+de.invesdwin.norva.apt.buildversion.internal.BuildVersionDefinitionAnnotationProcessor
