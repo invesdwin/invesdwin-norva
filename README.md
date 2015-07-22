@@ -37,6 +37,8 @@ de.invesdwin.norva.apt.staticfacade.internal.StaticFacadeDefinitionAnnotationPro
 public final class Reflections extends AReflectionsStaticFacade {
 ```
 
+You can see a few sample usages of this static facade pattern in the https://github.com/subes/invesdwin-util project.
+
 ### Constants
 ```java
 de.invesdwin.norva.apt.constants.internal.ConstantsAnnotationProcessor
