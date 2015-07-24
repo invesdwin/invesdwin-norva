@@ -98,7 +98,7 @@ For bean path elements you can also add utility methods for various dynamic deci
 * `String title()`: with this you can define a title text for a container
 * `String disableXyz()`: with this you can dynamically disable elements, the return type can also be a boolean, when it is a string it denotes the reason why it is disabled (can be shown as a tooltip in the UI)
 * `String hideXyz()`: just as the disable utility method, only that it hides elements
-* `String xyzTitle()`: can be used to define a dynamic title for elements
-* `String xyzTooltip()`: just like the title utility method, only for tooltips
+* `String (get)xyzTitle()`: can be used to define a dynamic title for elements. The `get` prefix is only needed for properties, on actions you do not need it.
+* `String (get)xyzTooltip()`: just like the title utility method, only for tooltips. The `get` prefix is only needed for properties, on actions you do not need it.
 * `boolean validateXyz(Object newValue)`: can be used to write complex validations for input, e.g. when BeanValidation annotations are not enough
 * `void removeFromXyz(Object removedValue)`: can be used as a column in a table that should remove an element in the model
