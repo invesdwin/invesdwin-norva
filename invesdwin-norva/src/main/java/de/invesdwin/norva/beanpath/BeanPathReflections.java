@@ -107,8 +107,8 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
         return getAnnotationRecursive(method.getAnnotations(), annotationType);
     }
 
-    public static <T extends Annotation> T getAnnotation(final Field method, final Class<T> annotationType) {
-        return getAnnotationRecursive(method.getAnnotations(), annotationType);
+    public static <T extends Annotation> T getAnnotation(final Field field, final Class<T> annotationType) {
+        return getAnnotationRecursive(field.getAnnotations(), annotationType);
     }
 
     public static <T extends Annotation> T getAnnotation(final Object object, final Class<T> annotationType) {
