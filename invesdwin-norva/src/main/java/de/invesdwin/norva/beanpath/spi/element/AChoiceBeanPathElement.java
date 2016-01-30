@@ -1,6 +1,5 @@
 package de.invesdwin.norva.beanpath.spi.element;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -8,7 +7,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.FixedValueBeanPathModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.SelectionBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
 
@@ -24,10 +22,11 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
         super(simplePropertyElement);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public IBeanPathPropertyModifier<Object> getModifier() {
         if (modifierIsRedirectedChoice) {
-            return new FixedValueBeanPathModifier<Object>(getAccessor(), null);
+            return (IBeanPathPropertyModifier) getSelectionModifier();
         } else {
             return super.getModifier();
         }
@@ -37,14 +36,15 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
      * This modifier supports multi-select. For single select the list is only allowed to have 1 item in it.
      */
     public IBeanPathPropertyModifier<List<Object>> getSelectionModifier() {
-        if (modifierIsRedirectedChoice) {
-            return new FixedValueBeanPathModifier<List<Object>>(getAccessor(), Collections.emptyList());
-        } else {
-            if (selectionModifier == null) {
+        if (selectionModifier == null) {
+            if (modifierIsRedirectedChoice) {
+                selectionModifier = new ChoiceBeanPathPropertyModifier(getChoiceElement().getAccessor(), null);
+            } else {
                 selectionModifier = new SelectionBeanPathPropertyModifier(getAccessor());
             }
-            return selectionModifier;
         }
+        return selectionModifier;
+
     }
 
     public boolean isMultiSelect() {
@@ -75,8 +75,8 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     protected void beforeFirstAccept() {
         super.beforeFirstAccept();
         this.choiceElement = getContext().getElementRegistry().getChoiceUtilityElementFor(this);
-        if (this.choiceElement == null
-                && (getAccessor().getRawType().isEnum() || getAccessor().getRawType().isBoolean() || isCollectionModifier())) {
+        if (this.choiceElement == null && (getAccessor().getRawType().isEnum() || getAccessor().getRawType().isBoolean()
+                || isCollectionModifier())) {
             this.modifierIsRedirectedChoice = isCollectionModifier();
             //redirect to this property as choice for enums
             this.choiceElement = new ChoiceBeanPathElement(getSimplePropertyElement(), false);
