@@ -27,6 +27,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     @Override
     public IBeanPathPropertyModifier<Object> getModifier() {
         if (modifierIsRedirectedChoice) {
+            //we have to return empty here, otherwise "all" choices would always be selected in UI, though we do not support selection
             return new FixedValueBeanPathModifier<Object>(getAccessor(), null);
         } else {
             return super.getModifier();
@@ -38,6 +39,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
      */
     public IBeanPathPropertyModifier<List<Object>> getSelectionModifier() {
         if (modifierIsRedirectedChoice) {
+            //we have to return empty here, otherwise "all" choices would always be selected in UI, though we do not support selection
             return new FixedValueBeanPathModifier<List<Object>>(getAccessor(), Collections.emptyList());
         } else {
             if (selectionModifier == null) {
@@ -75,8 +77,8 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     protected void beforeFirstAccept() {
         super.beforeFirstAccept();
         this.choiceElement = getContext().getElementRegistry().getChoiceUtilityElementFor(this);
-        if (this.choiceElement == null
-                && (getAccessor().getRawType().isEnum() || getAccessor().getRawType().isBoolean() || isCollectionModifier())) {
+        if (this.choiceElement == null && (getAccessor().getRawType().isEnum() || getAccessor().getRawType().isBoolean()
+                || isCollectionModifier())) {
             this.modifierIsRedirectedChoice = isCollectionModifier();
             //redirect to this property as choice for enums
             this.choiceElement = new ChoiceBeanPathElement(getSimplePropertyElement(), false);
