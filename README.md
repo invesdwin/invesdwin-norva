@@ -120,6 +120,7 @@ Here a sample to process a java class:
             .getElement("some.bean.path.propertyElement");
     //gain more access
     final BeanClassAccessor accessor = (BeanClassAccessor) beanPathElement.getAccessor();
+    final SomeAnnotation annotation = accessor.getAnnotation(SomeAnnotation.class);
     final Method method = accessor.getPublicGetterMethod();
     final BeanClassType type = (BeanClassType) beanPathElement.getAccessor().getRawType();
     final Class<?> methodReturnType = type.getType();
@@ -138,6 +139,7 @@ The same sample processing a java object:
             .getElement("some.bean.path.propertyElement");
     //gain more access
     final BeanObjectAccessor accessor = (BeanObjectAccessor) beanPathElement.getAccessor();
+    final SomeAnnotation annotation = accessor.getAnnotation(SomeAnnotation.class);
     final Method method = accessor.getBeanClassAccessor().getPublicGetterMethod();
     final BeanClassType type = (BeanClassType) beanPathElement.getAccessor().getRawType();
     final Class<?> methodReturnType = type.getType();
@@ -169,6 +171,7 @@ And again the same sample processing a javax.model.Element:
 	                            .getElement("some.bean.path.propertyElement");
 	                    //gain more access
 	                    final BeanModelAccessor accessor = (BeanModelAccessor) beanPathElement.getAccessor();
+	                    final SomeAnnotation annotation = accessor.getAnnotation(SomeAnnotation.class);
 	                    final Element method = accessor.getPublicGetterMethodElement();
 	                    final BeanModelType type = (BeanModelType) beanPathElement.getAccessor().getRawType();
 	                    final TypeElement methodReturnType = type.getTypeElement();
