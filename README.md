@@ -151,6 +151,7 @@ The same sample processing a java object:
 And again the same sample processing a javax.model.Element:
 
 ```java
+    @SupportedAnnotationTypes({ "*" })
     public class SampleProcessor extends javax.annotation.processing.AbstractProcessor {
 
 	    @Override
