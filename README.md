@@ -163,7 +163,7 @@ And again the same sample processing a javax.model.Element:
 	                            new BeanModelType(processingEnv, typeElement.asType(), typeElement));
 	                    final BeanModelContext context = new BeanModelContext(rootContainer, processingEnv);
 	                    //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
-	                    new BeanModelProcessor(context, new ConstantsGeneratorVisitor(context)).process();
+	                    new BeanModelProcessor(context, new PrintVisitor(context)).process();
 	                    //lookup element
 	                    final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
 	                            .getElement("some.bean.path.propertyElement");
