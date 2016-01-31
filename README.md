@@ -186,3 +186,5 @@ And again the same sample processing a javax.model.Element:
 
     }
 ```
+
+You can also restrict processing beans to the first layer, without traversing deeper by calling `processor.withShallowOnly()`. You should always do this for performance purposes when the first layer is the only things you are interested in.
