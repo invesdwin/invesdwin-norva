@@ -109,22 +109,26 @@ Here a sample to process java classes:
 
 ```java
     //create processing context
-    final BeanClassContext context = new BeanClassContext(new BeanClassContainer(new BeanClassType(SomeClass.class)));
+    final BeanClassContext context = new BeanClassContext(
+            new BeanClassContainer(new BeanClassType(SomeClass.class)));
     //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
     new BeanClassProcessor(context, new PrintVisitor(context)).process();
     //lookup elements
-    final APropertyBeanPathElement beanPathElement = context.getElementRegistry().getElement("some.bean.path.propertyElement");
+    final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
+            .getElement("some.bean.path.propertyElement");
 ```
     
 The same sample processing a java object:
 
 ```java
     //create processing context
-    final BeanClassContext context = new BeanObjectContext(new BeanObjectContainer(new BeanObjectType(new SomeObject())));
+    final BeanObjectContext context = new BeanObjectContext(
+            new BeanObjectContainer(new BeanObjectType(new SomeObject())));
     //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
     new BeanObjectProcessor(context, new PrintVisitor(context)).process();
     //lookup elements
-    final APropertyBeanPathElement beanPathElement = context.getElementRegistry().getElement("some.bean.path.propertyElement");
+    final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
+            .getElement("some.bean.path.propertyElement");
 ```
 
 And again the same sample processing a javax.model.Element:
