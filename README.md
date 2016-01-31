@@ -123,7 +123,6 @@ Here a sample to process a java class:
     final Method method = accessor.getPublicGetterMethod();
     final BeanClassType type = (BeanClassType) beanPathElement.getAccessor().getRawType();
     final Class<?> methodReturnType = type.getType();
-    
 ```
     
 The same sample processing a java object:
@@ -142,6 +141,9 @@ The same sample processing a java object:
     final Method method = accessor.getBeanClassAccessor().getPublicGetterMethod();
     final BeanClassType type = (BeanClassType) beanPathElement.getAccessor().getRawType();
     final Class<?> methodReturnType = type.getType();
+    //modify values (only supported when processing objects)
+    Object value = beanPathElement.getModifier().getValue();
+    beanPathElement.getModifier().setValue(new SomeValue());
 ```
 
 And again the same sample processing a javax.model.Element:
