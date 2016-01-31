@@ -102,3 +102,56 @@ For bean path elements you can also add utility methods for various dynamic deci
 * `String xyzTooltip()`: just like the title utility method, only for tooltips. The `get` prefix (`getXyzTooltip()`) is only needed for properties, on actions you do not need it.
 * `boolean validateXyz(Object newValue)`: can be used to write complex validations for input, e.g. when BeanValidation annotations are not enough
 * `void removeFromXyz(Object removedValue)`: can be used as a column in a table that should remove an element in the model
+
+### Bean Processors
+
+Here a sample to process java classes:
+
+```java
+    //create processing context
+    final BeanClassContext context = new BeanClassContext(new BeanClassContainer(new BeanClassType(SomeClass.class)));
+    //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
+    new BeanClassProcessor(context, new PrintVisitor(context)).process();
+    //lookup elements
+    final APropertyBeanPathElement beanPathElement = context.getElementRegistry().getElement("some.bean.path.propertyElement");
+```
+    
+The same sample processing a java object:
+
+```java
+    //create processing context
+    final BeanClassContext context = new BeanObjectContext(new BeanObjectContainer(new BeanObjectType(new SomeObject())));
+    //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
+    new BeanObjectProcessor(context, new PrintVisitor(context)).process();
+    //lookup elements
+    final APropertyBeanPathElement beanPathElement = context.getElementRegistry().getElement("some.bean.path.propertyElement");
+```
+
+And again the same sample processing a javax.model.Element:
+
+```java
+    public class SampleProcessor extends javax.annotation.processing.AbstractProcessor {
+
+	    @Override
+	    public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
+	        try {
+	            final Set<? extends Element> elements = roundEnv.getRootElements();
+	            for (final Element element : elements) {
+	                if (element instanceof TypeElement) {
+	                    final TypeElement typeElement = (TypeElement) element;
+	                    final BeanModelContainer rootContainer = new BeanModelContainer(
+	                            new BeanModelType(processingEnv, typeElement.asType(), typeElement));
+	                    final BeanModelContext context = new BeanModelContext(rootContainer, processingEnv);
+	                    new BeanModelProcessor(context, new ConstantsGeneratorVisitor(context)).process();
+	                    final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
+	                            .getElement("some.bean.path.propertyElement");
+	                }
+	            }
+	        } catch (final Throwable t) {
+	            t.printStackTrace();
+	        }
+	        return false;
+	    }
+
+    }
+```
