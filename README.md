@@ -105,7 +105,9 @@ For bean path elements you can also add utility methods for various dynamic deci
 
 ### Bean Processors
 
-Here a sample to process java classes:
+The bean processors allow you to run through properties and actions of beans from various sources and execute the same visitors on them. So you build your code once and only need to switch the processor to execute it in a different environment. No need to learn different APIs, since the norva-API abstracts away the details, but makes them available for you when really needed (just cast the classes to their respective implementation to gain full access).
+
+Here a sample to process a java class:
 
 ```java
     //create processing context
@@ -113,9 +115,15 @@ Here a sample to process java classes:
             new BeanClassContainer(new BeanClassType(SomeClass.class)));
     //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
     new BeanClassProcessor(context, new PrintVisitor(context)).process();
-    //lookup elements
+    //lookup element
     final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
             .getElement("some.bean.path.propertyElement");
+    //gain more access
+    final BeanClassAccessor accessor = (BeanClassAccessor) beanPathElement.getAccessor();
+    final Method method = accessor.getPublicGetterMethod();
+    final BeanClassType type = (BeanClassType) beanPathElement.getAccessor().getRawType();
+    final Class<?> methodReturnType = type.getType();
+    
 ```
     
 The same sample processing a java object:
@@ -126,9 +134,14 @@ The same sample processing a java object:
             new BeanObjectContainer(new BeanObjectType(new SomeObject())));
     //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
     new BeanObjectProcessor(context, new PrintVisitor(context)).process();
-    //lookup elements
+    //lookup element
     final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
             .getElement("some.bean.path.propertyElement");
+    //gain more access
+    final BeanObjectAccessor accessor = (BeanObjectAccessor) beanPathElement.getAccessor();
+    final Method method = accessor.getBeanClassAccessor().getPublicGetterMethod();
+    final BeanClassType type = (BeanClassType) beanPathElement.getAccessor().getRawType();
+    final Class<?> methodReturnType = type.getType();
 ```
 
 And again the same sample processing a javax.model.Element:
@@ -143,12 +156,20 @@ And again the same sample processing a javax.model.Element:
 	            for (final Element element : elements) {
 	                if (element instanceof TypeElement) {
 	                    final TypeElement typeElement = (TypeElement) element;
+	                    //create processing context
 	                    final BeanModelContainer rootContainer = new BeanModelContainer(
 	                            new BeanModelType(processingEnv, typeElement.asType(), typeElement));
 	                    final BeanModelContext context = new BeanModelContext(rootContainer, processingEnv);
+	                    //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
 	                    new BeanModelProcessor(context, new ConstantsGeneratorVisitor(context)).process();
+	                    //lookup element
 	                    final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
 	                            .getElement("some.bean.path.propertyElement");
+	                    //gain more access
+	                    final BeanModelAccessor accessor = (BeanModelAccessor) beanPathElement.getAccessor();
+                            final Element method = accessor.getPublicGetterMethodElement();
+                            final BeanModelType type = (BeanModelType) beanPathElement.getAccessor().getRawType();
+                            final TypeElement methodReturnType = type.getTypeElement();
 	                }
 	            }
 	        } catch (final Throwable t) {
