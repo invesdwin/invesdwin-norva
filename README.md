@@ -167,9 +167,9 @@ And again the same sample processing a javax.model.Element:
 	                            .getElement("some.bean.path.propertyElement");
 	                    //gain more access
 	                    final BeanModelAccessor accessor = (BeanModelAccessor) beanPathElement.getAccessor();
-                            final Element method = accessor.getPublicGetterMethodElement();
-                            final BeanModelType type = (BeanModelType) beanPathElement.getAccessor().getRawType();
-                            final TypeElement methodReturnType = type.getTypeElement();
+	                    final Element method = accessor.getPublicGetterMethodElement();
+	                    final BeanModelType type = (BeanModelType) beanPathElement.getAccessor().getRawType();
+	                    final TypeElement methodReturnType = type.getTypeElement();
 	                }
 	            }
 	        } catch (final Throwable t) {
