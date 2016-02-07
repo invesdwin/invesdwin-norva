@@ -48,7 +48,7 @@ public class StaticFacadeGenerator implements Runnable {
         // write file content
         final String content = generateContent(targetClasses, staticFacadePackage, staticFacadeClassName);
 
-        FileObject fileObject;
+        final FileObject fileObject;
         try {
             fileObject = env.getFiler().createResource(StandardLocation.SOURCE_OUTPUT, staticFacadePackage,
                     staticFacadeClassName + ".java");
@@ -172,8 +172,8 @@ public class StaticFacadeGenerator implements Runnable {
         sb.append("    /** @see " + targetClass.getQualifiedName() + "#" + m.getSimpleName() + "(");
         for (int i = 0; i < params.size(); i++) {
             final boolean isVarArgsParam = m.isVarArgs() && i == params.size() - 1;
-            sb.append(BeanPathObjects.removeGenericsFromQualifiedName(typeToString(params.get(i).asType(),
-                    isVarArgsParam)));
+            sb.append(BeanPathObjects
+                    .removeGenericsFromQualifiedName(typeToString(params.get(i).asType(), isVarArgsParam)));
             if (i < params.size() - 1) {
                 sb.append(", ");
             }

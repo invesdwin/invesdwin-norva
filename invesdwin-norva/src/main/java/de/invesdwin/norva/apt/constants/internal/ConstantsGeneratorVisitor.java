@@ -75,14 +75,13 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         final TypeElement rootTypeElement = getContext().getRootContainer().getType().getTypeElement();
         final String originatingClassName = String.valueOf(rootTypeElement.getSimpleName());
         final String targetClassName = originatingClassName + "Constants";
-        final String packageName = String.valueOf(rootTypeElement.getQualifiedName()).replace(
-                "." + originatingClassName, "");
+        final String packageName = String.valueOf(rootTypeElement.getQualifiedName())
+                .replace("." + originatingClassName, "");
         final String content = generateContent(elements, targetClassName, packageName);
-        FileObject fileObject;
+        final FileObject fileObject;
         try {
-            fileObject = getContext().getEnv()
-                    .getFiler()
-                    .createResource(StandardLocation.SOURCE_OUTPUT, packageName, targetClassName + ".java");
+            fileObject = getContext().getEnv().getFiler().createResource(StandardLocation.SOURCE_OUTPUT, packageName,
+                    targetClassName + ".java");
             final Writer w = fileObject.openWriter();
             try {
                 w.write(content);

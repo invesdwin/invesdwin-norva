@@ -31,7 +31,7 @@ public class BuildVersionGenerator implements Runnable {
         // write file content
         final String content = generateContent(buildVersionPackage, buildVersionClassName);
 
-        FileObject fileObject;
+        final FileObject fileObject;
         try {
             fileObject = env.getFiler().createResource(StandardLocation.SOURCE_OUTPUT, buildVersionPackage,
                     buildVersionClassName + ".java");
