@@ -259,8 +259,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         final Title titlePropertyAnnotation = getAccessor().getAnnotation(Title.class);
         if (titlePropertyAnnotation != null) {
             org.assertj.core.api.Assertions.assertThat(BeanPathStrings.isNotBlank(titlePropertyAnnotation.value()))
-            .as("@%s value on property [%s] must not be blank!", Title.class.getSimpleName(), getBeanPath())
-            .isTrue();
+                    .as("@%s value on property [%s] must not be blank!", Title.class.getSimpleName(), getBeanPath())
+                    .isTrue();
             return titlePropertyAnnotation.value();
         }
         //3. title action on type
@@ -275,8 +275,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         final Title titleTypeAnnotation = getAccessor().getType().getAnnotation(Title.class);
         if (titleTypeAnnotation != null) {
             org.assertj.core.api.Assertions.assertThat(BeanPathStrings.isNotBlank(titleTypeAnnotation.value()))
-            .as("@%s value on type [%s:%s] must not be blank!", Title.class.getSimpleName(), getBeanPath(),
-                    getAccessor().getType().getSimpleName())
+                    .as("@%s value on type [%s:%s] must not be blank!", Title.class.getSimpleName(), getBeanPath(),
+                            getAccessor().getType().getSimpleName())
                     .isTrue();
             return titleTypeAnnotation.value();
         }
@@ -346,7 +346,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                 final Object disableResult = disableAction.getInvoker().invokeFromTarget(parentTarget);
                 if (disableResult != null) {
                     if (BeanPathReflections.isBoolean(disableResult.getClass())) {
-                        return (Boolean) disableResult;
+                        final Boolean disabled = (Boolean) disableResult;
+                        return !disabled;
                     } else {
                         return false;
                     }
