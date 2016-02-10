@@ -4,8 +4,24 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.invesdwin</groupId>
 	<artifactId>invesdwin-norva</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
+
+	<name>invesdwin-norva</name>
+	<description>Naked Objects Reflection Visitor API</description>
+	<url>https://github.com/subes/invesdwin-norva</url>
+
+	<licenses>
+		<license>
+			<name>LGPL 3.0 license</name>
+			<url>https://opensource.org/licenses/lgpl-3.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/subes/invesdwin-norva</url>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,7 +36,7 @@
 		<version.hibernate-jpa-2.1-api>1.0.0.Final</version.hibernate-jpa-2.1-api>
 		<version.validation-api>1.1.0.Final</version.validation-api>
 		<version.jboss-logging-generator>1.0.0.CR5</version.jboss-logging-generator>
-		
+
 		<version.invesdwin-bom>1.0.0-SNAPSHOT</version.invesdwin-bom>
 	</properties>
 
@@ -189,18 +205,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>central</id>
-			<name>invesdwin.de-releases</name>
-			<url>http://invesdwin.de/artifactory/invesdwin-oss</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>invesdwin.de-snapshots</name>
-			<url>http://invesdwin.de/artifactory/invesdwin-oss</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 </project>
