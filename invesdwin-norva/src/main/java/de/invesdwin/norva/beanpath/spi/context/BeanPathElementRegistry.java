@@ -9,7 +9,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.google.common.base.Function;
 
 import de.invesdwin.norva.beanpath.BeanPathStrings;
-import de.invesdwin.norva.beanpath.annotation.Intercept;
+import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.spi.PathUtil;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
@@ -27,7 +27,7 @@ import de.invesdwin.norva.beanpath.spi.element.utility.ValidateBeanPathElement;
 public class BeanPathElementRegistry {
 
     private final Map<String, IBeanPathElement> beanPath_element = new HashMap<String, IBeanPathElement>();
-    private final Map<String, IBeanPathElement> beanPath_interceptor = new HashMap<String, IBeanPathElement>();
+    private final Map<String, IBeanPathElement> beanPath_redirect = new HashMap<String, IBeanPathElement>();
 
     public void addElement(final IBeanPathElement e) {
         final IBeanPathElement oldElement = beanPath_element.put(e.getBeanPath(), e);
@@ -42,11 +42,11 @@ public class BeanPathElementRegistry {
         }
     }
 
-    public void addInterceptor(final IBeanPathElement interceptor, final Intercept intercept) {
-        final String beanPath = PathUtil.newBeanPath(interceptor, intercept);
+    public void addRedirector(final IBeanPathElement redirector, final BeanPathRedirect redirect) {
+        final String beanPath = PathUtil.newBeanPath(redirector, redirect);
         //the first interceptor that is found is used, all others are ignored
-        if (beanPath_interceptor.get(beanPath) == null) {
-            org.assertj.core.api.Assertions.assertThat(beanPath_interceptor.put(beanPath, interceptor)).isNull();
+        if (beanPath_redirect.get(beanPath) == null) {
+            org.assertj.core.api.Assertions.assertThat(beanPath_redirect.put(beanPath, redirector)).isNull();
         }
     }
 
@@ -66,7 +66,7 @@ public class BeanPathElementRegistry {
      */
     @SuppressWarnings("unchecked")
     public <T extends IBeanPathElement> T getInterceptor(final String beanPath) {
-        return (T) beanPath_interceptor.get(beanPath);
+        return (T) beanPath_redirect.get(beanPath);
     }
 
     public Collection<IBeanPathElement> getElements() {

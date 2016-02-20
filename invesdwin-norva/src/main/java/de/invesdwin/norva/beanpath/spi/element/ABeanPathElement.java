@@ -12,7 +12,7 @@ import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.annotation.Disabled;
 import de.invesdwin.norva.beanpath.annotation.Hidden;
-import de.invesdwin.norva.beanpath.annotation.Intercept;
+import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.annotation.Title;
 import de.invesdwin.norva.beanpath.annotation.Tooltip;
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
@@ -46,7 +46,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
     private final IBeanPathContainer container;
     private final IBeanPathAccessor accessor;
     private final String beanPath;
-    private final Intercept intercept;
+    private final BeanPathRedirect redirect;
     private InterceptedBeanPathElement interceptedElement;
     private boolean firstAccept = true;
 
@@ -63,14 +63,14 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         this.accessor = accessor;
         this.beanPath = PathUtil.newBeanPath(container, accessor);
         //add interceptor
-        this.intercept = accessor.getAnnotation(Intercept.class);
+        this.redirect = accessor.getAnnotation(BeanPathRedirect.class);
         init();
     }
 
     protected void init() {
-        if (intercept != null && shouldBeAddedToElementRegistry()) {
+        if (redirect != null && shouldBeAddedToElementRegistry()) {
             try {
-                context.getElementRegistry().addInterceptor(this, intercept);
+                context.getElementRegistry().addRedirector(this, redirect);
             } catch (final AnnotationTypeMismatchException e) {
                 //do not abort annotation processing on annotation processing here or we end up with irreparable use of constants...
                 if (!(context instanceof BeanModelContext)) {
@@ -145,7 +145,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                 interceptor.interceptedElement = new InterceptedBeanPathElement(this);
                 return interceptor.accept(visitors);
             } else {
-                if (intercept != null && getInterceptedElement() == null) {
+                if (redirect != null && getInterceptedElement() == null) {
                     /*
                      * ignore if this is an interceptor that has not been attached yet, it might suffice to have this
                      * interceptor in the element registry

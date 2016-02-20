@@ -3,7 +3,7 @@ package de.invesdwin.norva.beanpath.spi;
 import javax.annotation.concurrent.Immutable;
 
 import de.invesdwin.norva.beanpath.BeanPathStrings;
-import de.invesdwin.norva.beanpath.annotation.Intercept;
+import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 
 @Immutable
@@ -34,7 +34,7 @@ public final class PathUtil {
         }
     }
 
-    public static String newBeanPath(final IBeanPathElement interceptor, final Intercept intercept) {
-        return newPath(interceptor.getContainer().getBeanPath(), BEAN_PATH_SEPARATOR, intercept.value());
+    public static String newBeanPath(final IBeanPathElement redirector, final BeanPathRedirect redirect) {
+        return newPath(redirector.getContainer().getBeanPath(), BEAN_PATH_SEPARATOR, redirect.value());
     }
 }

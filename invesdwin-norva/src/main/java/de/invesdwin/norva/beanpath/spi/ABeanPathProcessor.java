@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathStrings;
+import de.invesdwin.norva.beanpath.annotation.BeanPathEndPoint;
 import de.invesdwin.norva.beanpath.annotation.Tabbed;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.ABeanPathElement;
@@ -109,8 +110,9 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         processUtilityActionElements(result.getActions(), nonUtilityActionElements);
         // 2. accept root if not done so right after scanning his utility actions
         final boolean parentAccepted = parentElement.accept(visitors);
-        org.assertj.core.api.Assertions.assertThat(
-                !parentElement.getBeanPath().equals(RootBeanPathElement.ROOT_BEAN_PATH) || parentAccepted).isTrue();
+        org.assertj.core.api.Assertions
+                .assertThat(!parentElement.getBeanPath().equals(RootBeanPathElement.ROOT_BEAN_PATH) || parentAccepted)
+                .isTrue();
         if (!parentAccepted) {
             return false;
         }
@@ -185,7 +187,9 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                         new ColumnOrderBeanPathElement(actionElement).accept();
                     } else if (actionElement.getAccessor().getRawName().endsWith(TitleBeanPathElement.TITLE_SUFFIX)) {
                         new TitleBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor().getRawName().endsWith(TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
+                    } else if (actionElement.getAccessor()
+                            .getRawName()
+                            .endsWith(TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
                         new TooltipBeanPathElement(actionElement).accept();
                     } else {
                         nonUtilityActionElements.add(actionElement);
@@ -255,9 +259,8 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     }
 
     private boolean hasChoice(final SimplePropertyBeanPathElement propertyElement) {
-        return propertyElement.getContext()
-                .getElementRegistry()
-                .getElement(propertyElement.getBeanPath() + ChoiceBeanPathElement.CHOICE_SUFFIX) != null;
+        return propertyElement.getContext().getElementRegistry().getElement(
+                propertyElement.getBeanPath() + ChoiceBeanPathElement.CHOICE_SUFFIX) != null;
     }
 
     private void processUtilityPropertyElements(final List<SimplePropertyBeanPathElement> propertyElements,
@@ -391,7 +394,17 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private boolean isBeanPathEndpoint(final SimplePropertyBeanPathElement propertyElement) {
         final boolean isIterableOrJavaType = propertyElement.getAccessor().getRawType().isArray()
                 || hasChoice(propertyElement) || propertyElement.getAccessor().getRawType().isJavaType();
-        return isIterableOrJavaType || propertyElement.getAccessor().getRawType().isVoid()
+        if (isIterableOrJavaType) {
+            return true;
+        }
+        final boolean hasBeanPathEndPointAnnotation = propertyElement.getAccessor()
+                .getType()
+                .getAnnotation(BeanPathEndPoint.class) != null
+                || propertyElement.getAccessor().getAnnotation(BeanPathEndPoint.class) != null;
+        if (hasBeanPathEndPointAnnotation) {
+            return true;
+        }
+        return propertyElement.getAccessor().getRawType().isVoid()
                 || propertyElement.getAccessor().getRawType().isEnum()
                 || propertyElement.getAccessor().getRawType().isPrimitive()
                 || propertyElement.getAccessor().getRawType().isNumber()
