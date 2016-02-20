@@ -85,7 +85,7 @@ This framework handles the following annotations:
 * `@Tabbed`: can be used to create tabbed panels
 * `@Title`: can be used to set a title text for this element
 * `@Tooltip`: can be used to set a tooltip text for this element
-* `@BeanPathIntercept`: can be used to override bean paths of children, effectively changing the tree
+* `@BeanPathRedirect`: can be used to override bean paths of children, effectively changing the tree
 * `@BeanPathEndPoint`: can be used on an element or type to tell the processor not to visit children of it
 
 The framework also understands `@NotNull` from the BeanValidation annotations and `@Column(nullable=false)` from the JPA annotations to determine if `null` is a valid value in choices for comboboxes.
