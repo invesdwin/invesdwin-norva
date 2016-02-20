@@ -120,7 +120,8 @@ public class TableBeanPathElement extends AChoiceBeanPathElement {
                 }
 
                 @Override
-                protected IBeanPathElement getAssociatedHolderFromColumn(final ITableColumnBeanPathElement columnElement) {
+                protected IBeanPathElement getAssociatedHolderFromColumn(
+                        final ITableColumnBeanPathElement columnElement) {
                     return columnElement.getTableElement();
                 }
             }.getOrderedColumns();

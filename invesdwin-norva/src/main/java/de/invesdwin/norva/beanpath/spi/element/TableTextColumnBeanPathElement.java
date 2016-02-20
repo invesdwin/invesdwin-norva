@@ -29,7 +29,7 @@ public class TableTextColumnBeanPathElement extends APropertyBeanPathElement imp
     }
 
     @Override
-    public IBeanPathPropertyModifier<Object> getModifier() {
+    public NoObjectBeanPathPropertyModifier getModifier() {
         if (modifier == null) {
             modifier = new NoObjectBeanPathPropertyModifier(getAccessor());
         }
@@ -37,7 +37,7 @@ public class TableTextColumnBeanPathElement extends APropertyBeanPathElement imp
     }
 
     public IBeanPathPropertyModifier<Object> getModifier(final int index) {
-        return new IndexedBeanPathPropertyModifier(getTableElement().getChoiceModifier(), index, modifier);
+        return new IndexedBeanPathPropertyModifier(getTableElement().getChoiceModifier(), index, getModifier());
     }
 
     @Override
