@@ -10,8 +10,6 @@ import java.lang.annotation.Target;
  * elements of a subtype but cannot add annotations to it (e.g. since it is a database class you want to reuse from a
  * different module that has no dependency to invesdwin-nowicket). One example is to add the Hidden annotation to an
  * element of it or add a disable or validate utility method from the outside.
- * 
- * @author subes
  *
  */
 @Target({ ElementType.FIELD, ElementType.METHOD })

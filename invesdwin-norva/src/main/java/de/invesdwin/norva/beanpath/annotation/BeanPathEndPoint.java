@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 /**
  * Annotate a type with this to disable the bean path from visiting children of this element. Can also be used on
  * methods and fields to do the same in special occasions.
- * 
- * @author subes
  */
 @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
