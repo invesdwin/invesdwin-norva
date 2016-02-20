@@ -82,10 +82,10 @@ This framework handles the following annotations:
 * `@ColumnOrder`: to define an order for properties and actions or effectively table columns, can also be used to hide columns that are not named in this annotation
 * `@Disabled`: can be used to make an element disabled
 * `@Hidden`: can be used to hide an element
-* `@Intercept`: can be used to override bean paths of children, effectively changing the tree
 * `@Tabbed`: can be used to create tabbed panels
 * `@Title`: can be used to set a title text for this element
 * `@Tooltip`: can be used to set a tooltip text for this element
+* `@BeanPathIntercept`: can be used to override bean paths of children, effectively changing the tree
 * `@BeanPathEndPoint`: can be used on an element or type to tell the processor not to visit children of it
 
 The framework also understands `@NotNull` from the BeanValidation annotations and `@Column(nullable=false)` from the JPA annotations to determine if `null` is a valid value in choices for comboboxes.
