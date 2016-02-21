@@ -164,12 +164,15 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
 
     private static <A extends Annotation> A getAnnotationRecursive(final ProcessingEnvironment env,
             final Element element, final Class<A> annotationType, final Set<String> stackOverflowFilter) {
+        if (element == null) {
+            return null;
+        }
         final A annotation = element.getAnnotation(annotationType);
         if (annotation != null) {
             return annotation;
         } else {
-            final List<? extends AnnotationMirror> annotationMirrors = env.getElementUtils().getAllAnnotationMirrors(
-                    element);
+            final List<? extends AnnotationMirror> annotationMirrors = env.getElementUtils()
+                    .getAllAnnotationMirrors(element);
             for (final AnnotationMirror annotationMirror : annotationMirrors) {
                 final Element asElement = annotationMirror.getAnnotationType().asElement();
                 if (stackOverflowFilter.add(asElement.toString())) {
