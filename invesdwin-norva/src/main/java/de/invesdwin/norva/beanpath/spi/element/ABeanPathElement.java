@@ -10,9 +10,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
+import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.annotation.Disabled;
 import de.invesdwin.norva.beanpath.annotation.Hidden;
-import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.annotation.Title;
 import de.invesdwin.norva.beanpath.annotation.Tooltip;
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
@@ -63,8 +63,21 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         this.accessor = accessor;
         this.beanPath = PathUtil.newBeanPath(container, accessor);
         //add interceptor
-        this.redirect = accessor.getAnnotation(BeanPathRedirect.class);
+        this.redirect = extractRedirectAnnotation(accessor);
         init();
+    }
+
+    public BeanPathRedirect extractRedirectAnnotation(final IBeanPathAccessor accessor) {
+        final BeanPathRedirect annotation = accessor.getAnnotation(BeanPathRedirect.class);
+        if (annotation != null) {
+            return postProcessRedirect(annotation);
+        } else {
+            return null;
+        }
+    }
+
+    protected BeanPathRedirect postProcessRedirect(final BeanPathRedirect annotation) {
+        return annotation;
     }
 
     protected void init() {
@@ -347,7 +360,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                 if (disableResult != null) {
                     if (BeanPathReflections.isBoolean(disableResult.getClass())) {
                         final Boolean disabled = (Boolean) disableResult;
-                        return !disabled;
+                        final boolean enabled = !disabled;
+                        return enabled;
                     } else {
                         return false;
                     }

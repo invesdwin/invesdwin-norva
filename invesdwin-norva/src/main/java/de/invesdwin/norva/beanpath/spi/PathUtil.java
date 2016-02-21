@@ -37,4 +37,22 @@ public final class PathUtil {
     public static String newBeanPath(final IBeanPathElement redirector, final BeanPathRedirect redirect) {
         return newPath(redirector.getContainer().getBeanPath(), BEAN_PATH_SEPARATOR, redirect.value());
     }
+
+    public static String maybeAddUtilitySuffix(final String beanPath, final String suffix) {
+        return BeanPathStrings.eventuallyAddSuffix(beanPath, suffix);
+    }
+
+    public static String maybeAddUtilityPrefix(final String beanPath, final String prefix) {
+        if (beanPath.contains(BEAN_PATH_SEPARATOR)) {
+            final String startPath = BeanPathStrings.substringBeforeLast(beanPath, BEAN_PATH_SEPARATOR);
+            final String endPath = BeanPathStrings.substringAfterLast(beanPath, BEAN_PATH_SEPARATOR);
+            return startPath + BEAN_PATH_SEPARATOR + BeanPathStrings.eventuallyAddPrefixAndCapitalize(endPath, prefix);
+        } else {
+            return BeanPathStrings.eventuallyAddPrefixAndCapitalize(beanPath, prefix);
+        }
+    }
+
+    public static String maybeAddUtilityFragment(final String beanPath, final String fragment) {
+        return BeanPathStrings.eventuallyAddSuffix(beanPath, BEAN_PATH_SEPARATOR + fragment);
+    }
 }

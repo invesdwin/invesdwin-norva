@@ -36,8 +36,8 @@ public class BeanPathElementRegistry {
             org.assertj.core.api.Assertions.assertThat(cOldElement.isAttachedToElement()).isTrue();
         } else {
             org.assertj.core.api.Assertions.assertThat(oldElement)
-            .as("Element %s [%s] cannot be added because another one already exists with that bean path.",
-                    e.getClass().getSimpleName(), e.getBeanPath())
+                    .as("Element %s [%s] cannot be added because another one already exists with that bean path.",
+                            e.getClass().getSimpleName(), e.getBeanPath())
                     .isNull();
         }
     }
@@ -183,7 +183,8 @@ public class BeanPathElementRegistry {
 
     private String addUtilityPrefix(final String beanPath, final String utilityPrefix) {
         if (beanPath.contains(PathUtil.BEAN_PATH_SEPARATOR)) {
-            final String substringAfterLast = BeanPathStrings.substringAfterLast(beanPath, PathUtil.BEAN_PATH_SEPARATOR);
+            final String substringAfterLast = BeanPathStrings.substringAfterLast(beanPath,
+                    PathUtil.BEAN_PATH_SEPARATOR);
             final String substringBeforeLast = BeanPathStrings.substringBeforeLast(beanPath,
                     PathUtil.BEAN_PATH_SEPARATOR);
             return substringBeforeLast + PathUtil.BEAN_PATH_SEPARATOR + utilityPrefix

@@ -1,8 +1,12 @@
 package de.invesdwin.norva.beanpath.spi.element.utility;
 
+import java.lang.annotation.Annotation;
+
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathStrings;
+import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
+import de.invesdwin.norva.beanpath.spi.PathUtil;
 import de.invesdwin.norva.beanpath.spi.element.AActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
@@ -16,6 +20,23 @@ public class ValidateBeanPathElement extends AActionBeanPathElement implements I
 
     public ValidateBeanPathElement(final SimpleActionBeanPathElement simpleActionElement) {
         super(simpleActionElement);
+    }
+
+    @Override
+    protected BeanPathRedirect postProcessRedirect(final BeanPathRedirect annotation) {
+        final BeanPathRedirect parent = super.postProcessRedirect(annotation);
+        return new BeanPathRedirect() {
+
+            @Override
+            public Class<? extends Annotation> annotationType() {
+                return BeanPathRedirect.class;
+            }
+
+            @Override
+            public String value() {
+                return PathUtil.maybeAddUtilityPrefix(parent.value(), VALIDATE_PREFIX);
+            }
+        };
     }
 
     @Override

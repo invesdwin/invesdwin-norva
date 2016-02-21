@@ -1,7 +1,11 @@
 package de.invesdwin.norva.beanpath.spi.element.utility;
 
+import java.lang.annotation.Annotation;
+
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
+import de.invesdwin.norva.beanpath.spi.PathUtil;
 import de.invesdwin.norva.beanpath.spi.element.APropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
@@ -18,6 +22,33 @@ public class ChoiceBeanPathElement extends APropertyBeanPathElement implements I
             final boolean shouldBeAddedToElementRegistry) {
         super(simplePropertyElement);
         this.shouldBeAddedToElementRegistry = shouldBeAddedToElementRegistry;
+        superInit();
+    }
+
+    @Override
+    protected void init() {
+        //noop, gets delayed
+    }
+
+    private void superInit() {
+        super.init();
+    }
+
+    @Override
+    protected BeanPathRedirect postProcessRedirect(final BeanPathRedirect annotation) {
+        final BeanPathRedirect parent = super.postProcessRedirect(annotation);
+        return new BeanPathRedirect() {
+
+            @Override
+            public Class<? extends Annotation> annotationType() {
+                return BeanPathRedirect.class;
+            }
+
+            @Override
+            public String value() {
+                return PathUtil.maybeAddUtilitySuffix(parent.value(), CHOICE_SUFFIX);
+            }
+        };
     }
 
     @Override

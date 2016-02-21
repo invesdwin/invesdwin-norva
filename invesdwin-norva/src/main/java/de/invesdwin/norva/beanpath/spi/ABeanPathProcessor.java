@@ -55,6 +55,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private final Set<String> duplicateBeanPathsFilter = new HashSet<String>();
 
     private boolean shallowOnly;
+    private boolean ignoreBeanPathEndPointAnnotation;
 
     @SafeVarargs
     public ABeanPathProcessor(final X context, final IBeanPathVisitor... visitors) {
@@ -69,6 +70,16 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
 
     public boolean isShallowOnly() {
         return shallowOnly;
+    }
+
+    public boolean isIgnoreBeanPathEndPointAnnotation() {
+        return ignoreBeanPathEndPointAnnotation;
+    }
+
+    public ABeanPathProcessor<X, C> withIgnoreBeanPathEndPointAnnotation(
+            final boolean ignoreBeanPathEndPointAnnotation) {
+        this.ignoreBeanPathEndPointAnnotation = ignoreBeanPathEndPointAnnotation;
+        return this;
     }
 
     public final X getContext() {
@@ -397,12 +408,14 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         if (isIterableOrJavaType) {
             return true;
         }
-        final boolean hasBeanPathEndPointAnnotation = propertyElement.getAccessor()
-                .getType()
-                .getAnnotation(BeanPathEndPoint.class) != null
-                || propertyElement.getAccessor().getAnnotation(BeanPathEndPoint.class) != null;
-        if (hasBeanPathEndPointAnnotation) {
-            return true;
+        if (!ignoreBeanPathEndPointAnnotation) {
+            final boolean hasBeanPathEndPointAnnotation = propertyElement.getAccessor()
+                    .getType()
+                    .getAnnotation(BeanPathEndPoint.class) != null
+                    || propertyElement.getAccessor().getAnnotation(BeanPathEndPoint.class) != null;
+            if (hasBeanPathEndPointAnnotation) {
+                return true;
+            }
         }
         return propertyElement.getAccessor().getRawType().isVoid()
                 || propertyElement.getAccessor().getRawType().isEnum()
