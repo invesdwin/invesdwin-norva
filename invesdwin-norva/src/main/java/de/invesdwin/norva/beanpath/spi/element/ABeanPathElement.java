@@ -293,6 +293,11 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                     .isTrue();
             return titleTypeAnnotation.value();
         }
+        return getVisibleName();
+    }
+
+    @Override
+    public String getVisibleName() {
         final String beanPathFragment = getAccessor().getBeanPathFragment();
         if (BeanPathStrings.isBlank(beanPathFragment)) {
             return BeanPathObjects.toVisibleName(getContainer().getType().getSimpleName());

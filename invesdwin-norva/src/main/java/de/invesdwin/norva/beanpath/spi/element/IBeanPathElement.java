@@ -67,4 +67,6 @@ public interface IBeanPathElement extends IBeanPathFragment {
      */
     String getTitle(Object target);
 
+    String getVisibleName();
+
 }
