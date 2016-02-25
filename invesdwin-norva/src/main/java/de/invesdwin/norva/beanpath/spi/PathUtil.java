@@ -39,7 +39,7 @@ public final class PathUtil {
     }
 
     public static String maybeAddUtilitySuffix(final String beanPath, final String suffix) {
-        return BeanPathStrings.eventuallyAddSuffix(beanPath, suffix);
+        return BeanPathStrings.eventuallyAddSuffix(beanPath, BeanPathStrings.capitalize(suffix));
     }
 
     public static String maybeAddUtilityPrefix(final String beanPath, final String prefix) {

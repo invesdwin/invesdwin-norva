@@ -76,8 +76,15 @@ public class TabbedBeanPathElement extends APropertyBeanPathElement {
                 }
 
                 @Override
-                protected IBeanPathElement getAssociatedHolderFromColumn(final TabbedColumnBeanPathElement columnElement) {
+                protected IBeanPathElement getAssociatedHolderFromColumn(
+                        final TabbedColumnBeanPathElement columnElement) {
                     return columnElement.getTabbedElement();
+                }
+
+                @Override
+                protected IBeanPathElement getRemoveFromButtonColumn() {
+                    //not supported
+                    return null;
                 }
             }.getOrderedColumns();
         }

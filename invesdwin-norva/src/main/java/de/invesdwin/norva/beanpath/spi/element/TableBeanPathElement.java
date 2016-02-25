@@ -124,6 +124,11 @@ public class TableBeanPathElement extends AChoiceBeanPathElement {
                         final ITableColumnBeanPathElement columnElement) {
                     return columnElement.getTableElement();
                 }
+
+                @Override
+                protected IBeanPathElement getRemoveFromButtonColumn() {
+                    return TableBeanPathElement.this.getRemoveFromButtonColumn();
+                };
             }.getOrderedColumns();
         }
         return Collections.unmodifiableList(columns);
