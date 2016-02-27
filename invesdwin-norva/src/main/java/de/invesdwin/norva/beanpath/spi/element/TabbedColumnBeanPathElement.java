@@ -28,4 +28,10 @@ public class TabbedColumnBeanPathElement extends APropertyBeanPathElement {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    protected boolean isStaticallyDisabled() {
+        //columns normally don't have setters
+        return false;
+    }
+
 }

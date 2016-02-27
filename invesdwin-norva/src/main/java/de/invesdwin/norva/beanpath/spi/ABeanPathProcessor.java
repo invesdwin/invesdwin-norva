@@ -260,7 +260,8 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                     new TextFieldBeanPathElement(propertyElement).accept(visitors);
                 }
             } else {
-                if (propertyElement.getAccessor().getAnnotation(Tabbed.class) != null) {
+                if (propertyElement.getAccessor().getAnnotation(Tabbed.class) != null
+                        || propertyElement.getAccessor().getRawType().getAnnotation(Tabbed.class) != null) {
                     processTabbedElement(propertyElement, tabbedElements);
                 } else {
                     containerOpenElements.add(new ContainerOpenBeanPathElement(propertyElement, true));
@@ -410,7 +411,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         }
         if (!ignoreBeanPathEndPointAnnotation) {
             final boolean hasBeanPathEndPointAnnotation = propertyElement.getAccessor()
-                    .getType()
+                    .getRawType()
                     .getAnnotation(BeanPathEndPoint.class) != null
                     || propertyElement.getAccessor().getAnnotation(BeanPathEndPoint.class) != null;
             if (hasBeanPathEndPointAnnotation) {
