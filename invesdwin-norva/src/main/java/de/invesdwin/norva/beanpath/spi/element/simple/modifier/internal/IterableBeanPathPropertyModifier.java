@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
@@ -121,7 +122,15 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
             return null;
         } else if (oldValue instanceof Collection) {
             //reuse existing collection if possible, because instantiating a new collection is not always possible
-            targetCollection = (Collection<Object>) oldValue;
+            try {
+                targetCollection = (Collection<Object>) oldValue.getClass().newInstance();
+            } catch (final Throwable e) {
+                try {
+                    targetCollection = (Collection<Object>) BeanPathObjects.clone(oldValue);
+                } catch (final Throwable e1) {
+                    targetCollection = newTargetCollectionFromType();
+                }
+            }
         } else {
             targetCollection = newTargetCollectionFromType();
         }

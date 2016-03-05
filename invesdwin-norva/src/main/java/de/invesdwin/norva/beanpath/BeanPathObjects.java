@@ -1,11 +1,29 @@
 package de.invesdwin.norva.beanpath;
 
+import java.io.Serializable;
+import java.lang.reflect.Method;
+
 import javax.annotation.concurrent.Immutable;
 
 @Immutable
 public final class BeanPathObjects {
 
+    private static IDeepCloneProvider deepCloneProvider = new IDeepCloneProvider() {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public <T> T deepClone(final T obj) {
+            //use java serialization as default deep clone provider
+            return (T) org.apache.commons.lang3.SerializationUtils.clone((Serializable) obj);
+        }
+    };
+
     private BeanPathObjects() {}
+
+    public static void setDeepCloneProvider(final IDeepCloneProvider deepCloneProvider) {
+        org.assertj.core.api.Assertions.assertThat(deepCloneProvider).isNotNull();
+        BeanPathObjects.deepCloneProvider = deepCloneProvider;
+    }
 
     public static String removeGenericsFromQualifiedName(final String qualifiedName) {
         final String[] split = BeanPathStrings.split(qualifiedName.replace(" ", ""), "<");
@@ -60,6 +78,21 @@ public final class BeanPathObjects {
             prevChar = curChar;
         }
         return visibleName.toString();
+    }
+
+    public static Object clone(final Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        final Method cloneMethod = BeanPathReflections.findMethod(obj.getClass(), "clone");
+        if (cloneMethod != null) {
+            return BeanPathReflections.invokeMethod(cloneMethod, obj);
+        } else if (obj instanceof Serializable) {
+            return deepCloneProvider.deepClone((Serializable) obj);
+        } else {
+            throw new UnsupportedOperationException("Object [" + obj + "] is neither cloneable, nor serializable!");
+        }
+
     }
 
 }
