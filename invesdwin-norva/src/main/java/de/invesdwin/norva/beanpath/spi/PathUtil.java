@@ -55,4 +55,18 @@ public final class PathUtil {
     public static String maybeAddUtilityFragment(final String beanPath, final String fragment) {
         return BeanPathStrings.eventuallyAddSuffix(beanPath, BEAN_PATH_SEPARATOR + fragment);
     }
+
+    public static boolean startsWithAnyBeanPath(final boolean absoluteBeanPath, final String beanPath,
+            final String... beanPathPrefixes) {
+        if (absoluteBeanPath) {
+            final String adjBeanPath = beanPath + BEAN_PATH_SEPARATOR;
+            final String[] adjBeanPathPrefixes = new String[beanPathPrefixes.length];
+            for (int i = 0; i < beanPathPrefixes.length; i++) {
+                adjBeanPathPrefixes[i] = beanPathPrefixes[i] + BEAN_PATH_SEPARATOR;
+            }
+            return BeanPathStrings.startsWithAny(adjBeanPath, adjBeanPathPrefixes);
+        } else {
+            return BeanPathStrings.startsWithAny(beanPath, beanPathPrefixes);
+        }
+    }
 }

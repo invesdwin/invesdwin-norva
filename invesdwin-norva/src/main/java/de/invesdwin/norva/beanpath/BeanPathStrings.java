@@ -60,4 +60,16 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         }
     }
 
+    public static boolean startsWithAny(final String s, final String[] possiblePrefixes) {
+        if (s == null) {
+            return false;
+        }
+        for (final String prefix : possiblePrefixes) {
+            if (prefix != null && s.startsWith(prefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
