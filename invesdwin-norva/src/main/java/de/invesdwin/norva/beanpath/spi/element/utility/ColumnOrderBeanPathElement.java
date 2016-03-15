@@ -18,7 +18,7 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 @NotThreadSafe
 public class ColumnOrderBeanPathElement extends AActionBeanPathElement implements IUtilityBeanPathElement {
 
-    public static final String COLUMN_ORDER_BEAN_PATH_FRAGMENT = "ColumnOrder";
+    public static final String COLUMN_ORDER_BEAN_PATH_FRAGMENT = "columnOrder";
     private IBeanPathElement attachedToElement;
     private IBeanPathPropertyModifier<List<Object>> columnOrderModifier;
 
