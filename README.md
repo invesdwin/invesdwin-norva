@@ -145,8 +145,16 @@ The same sample processing a java object:
     final BeanClassType type = (BeanClassType) beanPathElement.getAccessor().getRawType();
     final Class<?> methodReturnType = type.getType();
     //modify values (only supported when processing objects)
-    Object value = beanPathElement.getModifier().getValue();
-    beanPathElement.getModifier().setValue(new SomeValue());
+    if (beanPathElement instanceof AChoiceBeanPathElement) {
+        //collection property
+        final AChoiceBeanPathElement choiceBeanPathElement = (AChoiceBeanPathElement) beanPathElement;
+        final List<?> values = choiceBeanPathElement.getChoiceModifier().getValue();
+        choiceBeanPathElement.getChoiceModifier().setValue(Arrays.asList(new SomeValue()));
+    } else {
+        //simple property
+        final Object value = beanPathElement.getModifier().getValue();
+        beanPathElement.getModifier().setValue(new SomeValue());
+    }
 ```
 
 And again the same sample processing a javax.model.Element:
