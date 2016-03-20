@@ -71,7 +71,7 @@ A bean path consists of elements separated by `.`, e.g. `some.path.doSomething`.
 Here `some` is a bean path container, having an accessor `SomeType getPath()` property method that returns a type that acts as a child container that has a `void doSomething()` action method.
 
 Using this framework, you can easily understand bean paths and handle static and dynamic information contained in them.
-They can be used to define models for generated UIs via the naked objects pattern. This framework does not do the UI generation part, instead it focuses on the reflection and basic functionality of a naked objects model and the processing of it. The actual naked objects framework can be built on top of this API, just like it is easy to create other code generators using this.
+They can be used to define models for generated UIs via the naked objects pattern. This framework does not do the UI generation part, instead it focuses on the reflection and basic functionality of a naked objects model and the processing of it. The actual naked objects framework can be built on top of this API, just like it is easy to create other code generators using this. See [invesdwin-NoWicket](https://github.com/subes/invesdwin-nowicket) for the UI generation part.
 
 The element classes of this API provide methods for easily understanding a few annotations and utility methods and the hierarchy of when which one should override another. Also when processing objects you are able to utilize property modifiers and action invokers to ease interaction with the model.
 
