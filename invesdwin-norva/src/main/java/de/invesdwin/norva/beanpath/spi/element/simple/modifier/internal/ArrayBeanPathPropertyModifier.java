@@ -11,13 +11,13 @@ import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 
 @NotThreadSafe
-public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<List<Object>> {
+public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<List<?>> {
 
     private final BeanPathPropertyModifier delegate;
-    private final IBeanPathPropertyModifier<List<Object>> invalidChoiceModifier;
+    private final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier;
 
     public ArrayBeanPathPropertyModifier(final IBeanPathAccessor accessor,
-            final IBeanPathPropertyModifier<List<Object>> invalidChoiceModifier) {
+            final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier) {
         org.assertj.core.api.Assertions.assertThat(accessor.getRawType().isArray()).isTrue();
         this.delegate = new BeanPathPropertyModifier(accessor);
         this.invalidChoiceModifier = invalidChoiceModifier;
@@ -29,42 +29,42 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
     }
 
     @Override
-    public void setValue(final List<Object> value) {
+    public void setValue(final List<?> value) {
         final Object[] array = toArray(value);
         delegate.setValue(array);
     }
 
     @Override
-    public List<Object> getValue() {
+    public List<?> getValue() {
         final Object[] array = (Object[]) delegate.getValue();
         return toList(array, getInvalidChoices());
     }
 
     @Override
-    public void setValueFromRoot(final Object root, final List<Object> value) {
+    public void setValueFromRoot(final Object root, final List<?> value) {
         final Object[] array = toArray(value);
         delegate.setValueFromRoot(root, array);
     }
 
     @Override
-    public List<Object> getValueFromRoot(final Object root) {
+    public List<?> getValueFromRoot(final Object root) {
         final Object[] array = (Object[]) delegate.getValueFromRoot(root);
         return toList(array, getInvalidChoicesFromRoot(root));
     }
 
     @Override
-    public void setValueFromTarget(final Object target, final List<Object> value) {
+    public void setValueFromTarget(final Object target, final List<?> value) {
         final Object[] array = toArray(value);
         delegate.setValueFromTarget(target, array);
     }
 
     @Override
-    public List<Object> getValueFromTarget(final Object target) {
+    public List<?> getValueFromTarget(final Object target) {
         final Object[] array = (Object[]) delegate.getValueFromTarget(target);
         return toList(array, getInvalidChoicesFromTarget(target));
     }
 
-    private Object[] toArray(final List<Object> value) {
+    private Object[] toArray(final List<?> value) {
         if (value == null) {
             return null;
         } else {
@@ -72,7 +72,7 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
         }
     }
 
-    private List<Object> toList(final Object[] array, final List<Object> invalidChoices) {
+    private List<?> toList(final Object[] array, final List<?> invalidChoices) {
         if (array == null) {
             if (invalidChoices != null && !invalidChoices.isEmpty()) {
                 return new ArrayList<Object>(invalidChoices);
@@ -94,7 +94,7 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
         return list;
     }
 
-    private List<Object> getInvalidChoices() {
+    private List<?> getInvalidChoices() {
         if (invalidChoiceModifier != null) {
             return invalidChoiceModifier.getValue();
         } else {
@@ -102,7 +102,7 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
         }
     }
 
-    private List<Object> getInvalidChoicesFromRoot(final Object root) {
+    private List<?> getInvalidChoicesFromRoot(final Object root) {
         if (invalidChoiceModifier != null) {
             return invalidChoiceModifier.getValueFromRoot(root);
         } else {
@@ -110,7 +110,7 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
         }
     }
 
-    private List<Object> getInvalidChoicesFromTarget(final Object target) {
+    private List<?> getInvalidChoicesFromTarget(final Object target) {
         if (invalidChoiceModifier != null) {
             return invalidChoiceModifier.getValueFromTarget(target);
         } else {

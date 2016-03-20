@@ -19,7 +19,7 @@ public class NoChoiceBeanPathElement extends AChoiceBeanPathElement {
     }
 
     @Override
-    public IBeanPathPropertyModifier<List<Object>> getChoiceModifier() {
+    public IBeanPathPropertyModifier<List<?>> getChoiceModifier() {
         return new ListWrapperBeanPathPropertyModifier(getModifier());
     }
 

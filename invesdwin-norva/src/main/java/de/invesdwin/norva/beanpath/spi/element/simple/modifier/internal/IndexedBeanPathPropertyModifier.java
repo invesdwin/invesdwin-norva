@@ -10,12 +10,12 @@ import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathProperty
 @NotThreadSafe
 public class IndexedBeanPathPropertyModifier implements IBeanPathPropertyModifier<Object> {
 
-    private final IBeanPathPropertyModifier<List<Object>> choiceModifier;
+    private final IBeanPathPropertyModifier<List<?>> choiceModifier;
     private final int index;
     private final NoObjectBeanPathPropertyModifier delegate;
 
-    public IndexedBeanPathPropertyModifier(final IBeanPathPropertyModifier<List<Object>> choiceModifier,
-            final int index, final NoObjectBeanPathPropertyModifier delegate) {
+    public IndexedBeanPathPropertyModifier(final IBeanPathPropertyModifier<List<?>> choiceModifier, final int index,
+            final NoObjectBeanPathPropertyModifier delegate) {
         this.choiceModifier = choiceModifier;
         this.index = index;
         this.delegate = delegate;
@@ -50,7 +50,7 @@ public class IndexedBeanPathPropertyModifier implements IBeanPathPropertyModifie
         return getValueFromTarget(target);
     }
 
-    private Object getIndexedTarget(final List<Object> value) {
+    private Object getIndexedTarget(final List<?> value) {
         return value.get(index);
     }
 

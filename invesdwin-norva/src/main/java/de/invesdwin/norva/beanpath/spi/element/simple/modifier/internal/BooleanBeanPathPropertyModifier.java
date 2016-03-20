@@ -10,7 +10,7 @@ import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 
 @NotThreadSafe
-public class BooleanBeanPathPropertyModifier implements IBeanPathPropertyModifier<List<Object>> {
+public class BooleanBeanPathPropertyModifier implements IBeanPathPropertyModifier<List<?>> {
 
     private final BeanPathPropertyModifier delegate;
 
@@ -26,12 +26,12 @@ public class BooleanBeanPathPropertyModifier implements IBeanPathPropertyModifie
     }
 
     @Override
-    public void setValue(final List<Object> value) {
+    public void setValue(final List<?> value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Object> getValue() {
+    public List<?> getValue() {
         final List<Object> list = new ArrayList<Object>();
         list.add(true);
         list.add(false);
@@ -42,22 +42,22 @@ public class BooleanBeanPathPropertyModifier implements IBeanPathPropertyModifie
     }
 
     @Override
-    public void setValueFromRoot(final Object root, final List<Object> value) {
+    public void setValueFromRoot(final Object root, final List<?> value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Object> getValueFromRoot(final Object root) {
+    public List<?> getValueFromRoot(final Object root) {
         return getValue();
     }
 
     @Override
-    public void setValueFromTarget(final Object target, final List<Object> value) {
+    public void setValueFromTarget(final Object target, final List<?> value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Object> getValueFromTarget(final Object target) {
+    public List<?> getValueFromTarget(final Object target) {
         return getValue();
     }
 

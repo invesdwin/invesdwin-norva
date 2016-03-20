@@ -14,8 +14,8 @@ public class PrintVisitorTest {
 
     @Test
     public void testPrintVisitor() {
-        final BeanClassContext context = new BeanClassContext(new BeanClassContainer(new BeanClassType(
-                PrintVisitor.class)));
+        final BeanClassContext context = new BeanClassContext(
+                new BeanClassContainer(new BeanClassType(PrintVisitor.class)));
         new BeanClassProcessor(context, new PrintVisitor(context)).process();
     }
 

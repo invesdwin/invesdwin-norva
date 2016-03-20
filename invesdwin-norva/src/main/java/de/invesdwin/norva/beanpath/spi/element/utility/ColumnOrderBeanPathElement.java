@@ -20,7 +20,7 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
 
     public static final String COLUMN_ORDER_BEAN_PATH_FRAGMENT = "columnOrder";
     private IBeanPathElement attachedToElement;
-    private IBeanPathPropertyModifier<List<Object>> columnOrderModifier;
+    private IBeanPathPropertyModifier<List<?>> columnOrderModifier;
 
     public ColumnOrderBeanPathElement(final SimpleActionBeanPathElement simpleActionElement) {
         super(simpleActionElement);
@@ -61,7 +61,7 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
         throw new UnsupportedOperationException();
     }
 
-    private IBeanPathPropertyModifier<List<Object>> getColumnOrderModifier() {
+    private IBeanPathPropertyModifier<List<?>> getColumnOrderModifier() {
         if (columnOrderModifier == null) {
             columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier(
                     new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ActionInvokerBeanObjectAccessor(

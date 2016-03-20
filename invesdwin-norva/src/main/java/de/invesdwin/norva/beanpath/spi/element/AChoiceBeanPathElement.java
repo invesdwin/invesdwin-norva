@@ -16,8 +16,8 @@ import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
 public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
 
     private ChoiceBeanPathElement choiceElement;
-    private IBeanPathPropertyModifier<List<Object>> choiceModifier;
-    private IBeanPathPropertyModifier<List<Object>> selectionModifier;
+    private IBeanPathPropertyModifier<List<?>> choiceModifier;
+    private IBeanPathPropertyModifier<List<?>> selectionModifier;
     private boolean modifierIsRedirectedChoice;
 
     public AChoiceBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement) {
@@ -37,10 +37,10 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     /**
      * This modifier supports multi-select. For single select the list is only allowed to have 1 item in it.
      */
-    public IBeanPathPropertyModifier<List<Object>> getSelectionModifier() {
+    public IBeanPathPropertyModifier<List<?>> getSelectionModifier() {
         if (modifierIsRedirectedChoice) {
             //we have to return empty here, otherwise "all" choices would always be selected in UI, though we do not support selection
-            return new FixedValueBeanPathModifier<List<Object>>(getAccessor(), Collections.emptyList());
+            return new FixedValueBeanPathModifier<List<?>>(getAccessor(), Collections.emptyList());
         } else {
             if (selectionModifier == null) {
                 selectionModifier = new SelectionBeanPathPropertyModifier(getAccessor());
@@ -65,7 +65,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
         return choiceElement;
     }
 
-    public IBeanPathPropertyModifier<List<Object>> getChoiceModifier() {
+    public IBeanPathPropertyModifier<List<?>> getChoiceModifier() {
         if (choiceModifier == null) {
             choiceModifier = new ChoiceBeanPathPropertyModifier(getChoiceElement().getAccessor(),
                     getSelectionModifier());

@@ -9,7 +9,7 @@ import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 
 @NotThreadSafe
-public class ListWrapperBeanPathPropertyModifier implements IBeanPathPropertyModifier<List<Object>> {
+public class ListWrapperBeanPathPropertyModifier implements IBeanPathPropertyModifier<List<?>> {
 
     private final IBeanPathPropertyModifier<Object> delegate;
 
@@ -23,14 +23,14 @@ public class ListWrapperBeanPathPropertyModifier implements IBeanPathPropertyMod
     }
 
     @Override
-    public void setValue(final List<Object> value) {
+    public void setValue(final List<?> value) {
         delegate.setValue(fromList(value));
     }
 
-    private Object fromList(final List<Object> value) {
+    private Object fromList(final List<?> value) {
         if (value.size() > 1) {
-            throw new UnsupportedOperationException("Only single selection supported by accessor [" + getAccessor()
-                    + "]: " + value);
+            throw new UnsupportedOperationException(
+                    "Only single selection supported by accessor [" + getAccessor() + "]: " + value);
         } else if (value.isEmpty()) {
             return null;
         } else {
@@ -39,31 +39,31 @@ public class ListWrapperBeanPathPropertyModifier implements IBeanPathPropertyMod
     }
 
     @Override
-    public List<Object> getValue() {
+    public List<?> getValue() {
         return wrapWithList(delegate.getValue());
     }
 
     @Override
-    public void setValueFromRoot(final Object root, final List<Object> value) {
+    public void setValueFromRoot(final Object root, final List<?> value) {
         delegate.setValueFromRoot(root, fromList(value));
     }
 
     @Override
-    public List<Object> getValueFromRoot(final Object root) {
+    public List<?> getValueFromRoot(final Object root) {
         return wrapWithList(delegate.getValueFromRoot(root));
     }
 
     @Override
-    public void setValueFromTarget(final Object target, final List<Object> value) {
+    public void setValueFromTarget(final Object target, final List<?> value) {
         delegate.setValueFromTarget(target, fromList(value));
     }
 
     @Override
-    public List<Object> getValueFromTarget(final Object target) {
+    public List<?> getValueFromTarget(final Object target) {
         return wrapWithList(delegate.getValueFromTarget(target));
     }
 
-    private List<Object> wrapWithList(final Object value) {
+    private List<?> wrapWithList(final Object value) {
         return Arrays.asList(value);
     }
 

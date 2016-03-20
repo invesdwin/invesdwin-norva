@@ -8,15 +8,15 @@ import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 
 @NotThreadSafe
-public class ChoiceBeanPathPropertyModifier extends DelegateBeanPathPropertyModifier<List<Object>> {
+public class ChoiceBeanPathPropertyModifier extends DelegateBeanPathPropertyModifier<List<?>> {
 
     public ChoiceBeanPathPropertyModifier(final IBeanPathAccessor accessor,
-            final IBeanPathPropertyModifier<List<Object>> invalidChoiceModifier) {
+            final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier) {
         super(createDelegate(accessor, invalidChoiceModifier));
     }
 
-    private static IBeanPathPropertyModifier<List<Object>> createDelegate(final IBeanPathAccessor accessor,
-            final IBeanPathPropertyModifier<List<Object>> invalidChoiceModifier) {
+    private static IBeanPathPropertyModifier<List<?>> createDelegate(final IBeanPathAccessor accessor,
+            final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier) {
         if (accessor.getRawType().isBoolean()) {
             return new BooleanBeanPathPropertyModifier(accessor);
         } else if (accessor.getRawType().isEnum()) {

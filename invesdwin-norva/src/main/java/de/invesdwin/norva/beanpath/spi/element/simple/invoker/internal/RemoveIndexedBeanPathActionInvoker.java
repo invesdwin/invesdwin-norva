@@ -9,8 +9,8 @@ import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathProperty
 @NotThreadSafe
 public class RemoveIndexedBeanPathActionInvoker extends IndexedBeanPathActionInvoker {
 
-    public RemoveIndexedBeanPathActionInvoker(final IBeanPathPropertyModifier<List<Object>> choiceModifier,
-            final int index, final NoObjectBeanPathActionInvoker delegate) {
+    public RemoveIndexedBeanPathActionInvoker(final IBeanPathPropertyModifier<List<?>> choiceModifier, final int index,
+            final NoObjectBeanPathActionInvoker delegate) {
         super(choiceModifier, index, delegate);
     }
 
