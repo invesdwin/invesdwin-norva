@@ -28,7 +28,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     public IBeanPathPropertyModifier<Object> getModifier() {
         if (modifierIsRedirectedChoice) {
             //we have to return empty here, otherwise "all" choices would always be selected in UI, though we do not support selection
-            return new FixedValueBeanPathModifier<Object>(getAccessor(), null);
+            return getChoiceElement().getModifier();
         } else {
             return super.getModifier();
         }
