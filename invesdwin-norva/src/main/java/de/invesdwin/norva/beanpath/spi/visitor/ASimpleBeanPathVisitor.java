@@ -113,8 +113,8 @@ public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {
             } else if (column instanceof AActionBeanPathElement) {
                 visitAction((AActionBeanPathElement) column);
             } else {
-                throw new IllegalArgumentException("Unknown " + ITableColumnBeanPathElement.class.getSimpleName()
-                        + ": " + column);
+                throw new IllegalArgumentException(
+                        "Unknown " + ITableColumnBeanPathElement.class.getSimpleName() + ": " + column);
             }
             visitSubElementsOpen();
             visitBaseUtilityElements(column);
