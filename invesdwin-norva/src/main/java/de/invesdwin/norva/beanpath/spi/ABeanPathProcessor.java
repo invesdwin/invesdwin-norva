@@ -331,7 +331,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private void processPotentialTableElement(final SimplePropertyBeanPathElement propertyElement,
             final List<TableBeanPathElement> tableElements) {
         boolean isComboBox = propertyElement.getAccessor().getType().isJavaType()
-                || propertyElement.getAccessor().getType().isNumber();
+                || propertyElement.getAccessor().getType().isNumber() || hasChoice(propertyElement);
         if (!isComboBox) {
             final C subContainer = newSubContainer(new ContainerOpenBeanPathElement(propertyElement, false));
             final ScanResult result = scanContainerShallow(subContainer);
