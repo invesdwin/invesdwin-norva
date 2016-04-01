@@ -16,8 +16,8 @@ public class EnumConstantsBeanPathPropertyModifier implements IBeanPathPropertyM
     private final BeanPathPropertyModifier delegate;
 
     public EnumConstantsBeanPathPropertyModifier(final IBeanPathAccessor accessor) {
-        //explicitly checking rawType here for enum since the accessor should be for a selectionModifier anyway
-        org.assertj.core.api.Assertions.assertThat(accessor.getRawType().isEnum()).isTrue();
+        //explicitly checking type here for enum since the accessor should be for a selectionModifier anyway
+        org.assertj.core.api.Assertions.assertThat(accessor.getType().isEnum()).isTrue();
         this.delegate = new BeanPathPropertyModifier(accessor);
     }
 
@@ -33,7 +33,7 @@ public class EnumConstantsBeanPathPropertyModifier implements IBeanPathPropertyM
 
     @Override
     public List<?> getValue() {
-        final Object[] array = getAccessor().getRawType().getType().getEnumConstants();
+        final Object[] array = getAccessor().getType().getType().getEnumConstants();
         final List<Object> list = new ArrayList<Object>();
         if (getAccessor().isNullable()) {
             list.add(null);

@@ -38,7 +38,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
      * This modifier supports multi-select. For single select the list is only allowed to have 1 item in it.
      */
     public IBeanPathPropertyModifier<List<?>> getSelectionModifier() {
-        if (modifierIsRedirectedChoice) {
+        if (isChoiceOnly()) {
             //we have to return empty here, otherwise "all" choices would always be selected in UI, though we do not support selection
             return new FixedValueBeanPathModifier<List<?>>(getAccessor(), Collections.emptyList());
         } else {
@@ -50,15 +50,15 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     }
 
     public boolean isMultiSelect() {
-        return !modifierIsRedirectedChoice && isCollectionModifier();
+        return !isChoiceOnly() && isCollectionModifier();
     }
 
     public boolean isSingleSelect() {
-        return !modifierIsRedirectedChoice && !isCollectionModifier();
+        return !isChoiceOnly() && !isCollectionModifier();
     }
 
     public boolean isChoiceOnly() {
-        return modifierIsRedirectedChoice;
+        return modifierIsRedirectedChoice && !isEnumChoice();
     }
 
     public ChoiceBeanPathElement getChoiceElement() {
@@ -77,13 +77,17 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     protected void beforeFirstAccept() {
         super.beforeFirstAccept();
         this.choiceElement = getContext().getElementRegistry().getChoiceUtilityElementFor(this);
-        if (this.choiceElement == null && (getAccessor().getRawType().isEnum() || getAccessor().getRawType().isBoolean()
-                || isCollectionModifier())) {
+        if (this.choiceElement == null
+                && (isEnumChoice() || getAccessor().getRawType().isBoolean() || isCollectionModifier())) {
             this.modifierIsRedirectedChoice = isCollectionModifier();
             //redirect to this property as choice for enums
             this.choiceElement = new ChoiceBeanPathElement(getSimplePropertyElement(), false);
         }
         org.assertj.core.api.Assertions.assertThat(choiceElement).as("No choice element found!").isNotNull();
+    }
+
+    private boolean isEnumChoice() {
+        return getAccessor().getType().isEnum();
     }
 
     private boolean isCollectionModifier() {

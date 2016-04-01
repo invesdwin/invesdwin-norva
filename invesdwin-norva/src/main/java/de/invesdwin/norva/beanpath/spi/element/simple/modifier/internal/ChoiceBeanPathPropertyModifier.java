@@ -19,7 +19,7 @@ public class ChoiceBeanPathPropertyModifier extends DelegateBeanPathPropertyModi
             final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier) {
         if (accessor.getRawType().isBoolean()) {
             return new BooleanBeanPathPropertyModifier(accessor);
-        } else if (accessor.getRawType().isEnum()) {
+        } else if (accessor.getType().isEnum()) {
             return new EnumConstantsBeanPathPropertyModifier(accessor);
         } else if (accessor.getRawType().isArray()) {
             return new ArrayBeanPathPropertyModifier(accessor, invalidChoiceModifier);

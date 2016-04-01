@@ -1,5 +1,6 @@
 package de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,7 +69,12 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
         if (value == null) {
             return null;
         } else {
-            return value.toArray();
+            try {
+                final Object[] newArray = (Object[]) Array.newInstance(getAccessor().getType().getType(), value.size());
+                return value.toArray(newArray);
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
