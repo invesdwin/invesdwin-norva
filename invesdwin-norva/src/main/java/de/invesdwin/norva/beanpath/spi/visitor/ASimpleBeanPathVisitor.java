@@ -3,14 +3,14 @@ package de.invesdwin.norva.beanpath.spi.visitor;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
-import de.invesdwin.norva.beanpath.spi.element.AActionBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.APropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.ButtonBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.CheckBoxBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.ComboBoxBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.ContainerOpenBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.HiddenBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.IPropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.ITableColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IValidatableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.RootBeanPathElement;
@@ -108,10 +108,10 @@ public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {
             visitAction(e.getColumnOrderElement());
         }
         for (final ITableColumnBeanPathElement column : e.getRawColumns()) {
-            if (column instanceof APropertyBeanPathElement) {
-                visitProperty((APropertyBeanPathElement) column);
-            } else if (column instanceof AActionBeanPathElement) {
-                visitAction((AActionBeanPathElement) column);
+            if (column instanceof IPropertyBeanPathElement) {
+                visitProperty((IPropertyBeanPathElement) column);
+            } else if (column instanceof IActionBeanPathElement) {
+                visitAction((IActionBeanPathElement) column);
             } else {
                 throw new IllegalArgumentException(
                         "Unknown " + ITableColumnBeanPathElement.class.getSimpleName() + ": " + column);
@@ -179,9 +179,9 @@ public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {
 
     public abstract void visitOther(IBeanPathElement e);
 
-    public abstract void visitProperty(APropertyBeanPathElement e);
+    public abstract void visitProperty(IPropertyBeanPathElement e);
 
-    public abstract void visitAction(AActionBeanPathElement e);
+    public abstract void visitAction(IActionBeanPathElement e);
 
     protected abstract void visitSubElementsOpen();
 

@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInvoker;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.SelectionBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
@@ -9,7 +10,8 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
  * Represents a toString() of a table row.
  */
 @NotThreadSafe
-public class TableSelectionButtonColumnBeanPathElement extends ABeanPathElement implements ITableColumnBeanPathElement {
+public class TableSelectionButtonColumnBeanPathElement extends ABeanPathElement
+        implements ITableColumnBeanPathElement, IActionBeanPathElement {
 
     public static final String COLUMN_ID = "selection";
 
@@ -53,6 +55,16 @@ public class TableSelectionButtonColumnBeanPathElement extends ABeanPathElement 
     @Override
     public String getColumnId() {
         return COLUMN_ID;
+    }
+
+    @Override
+    public IBeanPathActionInvoker getInvoker() {
+        return getSelectionModifier().getToggleSelectionInvoker();
+    }
+
+    @Override
+    public boolean isInvokerAvailable() {
+        return true;
     }
 
 }

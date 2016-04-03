@@ -8,9 +8,9 @@ import de.invesdwin.norva.beanpath.impl.clazz.BeanClassContext;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassProcessor;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassType;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
-import de.invesdwin.norva.beanpath.spi.element.AActionBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.APropertyBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.IPropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.RootBeanPathElement;
 
 @NotThreadSafe
@@ -41,12 +41,12 @@ public class PrintVisitor extends ASimpleBeanPathVisitor {
     }
 
     @Override
-    public void visitProperty(final APropertyBeanPathElement e) {
+    public void visitProperty(final IPropertyBeanPathElement e) {
         print(e);
     }
 
     @Override
-    public void visitAction(final AActionBeanPathElement e) {
+    public void visitAction(final IActionBeanPathElement e) {
         print(e);
     }
 

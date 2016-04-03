@@ -72,4 +72,16 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         return false;
     }
 
+    public static boolean equalsAny(final String string, final String... searchStrings) {
+        if (string == null) {
+            return false;
+        }
+        for (final String search : searchStrings) {
+            if (string.equals(search)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

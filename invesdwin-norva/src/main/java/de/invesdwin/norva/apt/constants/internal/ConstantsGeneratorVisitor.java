@@ -15,9 +15,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
 import de.invesdwin.norva.beanpath.spi.PathUtil;
-import de.invesdwin.norva.beanpath.spi.element.AActionBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.APropertyBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.IPropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.SimpleBeanPathVisitorSupport;
 
 @NotThreadSafe
@@ -35,12 +35,12 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
     }
 
     @Override
-    public void visitProperty(final APropertyBeanPathElement e) {
+    public void visitProperty(final IPropertyBeanPathElement e) {
         generateConstant(e);
     }
 
     @Override
-    public void visitAction(final AActionBeanPathElement e) {
+    public void visitAction(final IActionBeanPathElement e) {
         generateConstant(e);
     }
 
