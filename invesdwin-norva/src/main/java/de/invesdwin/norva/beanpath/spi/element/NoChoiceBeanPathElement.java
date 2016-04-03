@@ -11,11 +11,11 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 @NotThreadSafe
 public class NoChoiceBeanPathElement extends AChoiceBeanPathElement {
 
-    private final APropertyBeanPathElement original;
+    private final APropertyBeanPathElement originalElement;
 
     public NoChoiceBeanPathElement(final APropertyBeanPathElement original) {
         super(original.getSimplePropertyElement());
-        this.original = original;
+        this.originalElement = original;
     }
 
     @Override
@@ -23,8 +23,8 @@ public class NoChoiceBeanPathElement extends AChoiceBeanPathElement {
         return new ListWrapperBeanPathPropertyModifier(getModifier());
     }
 
-    public APropertyBeanPathElement getOriginal() {
-        return original;
+    public APropertyBeanPathElement getOriginalElement() {
+        return originalElement;
     }
 
     @Override

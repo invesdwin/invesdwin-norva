@@ -11,7 +11,7 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 @NotThreadSafe
 public class TableButtonColumnBeanPathElement extends AActionBeanPathElement implements ITableColumnBeanPathElement {
 
-    private TableBeanPathElement tableElement;
+    private ATableBeanPathElement tableElement;
     private NoObjectBeanPathActionInvoker invoker;
 
     public TableButtonColumnBeanPathElement(final SimpleActionBeanPathElement simpleActionElement) {
@@ -19,11 +19,11 @@ public class TableButtonColumnBeanPathElement extends AActionBeanPathElement imp
     }
 
     @Override
-    public TableBeanPathElement getTableElement() {
+    public ATableBeanPathElement getTableElement() {
         return tableElement;
     }
 
-    void setTableElement(final TableBeanPathElement tableElement) {
+    void setTableElement(final ATableBeanPathElement tableElement) {
         org.assertj.core.api.Assertions.assertThat(this.tableElement).isNull();
         this.tableElement = tableElement;
     }

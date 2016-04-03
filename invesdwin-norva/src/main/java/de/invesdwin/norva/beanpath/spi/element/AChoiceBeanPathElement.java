@@ -11,6 +11,7 @@ import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBe
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.FixedValueBeanPathModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.SelectionBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.utility.RemoveFromBeanPathElement;
 
 @NotThreadSafe
 public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
@@ -19,6 +20,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     private IBeanPathPropertyModifier<List<?>> choiceModifier;
     private IBeanPathPropertyModifier<List<?>> selectionModifier;
     private boolean modifierIsRedirectedChoice;
+    private TableRemoveFromButtonColumnBeanPathElement tableRemoveFromButtonColumn;
 
     public AChoiceBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement) {
         super(simplePropertyElement);
@@ -47,6 +49,10 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
             }
             return selectionModifier;
         }
+    }
+
+    public TableRemoveFromButtonColumnBeanPathElement getTableRemoveFromButtonColumn() {
+        return tableRemoveFromButtonColumn;
     }
 
     public boolean isMultiSelect() {
@@ -84,6 +90,19 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
             this.choiceElement = new ChoiceBeanPathElement(getSimplePropertyElement(), false);
         }
         org.assertj.core.api.Assertions.assertThat(choiceElement).as("No choice element found!").isNotNull();
+
+        final RemoveFromBeanPathElement removeFromElement = getContext().getElementRegistry()
+                .getRemoveFromUtilityElementFor(this);
+        if (removeFromElement != null) {
+            this.tableRemoveFromButtonColumn = new TableRemoveFromButtonColumnBeanPathElement(removeFromElement);
+        }
+        if (tableRemoveFromButtonColumn != null) {
+            if (tableRemoveFromButtonColumn.accept()) {
+                tableRemoveFromButtonColumn.setTableElement(ChoiceAsTableBeanPathElement.maybeWrap(this));
+            } else {
+                tableRemoveFromButtonColumn = null;
+            }
+        }
     }
 
     private boolean isEnumChoice() {
