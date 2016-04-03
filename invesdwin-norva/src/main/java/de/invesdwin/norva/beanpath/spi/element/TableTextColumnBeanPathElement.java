@@ -58,4 +58,9 @@ public class TableTextColumnBeanPathElement extends APropertyBeanPathElement imp
         return getTableElement().getColumns().contains(this);
     }
 
+    @Override
+    public String getColumnId() {
+        return getAccessor().getBeanPathFragment();
+    }
+
 }

@@ -6,4 +6,6 @@ public interface ITableColumnBeanPathElement extends IBeanPathElement {
 
     boolean isVisible();
 
+    String getColumnId();
+
 }

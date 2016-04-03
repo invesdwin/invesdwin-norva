@@ -14,6 +14,8 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 public class TableContainerColumnBeanPathElement extends APropertyBeanPathElement
         implements ITableColumnBeanPathElement {
 
+    public static final String COLUMN_ID = "container";
+
     private final ChoiceAsTableBeanPathElement tableElement;
     private NoObjectBeanPathPropertyModifier modifier;
 
@@ -29,8 +31,7 @@ public class TableContainerColumnBeanPathElement extends APropertyBeanPathElemen
 
     @Override
     public boolean isVisible() {
-        //toString can not be filtered
-        return true;
+        return getTableElement().getColumns().contains(this);
     }
 
     @Override
@@ -53,6 +54,11 @@ public class TableContainerColumnBeanPathElement extends APropertyBeanPathElemen
     @Override
     protected boolean shouldAttachToContainerTitleElement() {
         return false;
+    }
+
+    @Override
+    public String getColumnId() {
+        return COLUMN_ID;
     }
 
 }

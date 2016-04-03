@@ -10,6 +10,8 @@ import de.invesdwin.norva.beanpath.spi.element.utility.RemoveFromBeanPathElement
 @NotThreadSafe
 public class TableRemoveFromButtonColumnBeanPathElement extends TableButtonColumnBeanPathElement {
 
+    public static final String COLUMN_ID = RemoveFromBeanPathElement.REMOVE_FROM_PREFIX;
+
     private RemoveNoObjectBeanPathActionInvoker invoker;
     private final RemoveFromBeanPathElement removeFromElement;
 

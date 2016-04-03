@@ -86,6 +86,12 @@ public class TabbedBeanPathElement extends APropertyBeanPathElement {
                     //not supported
                     return null;
                 }
+
+                @Override
+                protected IBeanPathElement getSelectionButtonColumn() {
+                    //not supported
+                    return null;
+                }
             }.getOrderedColumns();
         }
         return Collections.unmodifiableList(columns);

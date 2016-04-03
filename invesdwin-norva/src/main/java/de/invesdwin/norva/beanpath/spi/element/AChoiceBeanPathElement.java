@@ -7,10 +7,11 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.SelectionBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.FixedValueBeanPathModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.SelectionBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.RemoveFromBeanPathElement;
 
 @NotThreadSafe
@@ -20,7 +21,9 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     private IBeanPathPropertyModifier<List<?>> choiceModifier;
     private IBeanPathPropertyModifier<List<?>> selectionModifier;
     private boolean modifierIsRedirectedChoice;
-    private TableRemoveFromButtonColumnBeanPathElement tableRemoveFromButtonColumn;
+    private ColumnOrderBeanPathElement columnOrderElement;
+    private TableRemoveFromButtonColumnBeanPathElement removeFromButtonColumn;
+    private TableSelectionButtonColumnBeanPathElement selectionButtonColumn;
 
     public AChoiceBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement) {
         super(simplePropertyElement);
@@ -51,8 +54,16 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
         }
     }
 
-    public TableRemoveFromButtonColumnBeanPathElement getTableRemoveFromButtonColumn() {
-        return tableRemoveFromButtonColumn;
+    public ColumnOrderBeanPathElement getColumnOrderElement() {
+        return columnOrderElement;
+    }
+
+    public TableRemoveFromButtonColumnBeanPathElement getRemoveFromButtonColumn() {
+        return removeFromButtonColumn;
+    }
+
+    public TableSelectionButtonColumnBeanPathElement getSelectionButtonColumn() {
+        return selectionButtonColumn;
     }
 
     public boolean isMultiSelect() {
@@ -91,17 +102,24 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
         }
         org.assertj.core.api.Assertions.assertThat(choiceElement).as("No choice element found!").isNotNull();
 
+        this.columnOrderElement = getContext().getElementRegistry().getColumnOrderUtilityElementFor(this);
+
         final RemoveFromBeanPathElement removeFromElement = getContext().getElementRegistry()
                 .getRemoveFromUtilityElementFor(this);
         if (removeFromElement != null) {
-            this.tableRemoveFromButtonColumn = new TableRemoveFromButtonColumnBeanPathElement(removeFromElement);
+            this.removeFromButtonColumn = new TableRemoveFromButtonColumnBeanPathElement(removeFromElement);
         }
-        if (tableRemoveFromButtonColumn != null) {
-            if (tableRemoveFromButtonColumn.accept()) {
-                tableRemoveFromButtonColumn.setTableElement(ChoiceAsTableBeanPathElement.maybeWrap(this));
+        if (removeFromButtonColumn != null) {
+            if (removeFromButtonColumn.accept()) {
+                removeFromButtonColumn.setTableElement(ChoiceAsTableBeanPathElement.maybeWrap(this));
             } else {
-                tableRemoveFromButtonColumn = null;
+                removeFromButtonColumn = null;
             }
+        }
+
+        if (isSingleSelect() || isMultiSelect()) {
+            selectionButtonColumn = new TableSelectionButtonColumnBeanPathElement(
+                    ChoiceAsTableBeanPathElement.maybeWrap(this));
         }
     }
 

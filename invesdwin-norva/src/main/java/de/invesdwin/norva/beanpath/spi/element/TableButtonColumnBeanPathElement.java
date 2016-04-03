@@ -55,4 +55,9 @@ public class TableButtonColumnBeanPathElement extends AActionBeanPathElement imp
         return getTableElement().getColumns().contains(this);
     }
 
+    @Override
+    public String getColumnId() {
+        return getAccessor().getBeanPathFragment();
+    }
+
 }

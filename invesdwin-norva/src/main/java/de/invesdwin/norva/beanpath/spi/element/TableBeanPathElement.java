@@ -1,15 +1,12 @@
 package de.invesdwin.norva.beanpath.spi.element;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import de.invesdwin.norva.beanpath.spi.element.internal.AColumnOrderHelper;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
 @NotThreadSafe
@@ -18,8 +15,6 @@ public class TableBeanPathElement extends ATableBeanPathElement {
     private final List<TableTextColumnBeanPathElement> textColumns;
     private final List<TableButtonColumnBeanPathElement> buttonColumns;
     private List<ITableColumnBeanPathElement> rawColumns;
-    private List<ITableColumnBeanPathElement> columns;
-    private ColumnOrderBeanPathElement columnOrderElement;
 
     public TableBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement,
             final List<TableTextColumnBeanPathElement> textColumns,
@@ -40,11 +35,6 @@ public class TableBeanPathElement extends ATableBeanPathElement {
     }
 
     @Override
-    public ColumnOrderBeanPathElement getColumnOrderElement() {
-        return columnOrderElement;
-    }
-
-    @Override
     public TableContainerColumnBeanPathElement getContainerColumn() {
         //not use in real tables
         return null;
@@ -53,8 +43,6 @@ public class TableBeanPathElement extends ATableBeanPathElement {
     @Override
     protected void beforeFirstAccept() {
         super.beforeFirstAccept();
-
-        this.columnOrderElement = getContext().getElementRegistry().getColumnOrderUtilityElementFor(this);
 
         //filter columns and add them to the registry before letting visitors visit this table element
         final List<TableTextColumnBeanPathElement> filteredTextColumns = new ArrayList<TableTextColumnBeanPathElement>();
@@ -84,6 +72,9 @@ public class TableBeanPathElement extends ATableBeanPathElement {
     public List<ITableColumnBeanPathElement> getRawColumns() {
         if (rawColumns == null) {
             rawColumns = new ArrayList<ITableColumnBeanPathElement>();
+            if (getSelectionButtonColumn() != null) {
+                rawColumns.add(getSelectionButtonColumn());
+            }
             //use alphabetically sorted order with text first, then buttons
             for (final TableTextColumnBeanPathElement textColumn : getTextColumns()) {
                 rawColumns.add(textColumn);
@@ -91,39 +82,11 @@ public class TableBeanPathElement extends ATableBeanPathElement {
             for (final TableButtonColumnBeanPathElement buttonColumn : getButtonColumns()) {
                 rawColumns.add(buttonColumn);
             }
-            if (getTableRemoveFromButtonColumn() != null) {
-                rawColumns.add(getTableRemoveFromButtonColumn());
+            if (getRemoveFromButtonColumn() != null) {
+                rawColumns.add(getRemoveFromButtonColumn());
             }
         }
         return Collections.unmodifiableList(rawColumns);
-    }
-
-    /**
-     * These columns are ordered and filtered according to @ColumnOrder order a columnOrder() method.
-     */
-    @Override
-    public List<ITableColumnBeanPathElement> getColumns() {
-        if (columns == null) {
-            columns = new AColumnOrderHelper<ITableColumnBeanPathElement>(this, getColumnOrderElement(),
-                    ITableColumnBeanPathElement.class) {
-                @Override
-                protected Collection<? extends ITableColumnBeanPathElement> getRawColumns() {
-                    return TableBeanPathElement.this.getRawColumns();
-                }
-
-                @Override
-                protected IBeanPathElement getAssociatedHolderFromColumn(
-                        final ITableColumnBeanPathElement columnElement) {
-                    return columnElement.getTableElement();
-                }
-
-                @Override
-                protected IBeanPathElement getRemoveFromButtonColumn() {
-                    return TableBeanPathElement.this.getTableRemoveFromButtonColumn();
-                };
-            }.getOrderedColumns();
-        }
-        return Collections.unmodifiableList(columns);
     }
 
     @Override

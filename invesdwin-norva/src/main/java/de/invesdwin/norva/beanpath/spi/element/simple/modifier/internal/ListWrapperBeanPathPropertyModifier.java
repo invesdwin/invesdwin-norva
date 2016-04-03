@@ -1,6 +1,6 @@
 package de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -64,7 +64,9 @@ public class ListWrapperBeanPathPropertyModifier implements IBeanPathPropertyMod
     }
 
     private List<?> wrapWithList(final Object value) {
-        return Arrays.asList(value);
+        final ArrayList<Object> list = new ArrayList<Object>();
+        list.add(value);
+        return list;
     }
 
 }

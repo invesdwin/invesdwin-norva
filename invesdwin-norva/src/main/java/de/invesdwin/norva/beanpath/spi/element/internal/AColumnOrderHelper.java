@@ -10,8 +10,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.norva.beanpath.annotation.ColumnOrder;
 import de.invesdwin.norva.beanpath.spi.PathUtil;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.TableRemoveFromButtonColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.TableSelectionButtonColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.utility.RemoveFromBeanPathElement;
 
 @NotThreadSafe
 public abstract class AColumnOrderHelper<E> {
@@ -46,8 +47,10 @@ public abstract class AColumnOrderHelper<E> {
             for (final String beanPathFragment : beanPathFragments) {
                 final String beanPath = element.getBeanPath() + PathUtil.BEAN_PATH_SEPARATOR + beanPathFragment;
                 final IBeanPathElement columnElement;
-                if (RemoveFromBeanPathElement.REMOVE_FROM_PREFIX.equals(beanPathFragment)) {
+                if (TableRemoveFromButtonColumnBeanPathElement.COLUMN_ID.equals(beanPathFragment)) {
                     columnElement = getRemoveFromButtonColumn();
+                } else if (TableSelectionButtonColumnBeanPathElement.COLUMN_ID.equals(beanPathFragment)) {
+                    columnElement = getSelectionButtonColumn();
                 } else {
                     columnElement = element.getContext().getElementRegistry().getElement(beanPath);
                 }
@@ -71,6 +74,8 @@ public abstract class AColumnOrderHelper<E> {
     }
 
     protected abstract IBeanPathElement getRemoveFromButtonColumn();
+
+    protected abstract IBeanPathElement getSelectionButtonColumn();
 
     protected abstract Collection<? extends E> getRawColumns();
 

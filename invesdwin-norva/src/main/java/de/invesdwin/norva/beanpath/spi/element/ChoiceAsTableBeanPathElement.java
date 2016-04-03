@@ -17,7 +17,7 @@ public final class ChoiceAsTableBeanPathElement extends ATableBeanPathElement {
     private final AChoiceBeanPathElement originalElement;
 
     private final TableContainerColumnBeanPathElement containerColumn;
-    private final List<ITableColumnBeanPathElement> columns;
+    private final List<ITableColumnBeanPathElement> rawColumns;
 
     private ChoiceAsTableBeanPathElement(final AChoiceBeanPathElement originalElement) {
         super(originalElement.getSimplePropertyElement());
@@ -25,11 +25,13 @@ public final class ChoiceAsTableBeanPathElement extends ATableBeanPathElement {
 
         this.containerColumn = new TableContainerColumnBeanPathElement(this);
 
-        this.columns = new ArrayList<ITableColumnBeanPathElement>();
-        this.columns.add(containerColumn);
-
-        if (getTableRemoveFromButtonColumn() != null) {
-            columns.add(getTableRemoveFromButtonColumn());
+        this.rawColumns = new ArrayList<ITableColumnBeanPathElement>();
+        if (getSelectionButtonColumn() != null) {
+            rawColumns.add(getSelectionButtonColumn());
+        }
+        this.rawColumns.add(containerColumn);
+        if (getRemoveFromButtonColumn() != null) {
+            rawColumns.add(getRemoveFromButtonColumn());
         }
     }
 
@@ -60,19 +62,8 @@ public final class ChoiceAsTableBeanPathElement extends ATableBeanPathElement {
     }
 
     @Override
-    public ColumnOrderBeanPathElement getColumnOrderElement() {
-        //only used in real tables
-        return null;
-    }
-
-    @Override
     public List<ITableColumnBeanPathElement> getRawColumns() {
-        return Collections.unmodifiableList(columns);
-    }
-
-    @Override
-    public List<ITableColumnBeanPathElement> getColumns() {
-        return Collections.unmodifiableList(columns);
+        return Collections.unmodifiableList(rawColumns);
     }
 
     @Override
@@ -88,24 +79,26 @@ public final class ChoiceAsTableBeanPathElement extends ATableBeanPathElement {
         }
     }
 
+    /** redirected methods from AChoiceBeanPathElement **/
+
     @Override
     public IBeanPathPropertyModifier<Object> getModifier() {
         return originalElement.getModifier();
     }
 
-    /** redirected methods from AChoiceBeanPathElement **/
-
-    /**
-     * This modifier supports multi-select. For single select the list is only allowed to have 1 item in it.
-     */
     @Override
     public IBeanPathPropertyModifier<List<?>> getSelectionModifier() {
         return originalElement.getSelectionModifier();
     }
 
     @Override
-    public TableRemoveFromButtonColumnBeanPathElement getTableRemoveFromButtonColumn() {
-        return originalElement.getTableRemoveFromButtonColumn();
+    public TableRemoveFromButtonColumnBeanPathElement getRemoveFromButtonColumn() {
+        return originalElement.getRemoveFromButtonColumn();
+    }
+
+    @Override
+    public TableSelectionButtonColumnBeanPathElement getSelectionButtonColumn() {
+        return originalElement.getSelectionButtonColumn();
     }
 
     @Override
@@ -121,6 +114,11 @@ public final class ChoiceAsTableBeanPathElement extends ATableBeanPathElement {
     @Override
     public IBeanPathPropertyModifier<List<?>> getChoiceModifier() {
         return originalElement.getChoiceModifier();
+    }
+
+    @Override
+    public ColumnOrderBeanPathElement getColumnOrderElement() {
+        return originalElement.getColumnOrderElement();
     }
 
 }
