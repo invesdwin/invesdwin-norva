@@ -17,6 +17,8 @@ import de.invesdwin.norva.beanpath.spi.element.RootBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TabbedBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TabbedColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TableBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.TableContainerColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.TableSelectionButtonColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TextFieldBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.UploadButtonBeanPathElement;
 
@@ -108,6 +110,12 @@ public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {
             visitAction(e.getColumnOrderElement());
         }
         for (final ITableColumnBeanPathElement column : e.getRawColumns()) {
+            if (TableSelectionButtonColumnBeanPathElement.COLUMN_ID.equals(column.getColumnId())) {
+                continue;
+            }
+            if (TableContainerColumnBeanPathElement.COLUMN_ID.equals(column.getColumnId())) {
+                continue;
+            }
             if (column instanceof IPropertyBeanPathElement) {
                 visitProperty((IPropertyBeanPathElement) column);
             } else if (column instanceof IActionBeanPathElement) {

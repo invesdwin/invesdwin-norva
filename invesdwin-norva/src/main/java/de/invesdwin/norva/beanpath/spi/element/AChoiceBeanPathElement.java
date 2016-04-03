@@ -66,11 +66,11 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
         return selectionButtonColumn;
     }
 
-    public boolean isMultiSelect() {
+    public boolean isMultiSelection() {
         return !isChoiceOnly() && isCollectionModifier();
     }
 
-    public boolean isSingleSelect() {
+    public boolean isSingleSelection() {
         return !isChoiceOnly() && !isCollectionModifier();
     }
 
@@ -117,7 +117,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
             }
         }
 
-        if (isSingleSelect() || isMultiSelect()) {
+        if (isSingleSelection() || isMultiSelection()) {
             selectionButtonColumn = new TableSelectionButtonColumnBeanPathElement(
                     ChoiceAsTableBeanPathElement.maybeWrap(this));
         }

@@ -37,6 +37,14 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
         return getValue().contains(value);
     }
 
+    public boolean isSingleSelection() {
+        return singleSelection;
+    }
+
+    public boolean isMultiSelection() {
+        return !singleSelection;
+    }
+
     /**
      * Returns the new selection state.
      */
