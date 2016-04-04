@@ -32,7 +32,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     @Override
     public IBeanPathPropertyModifier<Object> getModifier() {
         if (modifierIsRedirectedChoice) {
-            //we have to return empty here, otherwise "all" choices would always be selected in UI, though we do not support selection
+            //we have to return the choices here to provide easy access to the property
             return getChoiceElement().getModifier();
         } else {
             return super.getModifier();

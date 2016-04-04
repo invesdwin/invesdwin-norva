@@ -8,8 +8,8 @@ import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathProperty
 import de.invesdwin.norva.beanpath.spi.element.utility.ValidateBeanPathElement;
 
 @NotThreadSafe
-public abstract class APropertyBeanPathElement extends ABeanPathElement implements IPropertyBeanPathElement,
-IValidatableBeanPathElement {
+public abstract class APropertyBeanPathElement extends ABeanPathElement
+        implements IPropertyBeanPathElement, IValidatableBeanPathElement {
 
     private final SimplePropertyBeanPathElement simplePropertyElement;
     private ValidateBeanPathElement validateElement;
@@ -62,7 +62,10 @@ IValidatableBeanPathElement {
     @Override
     protected void beforeFirstAccept() {
         super.beforeFirstAccept();
-        this.validateElement = getContext().getElementRegistry().getValidateUtilityElementFor(this);
+        if (shouldBeAddedToElementRegistry()) {
+            //skip ContainerOpenElement for tables
+            this.validateElement = getContext().getElementRegistry().getValidateUtilityElementFor(this);
+        }
     }
 
 }
