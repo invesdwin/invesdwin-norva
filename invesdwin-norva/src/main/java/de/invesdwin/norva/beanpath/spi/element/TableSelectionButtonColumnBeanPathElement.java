@@ -3,6 +3,7 @@ package de.invesdwin.norva.beanpath.spi.element;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInvoker;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.SelectionBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
@@ -11,7 +12,7 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
  */
 @NotThreadSafe
 public class TableSelectionButtonColumnBeanPathElement extends ABeanPathElement
-        implements ITableColumnBeanPathElement, IActionBeanPathElement {
+        implements ITableColumnBeanPathElement, IActionBeanPathElement, IPropertyBeanPathElement {
 
     public static final String COLUMN_ID = "selection";
 
@@ -35,12 +36,12 @@ public class TableSelectionButtonColumnBeanPathElement extends ABeanPathElement
 
     @Override
     public boolean isProperty() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAction() {
-        return false;
+        return true;
     }
 
     @Override
@@ -64,6 +65,18 @@ public class TableSelectionButtonColumnBeanPathElement extends ABeanPathElement
 
     @Override
     public boolean isInvokerAvailable() {
+        //can be used both as invoker, aswell as property
+        return true;
+    }
+
+    @Override
+    public IBeanPathPropertyModifier<Object> getModifier() {
+        return tableElement.getModifier();
+    }
+
+    @Override
+    public boolean isModifierAvailable() {
+        //can be used both as invoker, aswell as property
         return true;
     }
 
