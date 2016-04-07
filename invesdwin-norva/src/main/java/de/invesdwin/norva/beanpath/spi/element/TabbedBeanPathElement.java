@@ -9,16 +9,19 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.spi.element.internal.AColumnOrderHelper;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.TabbedColumnsAsChoiceBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
 @NotThreadSafe
-public class TabbedBeanPathElement extends APropertyBeanPathElement {
+public class TabbedBeanPathElement extends AChoiceBeanPathElement {
 
     private final List<TabbedColumnBeanPathElement> rawColumns;
     private final List<HiddenBeanPathElement> invalidColumns;
     private ColumnOrderBeanPathElement columnOrderElement;
     private List<TabbedColumnBeanPathElement> columns;
+    private TabbedColumnsAsChoiceBeanPathPropertyModifier choiceModifier;
 
     public TabbedBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement,
             final List<TabbedColumnBeanPathElement> rawColumns, final List<HiddenBeanPathElement> invalidColumns) {
@@ -27,6 +30,7 @@ public class TabbedBeanPathElement extends APropertyBeanPathElement {
         this.invalidColumns = invalidColumns;
     }
 
+    @Override
     public ColumnOrderBeanPathElement getColumnOrderElement() {
         return columnOrderElement;
     }
@@ -105,6 +109,19 @@ public class TabbedBeanPathElement extends APropertyBeanPathElement {
     @Override
     protected void innerAccept(final IBeanPathVisitor visitor) {
         visitor.visitTabbed(this);
+    }
+
+    @Override
+    public IBeanPathPropertyModifier<List<?>> getChoiceModifier() {
+        if (choiceModifier == null) {
+            choiceModifier = new TabbedColumnsAsChoiceBeanPathPropertyModifier(this);
+        }
+        return choiceModifier;
+    }
+
+    @Override
+    protected void verifyChoiceElementFound() {
+        //not needed here
     }
 
 }

@@ -29,16 +29,6 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
         super(simplePropertyElement);
     }
 
-    @Override
-    public IBeanPathPropertyModifier<Object> getModifier() {
-        if (modifierIsRedirectedChoice) {
-            //we have to return the choices here to provide easy access to the property
-            return getChoiceElement().getModifier();
-        } else {
-            return super.getModifier();
-        }
-    }
-
     /**
      * This modifier supports multi-select. For single select the list is only allowed to have 1 item in it.
      */
@@ -100,7 +90,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
             //redirect to this property as choice for enums
             this.choiceElement = new ChoiceBeanPathElement(getSimplePropertyElement(), false);
         }
-        org.assertj.core.api.Assertions.assertThat(choiceElement).as("No choice element found!").isNotNull();
+        verifyChoiceElementFound();
 
         this.columnOrderElement = getContext().getElementRegistry().getColumnOrderUtilityElementFor(this);
 
@@ -121,6 +111,10 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
             selectionButtonColumn = new TableSelectionButtonColumnBeanPathElement(
                     ChoiceAsTableBeanPathElement.maybeWrap(this));
         }
+    }
+
+    protected void verifyChoiceElementFound() {
+        org.assertj.core.api.Assertions.assertThat(choiceElement).as("No choice element found!").isNotNull();
     }
 
     private boolean isEnumChoice() {
