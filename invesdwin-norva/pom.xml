@@ -26,7 +26,6 @@
 
 		<version.commons-lang3>3.3.2</version.commons-lang3>
 		<version.hibernate-jpa-2.1-api>1.0.0.Final</version.hibernate-jpa-2.1-api>
-		<version.validation-api>1.1.0.Final</version.validation-api>
 		<version.jboss-logging-generator>1.0.0.CR5</version.jboss-logging-generator>
 
 		<version.invesdwin-bom>1.0.0-SNAPSHOT</version.invesdwin-bom>
@@ -74,7 +73,6 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>${version.validation-api}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.logging</groupId>
