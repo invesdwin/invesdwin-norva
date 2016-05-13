@@ -72,13 +72,13 @@ public class DelegateBeanObjectAccessor implements IBeanObjectAccessor {
     }
 
     @Override
-    public boolean hasPublicGetter() {
-        return delegate.hasPublicGetter();
+    public boolean hasPublicGetterOrField() {
+        return delegate.hasPublicGetterOrField();
     }
 
     @Override
-    public boolean hasPublicSetter() {
-        return delegate.hasPublicSetter();
+    public boolean hasPublicSetterOrField() {
+        return delegate.hasPublicSetterOrField();
     }
 
     @Override

@@ -33,7 +33,8 @@ public class BeanModelAccessor extends ABeanPathAccessor {
     private final BeanModelType rawType;
     private final BeanModelType type;
 
-    public BeanModelAccessor(final BeanModelContext context, final BeanModelContainer container, final Element element) {
+    public BeanModelAccessor(final BeanModelContext context, final BeanModelContainer container,
+            final Element element) {
         this.context = context;
         this.container = container;
         this.rawElement = element;
@@ -76,8 +77,7 @@ public class BeanModelAccessor extends ABeanPathAccessor {
             ExecutableElement getterMethod = BeanPathReflections.findMethod(container.getType().getTypeElement(),
                     BeanPathReflections.PROPERTY_GET_METHOD_PREFIX + BeanPathStrings.capitalize(getBeanPathFragment()));
             if (getterMethod == null) {
-                getterMethod = BeanPathReflections.findMethod(
-                        container.getType().getTypeElement(),
+                getterMethod = BeanPathReflections.findMethod(container.getType().getTypeElement(),
                         BeanPathReflections.PROPERTY_IS_METHOD_PREFIX
                                 + BeanPathStrings.capitalize(getBeanPathFragment()));
             }
@@ -107,7 +107,8 @@ public class BeanModelAccessor extends ABeanPathAccessor {
     }
 
     private Element determinePublicFieldElement() {
-        final Element field = BeanPathReflections.findField(container.getType().getTypeElement(), getBeanPathFragment());
+        final Element field = BeanPathReflections.findField(container.getType().getTypeElement(),
+                getBeanPathFragment());
         if (field != null && BeanPathReflections.isPublic(field)) {
             return field;
         }
@@ -148,15 +149,15 @@ public class BeanModelAccessor extends ABeanPathAccessor {
         case METHOD:
             if (rawMethodElement.getParameters().size() == 1
                     && !BeanPathStrings.startsWithAny(String.valueOf(rawMethodElement.getSimpleName()),
-                    BeanPathReflections.PROPERTY_GET_METHOD_PREFIX,
+                            BeanPathReflections.PROPERTY_GET_METHOD_PREFIX,
                             BeanPathReflections.PROPERTY_IS_METHOD_PREFIX)) {
                 return rawMethodElement.getParameters().get(0).asType();
             } else {
                 return rawMethodElement.getReturnType();
             }
         default:
-            throw new IllegalArgumentException("Unknown " + ElementKind.class.getSimpleName() + ": "
-                    + rawElement.getKind());
+            throw new IllegalArgumentException(
+                    "Unknown " + ElementKind.class.getSimpleName() + ": " + rawElement.getKind());
         }
     }
 
@@ -218,11 +219,11 @@ public class BeanModelAccessor extends ABeanPathAccessor {
         case FIELD:
             return Introspector.decapitalize(getRawName());
         case METHOD:
-            return Introspector.decapitalize(BeanPathStrings.removeAnyStart(getRawName(),
-                    BeanPathReflections.PROPERTY_METHOD_PREFIXES));
+            return Introspector.decapitalize(
+                    BeanPathStrings.removeAnyStart(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES));
         default:
-            throw new IllegalArgumentException("Unknown " + ElementKind.class.getSimpleName() + ": "
-                    + rawElement.getKind());
+            throw new IllegalArgumentException(
+                    "Unknown " + ElementKind.class.getSimpleName() + ": " + rawElement.getKind());
         }
     }
 
@@ -289,8 +290,8 @@ public class BeanModelAccessor extends ABeanPathAccessor {
         case FIELD:
             return null;
         default:
-            throw new IllegalArgumentException("Unknown " + ElementKind.class.getSimpleName() + ": "
-                    + rawElement.getKind());
+            throw new IllegalArgumentException(
+                    "Unknown " + ElementKind.class.getSimpleName() + ": " + rawElement.getKind());
         }
     }
 
@@ -309,8 +310,8 @@ public class BeanModelAccessor extends ABeanPathAccessor {
                 return null;
             }
         default:
-            throw new IllegalArgumentException("Unknown " + ElementKind.class.getSimpleName() + ": "
-                    + rawElement.getKind());
+            throw new IllegalArgumentException(
+                    "Unknown " + ElementKind.class.getSimpleName() + ": " + rawElement.getKind());
         }
     }
 
@@ -329,8 +330,8 @@ public class BeanModelAccessor extends ABeanPathAccessor {
                 return null;
             }
         default:
-            throw new IllegalArgumentException("Unknown " + ElementKind.class.getSimpleName() + ": "
-                    + rawElement.getKind());
+            throw new IllegalArgumentException(
+                    "Unknown " + ElementKind.class.getSimpleName() + ": " + rawElement.getKind());
         }
     }
 
@@ -345,12 +346,12 @@ public class BeanModelAccessor extends ABeanPathAccessor {
     }
 
     @Override
-    public boolean hasPublicGetter() {
+    public boolean hasPublicGetterOrField() {
         return publicGetterMethodElement != null || publicFieldElement != null;
     }
 
     @Override
-    public boolean hasPublicSetter() {
+    public boolean hasPublicSetterOrField() {
         return publicSetterMethodElement != null || publicFieldElement != null;
     }
 

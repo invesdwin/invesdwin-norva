@@ -81,12 +81,12 @@ public class RootBeanPathAccessor implements IBeanPathAccessor {
     }
 
     @Override
-    public boolean hasPublicGetter() {
+    public boolean hasPublicGetterOrField() {
         return false;
     }
 
     @Override
-    public boolean hasPublicSetter() {
+    public boolean hasPublicSetterOrField() {
         return false;
     }
 

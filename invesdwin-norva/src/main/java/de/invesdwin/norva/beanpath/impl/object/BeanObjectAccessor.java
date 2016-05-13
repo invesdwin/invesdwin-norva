@@ -20,15 +20,16 @@ public class BeanObjectAccessor extends ABeanPathAccessor implements IBeanObject
     public BeanObjectAccessor(final BeanObjectContext context, final BeanObjectContainer container, final Field field) {
         this.context = context;
         this.container = container;
-        this.beanClassAccessor = new BeanClassAccessor(context.getBeanClassContext(),
-                container.getBeanClassContainer(), field);
+        this.beanClassAccessor = new BeanClassAccessor(context.getBeanClassContext(), container.getBeanClassContainer(),
+                field);
     }
 
-    public BeanObjectAccessor(final BeanObjectContext context, final BeanObjectContainer container, final Method method) {
+    public BeanObjectAccessor(final BeanObjectContext context, final BeanObjectContainer container,
+            final Method method) {
         this.context = context;
         this.container = container;
-        this.beanClassAccessor = new BeanClassAccessor(context.getBeanClassContext(),
-                container.getBeanClassContainer(), method);
+        this.beanClassAccessor = new BeanClassAccessor(context.getBeanClassContext(), container.getBeanClassContainer(),
+                method);
     }
 
     @Override
@@ -120,13 +121,13 @@ public class BeanObjectAccessor extends ABeanPathAccessor implements IBeanObject
     }
 
     @Override
-    public boolean hasPublicGetter() {
-        return beanClassAccessor.hasPublicGetter();
+    public boolean hasPublicGetterOrField() {
+        return beanClassAccessor.hasPublicGetterOrField();
     }
 
     @Override
-    public boolean hasPublicSetter() {
-        return beanClassAccessor.hasPublicSetter();
+    public boolean hasPublicSetterOrField() {
+        return beanClassAccessor.hasPublicSetterOrField();
     }
 
     @Override

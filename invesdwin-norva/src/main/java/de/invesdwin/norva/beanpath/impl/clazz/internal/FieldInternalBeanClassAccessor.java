@@ -112,12 +112,12 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
     }
 
     @Override
-    public boolean hasPublicGetter() {
+    public boolean hasPublicGetterOrField() {
         return publicField != null;
     }
 
     @Override
-    public boolean hasPublicSetter() {
+    public boolean hasPublicSetterOrField() {
         return publicField != null;
     }
 
@@ -128,7 +128,7 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
 
     @Override
     public Integer getPublicGetterParameterCount() {
-        if (hasPublicGetter()) {
+        if (hasPublicGetterOrField()) {
             return 0;
         } else {
             return null;
@@ -137,7 +137,7 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
 
     @Override
     public Integer getPublicSetterParameterCount() {
-        if (hasPublicSetter()) {
+        if (hasPublicSetterOrField()) {
             return 1;
         } else {
             return null;

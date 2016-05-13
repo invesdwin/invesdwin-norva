@@ -243,13 +243,13 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
     }
 
     @Override
-    public boolean hasPublicGetter() {
-        return internal.hasPublicGetter();
+    public boolean hasPublicGetterOrField() {
+        return internal.hasPublicGetterOrField();
     }
 
     @Override
-    public boolean hasPublicSetter() {
-        return internal.hasPublicSetter();
+    public boolean hasPublicSetterOrField() {
+        return internal.hasPublicSetterOrField();
     }
 
     @Override

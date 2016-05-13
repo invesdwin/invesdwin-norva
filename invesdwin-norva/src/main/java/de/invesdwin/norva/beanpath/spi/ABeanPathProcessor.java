@@ -213,7 +213,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private void processContainerOpenElement(final ContainerOpenBeanPathElement containerOpenElement) {
         IBeanPathContainer parent = containerOpenElement.getContainer();
         while (parent != null) {
-            if (parent.getType()
+            if (!isShallowOnly() && parent.getType()
                     .getQualifiedName()
                     .equals(containerOpenElement.getAccessor().getType().getQualifiedName())) {
                 //skip recursive loops
@@ -368,7 +368,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         if (!element.getAccessor().isPublic() || element.getAccessor().isStatic()) {
             return false;
         }
-        if (!element.getAccessor().hasPublicSetter() && !element.getAccessor().hasPublicGetter()
+        if (!element.getAccessor().hasPublicSetterOrField() && !element.getAccessor().hasPublicGetterOrField()
                 && !element.getAccessor().hasPublicAction()) {
             return false;
         }
@@ -385,10 +385,10 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     }
 
     private boolean hasUnexpectedParameters(final ABeanPathElement element) {
-        if (element.getAccessor().hasPublicSetter() && element.getAccessor().getPublicSetterParameterCount() != 1) {
+        if (element.getAccessor().hasPublicSetterOrField() && element.getAccessor().getPublicSetterParameterCount() != 1) {
             return true;
         }
-        if (element.getAccessor().hasPublicGetter() && element.getAccessor().getPublicGetterParameterCount() != 0) {
+        if (element.getAccessor().hasPublicGetterOrField() && element.getAccessor().getPublicGetterParameterCount() != 0) {
             return true;
         }
         if (element.getAccessor().hasPublicAction()) {

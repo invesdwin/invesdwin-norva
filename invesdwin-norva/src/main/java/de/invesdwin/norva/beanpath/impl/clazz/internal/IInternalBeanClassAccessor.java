@@ -38,9 +38,9 @@ public interface IInternalBeanClassAccessor {
 
     <T extends Annotation> T getAnnotation(final Class<T> annotationType);
 
-    boolean hasPublicGetter();
+    boolean hasPublicGetterOrField();
 
-    boolean hasPublicSetter();
+    boolean hasPublicSetterOrField();
 
     boolean hasPublicAction();
 

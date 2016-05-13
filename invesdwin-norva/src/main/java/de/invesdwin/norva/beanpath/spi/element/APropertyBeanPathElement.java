@@ -56,7 +56,7 @@ public abstract class APropertyBeanPathElement extends ABeanPathElement
 
     @Override
     protected boolean isStaticallyDisabled() {
-        return !getAccessor().hasPublicSetter();
+        return !getAccessor().hasPublicSetterOrField();
     }
 
     @Override
