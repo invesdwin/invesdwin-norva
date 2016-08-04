@@ -43,9 +43,8 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     }
 
     private BeanClassType determineRawType() {
-        if (rawMethod.getParameterTypes().length == 1
-                && !BeanPathStrings.startsWithAny(rawMethod.getName(), BeanPathReflections.PROPERTY_GET_METHOD_PREFIX,
-                        BeanPathReflections.PROPERTY_IS_METHOD_PREFIX)) {
+        if (rawMethod.getParameterTypes().length == 1 && !BeanPathStrings.startsWithAny(rawMethod.getName(),
+                BeanPathReflections.PROPERTY_GET_METHOD_PREFIX, BeanPathReflections.PROPERTY_IS_METHOD_PREFIX)) {
             return new BeanClassType(rawMethod.getParameterTypes()[0], rawMethod.getGenericParameterTypes()[0]);
         } else {
             return new BeanClassType(rawMethod.getReturnType(), rawMethod.getGenericReturnType());
@@ -67,8 +66,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
             Method getterMethod = BeanPathReflections.findMethod(container.getType().getType(),
                     BeanPathReflections.PROPERTY_GET_METHOD_PREFIX + BeanPathStrings.capitalize(getBeanPathFragment()));
             if (getterMethod == null) {
-                getterMethod = BeanPathReflections.findMethod(
-                        container.getType().getType(),
+                getterMethod = BeanPathReflections.findMethod(container.getType().getType(),
                         BeanPathReflections.PROPERTY_IS_METHOD_PREFIX
                                 + BeanPathStrings.capitalize(getBeanPathFragment()));
             }
@@ -111,8 +109,8 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public String getBeanPathFragment() {
-        return Introspector.decapitalize(BeanPathStrings.removeAnyStart(getRawName(),
-                BeanPathReflections.PROPERTY_METHOD_PREFIXES));
+        return Introspector.decapitalize(
+                BeanPathStrings.removeAnyStartIfNotEqual(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES));
     }
 
     @Override

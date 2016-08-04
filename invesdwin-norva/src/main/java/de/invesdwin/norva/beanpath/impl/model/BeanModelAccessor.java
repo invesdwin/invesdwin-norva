@@ -219,8 +219,8 @@ public class BeanModelAccessor extends ABeanPathAccessor {
         case FIELD:
             return Introspector.decapitalize(getRawName());
         case METHOD:
-            return Introspector.decapitalize(
-                    BeanPathStrings.removeAnyStart(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES));
+            return Introspector.decapitalize(BeanPathStrings.removeAnyStartIfNotEqual(getRawName(),
+                    BeanPathReflections.PROPERTY_METHOD_PREFIXES));
         default:
             throw new IllegalArgumentException(
                     "Unknown " + ElementKind.class.getSimpleName() + ": " + rawElement.getKind());

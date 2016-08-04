@@ -50,6 +50,18 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
     }
 
     /**
+     * Prevents the result from becoming empty when the string equals the start string.
+     */
+    public static String removeAnyStartIfNotEqual(final String s, final String[] starts) {
+        for (final String start : starts) {
+            if (s.startsWith(start) && !s.equals(start)) {
+                return removeStart(s, start);
+            }
+        }
+        return s;
+    }
+
+    /**
      * Calls o.toString(). Returns null if o is null.
      */
     public static String asString(final Object o) {
