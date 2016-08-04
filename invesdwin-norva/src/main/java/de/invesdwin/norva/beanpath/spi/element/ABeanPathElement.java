@@ -202,7 +202,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                 }
             }
         } catch (final Throwable t) {
-            throw new RuntimeException("On: " + getBeanPath(), t);
+            throw new RuntimeException("On bean path [" + getBeanPath() + "] for type: "
+                    + getContainer().getRoot().getType().getQualifiedName(), t);
         }
     }
 
