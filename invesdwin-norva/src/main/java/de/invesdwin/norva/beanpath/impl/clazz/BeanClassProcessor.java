@@ -24,16 +24,18 @@ public class BeanClassProcessor extends ABeanPathProcessor<BeanClassContext, Bea
     @Override
     protected void innerScanContainerShallow(final BeanClassContainer container, final ScanResult result) {
         for (final Field field : container.getType().getType().getFields()) {
-            result.addPropertyField(new SimplePropertyBeanPathElement(getContext(), container, new BeanClassAccessor(
-                    getContext(), container, field)));
+            result.addPropertyField(new SimplePropertyBeanPathElement(getContext(), container,
+                    new BeanClassAccessor(getContext(), container, field)));
         }
         for (final Method method : container.getType().getType().getMethods()) {
-            if (BeanPathStrings.startsWithAny(method.getName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+            //check for getXyz but ignore get
+            if (BeanPathStrings.startsWithAny(method.getName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)
+                    && !BeanPathStrings.equalsAny(method.getName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
                 result.addPropertyMethod(new SimplePropertyBeanPathElement(getContext(), container,
                         new BeanClassAccessor(getContext(), container, method)));
             } else {
-                result.addActionMethod(new SimpleActionBeanPathElement(getContext(), container, new BeanClassAccessor(
-                        getContext(), container, method)));
+                result.addActionMethod(new SimpleActionBeanPathElement(getContext(), container,
+                        new BeanClassAccessor(getContext(), container, method)));
             }
 
         }
