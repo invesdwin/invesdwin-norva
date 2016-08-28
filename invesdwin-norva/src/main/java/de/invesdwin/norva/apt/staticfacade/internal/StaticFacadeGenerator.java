@@ -25,6 +25,7 @@ import javax.tools.StandardLocation;
 import de.invesdwin.norva.apt.staticfacade.StaticFacadeDefinition;
 import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.BeanPathReflections;
+import de.invesdwin.norva.beanpath.BeanPathStrings;
 
 @NotThreadSafe
 public class StaticFacadeGenerator implements Runnable {
@@ -227,7 +228,7 @@ public class StaticFacadeGenerator implements Runnable {
     private String typeToString(final TypeMirror type, final boolean isVarArgsParam) {
         String str = type.toString();
         if (isVarArgsParam) {
-            str = str.replace("[]", "...");
+            str = BeanPathStrings.replaceEnd(str, "[]", "...");
         }
         return str;
     }
