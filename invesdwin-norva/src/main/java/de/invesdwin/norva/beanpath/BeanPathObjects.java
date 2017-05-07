@@ -85,10 +85,14 @@ public final class BeanPathObjects {
         if (obj == null) {
             return null;
         }
-        final Method cloneMethod = BeanPathReflections.findMethod(obj.getClass(), "clone");
-        if (cloneMethod != null) {
-            return (T) BeanPathReflections.invokeMethod(cloneMethod, obj);
-        } else if (obj instanceof Serializable) {
+        if (obj instanceof Cloneable) {
+            final Method cloneMethod = BeanPathReflections.findMethod(obj.getClass(), "clone");
+            if (cloneMethod != null) {
+                BeanPathReflections.makeAccessible(cloneMethod);
+                return (T) BeanPathReflections.invokeMethod(cloneMethod, obj);
+            }
+        }
+        if (obj instanceof Serializable) {
             return (T) deepCloneProvider.deepClone((Serializable) obj);
         } else {
             throw new UnsupportedOperationException("Object [" + obj + "] is neither cloneable, nor serializable!");
