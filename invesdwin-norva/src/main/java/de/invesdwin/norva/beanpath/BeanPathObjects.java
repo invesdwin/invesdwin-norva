@@ -80,15 +80,16 @@ public final class BeanPathObjects {
         return visibleName.toString();
     }
 
-    public static Object clone(final Object obj) {
+    @SuppressWarnings("unchecked")
+    public static <T> T clone(final T obj) {
         if (obj == null) {
             return null;
         }
         final Method cloneMethod = BeanPathReflections.findMethod(obj.getClass(), "clone");
         if (cloneMethod != null) {
-            return BeanPathReflections.invokeMethod(cloneMethod, obj);
+            return (T) BeanPathReflections.invokeMethod(cloneMethod, obj);
         } else if (obj instanceof Serializable) {
-            return deepCloneProvider.deepClone((Serializable) obj);
+            return (T) deepCloneProvider.deepClone((Serializable) obj);
         } else {
             throw new UnsupportedOperationException("Object [" + obj + "] is neither cloneable, nor serializable!");
         }
