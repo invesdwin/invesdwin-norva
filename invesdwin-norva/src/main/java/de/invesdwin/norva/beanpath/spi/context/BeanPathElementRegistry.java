@@ -10,7 +10,7 @@ import com.google.common.base.Function;
 
 import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
-import de.invesdwin.norva.beanpath.spi.PathUtil;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
@@ -43,7 +43,7 @@ public class BeanPathElementRegistry {
     }
 
     public void addRedirector(final IBeanPathElement redirector, final BeanPathRedirect redirect) {
-        final String beanPath = PathUtil.newBeanPath(redirector, redirect);
+        final String beanPath = BeanPathUtil.newBeanPath(redirector, redirect);
         //the first interceptor that is found is used, all others are ignored
         if (beanPath_redirect.get(beanPath) == null) {
             org.assertj.core.api.Assertions.assertThat(beanPath_redirect.put(beanPath, redirector)).isNull();
@@ -175,19 +175,19 @@ public class BeanPathElementRegistry {
 
     private String addUtilityBeanPathFragment(final String beanPath, final String utilityBeanPathFragment) {
         if (BeanPathStrings.isNotBlank(beanPath)) {
-            return beanPath + PathUtil.BEAN_PATH_SEPARATOR + utilityBeanPathFragment;
+            return beanPath + BeanPathUtil.BEAN_PATH_SEPARATOR + utilityBeanPathFragment;
         } else {
             return utilityBeanPathFragment;
         }
     }
 
     private String addUtilityPrefix(final String beanPath, final String utilityPrefix) {
-        if (beanPath.contains(PathUtil.BEAN_PATH_SEPARATOR)) {
+        if (beanPath.contains(BeanPathUtil.BEAN_PATH_SEPARATOR)) {
             final String substringAfterLast = BeanPathStrings.substringAfterLast(beanPath,
-                    PathUtil.BEAN_PATH_SEPARATOR);
+                    BeanPathUtil.BEAN_PATH_SEPARATOR);
             final String substringBeforeLast = BeanPathStrings.substringBeforeLast(beanPath,
-                    PathUtil.BEAN_PATH_SEPARATOR);
-            return substringBeforeLast + PathUtil.BEAN_PATH_SEPARATOR + utilityPrefix
+                    BeanPathUtil.BEAN_PATH_SEPARATOR);
+            return substringBeforeLast + BeanPathUtil.BEAN_PATH_SEPARATOR + utilityPrefix
                     + BeanPathStrings.capitalize(substringAfterLast);
         } else {
             return utilityPrefix + BeanPathStrings.capitalize(beanPath);

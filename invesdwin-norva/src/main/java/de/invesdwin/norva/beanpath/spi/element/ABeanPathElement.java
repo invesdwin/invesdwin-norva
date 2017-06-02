@@ -20,7 +20,7 @@ import de.invesdwin.norva.beanpath.impl.object.BeanObjectAccessor;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectContainer;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
-import de.invesdwin.norva.beanpath.spi.PathUtil;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.utility.ContainerTitleBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.DisableBeanPathElement;
@@ -61,7 +61,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         this.context = context;
         this.container = container;
         this.accessor = accessor;
-        this.beanPath = PathUtil.newBeanPath(container, accessor);
+        this.beanPath = BeanPathUtil.newBeanPath(container, accessor);
         //add interceptor
         this.redirect = extractRedirectAnnotation(accessor);
         init();
@@ -145,7 +145,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
 
     @Override
     public final String getTypePath() {
-        return PathUtil.newTypePath(getContainer(), getAccessor());
+        return BeanPathUtil.newTypePath(getContainer(), getAccessor());
     }
 
     @SafeVarargs

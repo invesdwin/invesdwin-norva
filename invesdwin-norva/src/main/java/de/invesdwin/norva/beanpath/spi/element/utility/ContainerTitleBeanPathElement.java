@@ -5,7 +5,7 @@ import java.lang.annotation.Annotation;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
-import de.invesdwin.norva.beanpath.spi.PathUtil;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.AActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
@@ -35,7 +35,7 @@ public class ContainerTitleBeanPathElement extends AActionBeanPathElement implem
 
             @Override
             public String value() {
-                return PathUtil.maybeAddUtilityFragment(parent.value(), CONTAINER_TITLE_BEAN_PATH_FRAGMENT);
+                return BeanPathUtil.maybeAddUtilityFragment(parent.value(), CONTAINER_TITLE_BEAN_PATH_FRAGMENT);
             }
         };
     }

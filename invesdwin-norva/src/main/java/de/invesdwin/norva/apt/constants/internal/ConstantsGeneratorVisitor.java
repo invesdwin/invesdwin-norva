@@ -14,7 +14,7 @@ import javax.tools.StandardLocation;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
-import de.invesdwin.norva.beanpath.spi.PathUtil;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IPropertyBeanPathElement;
@@ -58,7 +58,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         sb.append(StringEscapeUtils.escapeHtml4(e.getTypePath()));
         sb.append(" */\n");
         sb.append("\tpublic static final String ");
-        sb.append(beanPath.replace(PathUtil.BEAN_PATH_SEPARATOR, "_"));
+        sb.append(beanPath.replace(BeanPathUtil.BEAN_PATH_SEPARATOR, "_"));
         sb.append(" = \"");
         sb.append(beanPath);
         sb.append("\";\n");

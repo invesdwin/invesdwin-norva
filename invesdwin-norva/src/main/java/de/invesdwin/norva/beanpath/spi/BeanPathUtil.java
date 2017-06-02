@@ -7,12 +7,12 @@ import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 
 @Immutable
-public final class PathUtil {
+public final class BeanPathUtil {
 
     public static final String TYPE_PATH_SEPARATOR = " -> ";
     public static final String BEAN_PATH_SEPARATOR = ".";
 
-    private PathUtil() {}
+    private BeanPathUtil() {}
 
     public static String newBeanPath(final IBeanPathContainer container, final IBeanPathAccessor accessor) {
         return newPath(container.getBeanPath(), BEAN_PATH_SEPARATOR, accessor.getBeanPathFragment());

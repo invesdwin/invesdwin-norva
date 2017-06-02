@@ -5,7 +5,7 @@ import java.lang.annotation.Annotation;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
-import de.invesdwin.norva.beanpath.spi.PathUtil;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.AActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.PropertyGetterActionBeanPathElement;
@@ -39,7 +39,7 @@ public class TooltipBeanPathElement extends AActionBeanPathElement implements IU
 
             @Override
             public String value() {
-                return PathUtil.maybeAddUtilitySuffix(parent.value(), TOOLTIP_SUFFIX);
+                return BeanPathUtil.maybeAddUtilitySuffix(parent.value(), TOOLTIP_SUFFIX);
             }
         };
     }

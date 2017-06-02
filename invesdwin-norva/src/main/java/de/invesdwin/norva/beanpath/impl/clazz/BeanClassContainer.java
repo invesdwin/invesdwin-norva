@@ -3,7 +3,7 @@ package de.invesdwin.norva.beanpath.impl.clazz;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.spi.ABeanPathContainer;
-import de.invesdwin.norva.beanpath.spi.PathUtil;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.ContainerOpenBeanPathElement;
 
 @NotThreadSafe
@@ -30,8 +30,8 @@ public class BeanClassContainer extends ABeanPathContainer {
         this.root = parent.getRoot();
         this.accessor = (BeanClassAccessor) containerOpenElement.getAccessor();
         this.type = accessor.getType();
-        this.beanPath = PathUtil.newBeanPath(parent, accessor);
-        this.typePath = PathUtil.newTypePath(parent, accessor);
+        this.beanPath = BeanPathUtil.newBeanPath(parent, accessor);
+        this.typePath = BeanPathUtil.newTypePath(parent, accessor);
     }
 
     public BeanClassContainer(final BeanClassContainer parent, final BeanClassAccessor accessor) {
@@ -39,8 +39,8 @@ public class BeanClassContainer extends ABeanPathContainer {
         this.root = parent.getRoot();
         this.accessor = accessor;
         this.type = accessor.getType();
-        this.beanPath = PathUtil.newBeanPath(parent, accessor);
-        this.typePath = PathUtil.newTypePath(parent, accessor);
+        this.beanPath = BeanPathUtil.newBeanPath(parent, accessor);
+        this.typePath = BeanPathUtil.newTypePath(parent, accessor);
     }
 
     public Object getObjectFromRoot(final Object rootObject) {

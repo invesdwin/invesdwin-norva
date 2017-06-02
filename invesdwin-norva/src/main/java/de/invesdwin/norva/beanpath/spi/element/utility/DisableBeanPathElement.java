@@ -5,7 +5,7 @@ import java.lang.annotation.Annotation;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
-import de.invesdwin.norva.beanpath.spi.PathUtil;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.AActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
@@ -33,7 +33,7 @@ public class DisableBeanPathElement extends AActionBeanPathElement implements IU
 
             @Override
             public String value() {
-                return PathUtil.maybeAddUtilityPrefix(parent.value(), DISABLE_PREFIX);
+                return BeanPathUtil.maybeAddUtilityPrefix(parent.value(), DISABLE_PREFIX);
             }
         };
     }

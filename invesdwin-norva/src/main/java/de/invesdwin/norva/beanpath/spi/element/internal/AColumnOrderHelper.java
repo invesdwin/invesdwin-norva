@@ -8,7 +8,7 @@ import java.util.List;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.annotation.ColumnOrder;
-import de.invesdwin.norva.beanpath.spi.PathUtil;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TableRemoveFromButtonColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TableSelectionButtonColumnBeanPathElement;
@@ -45,7 +45,7 @@ public abstract class AColumnOrderHelper<E> {
             }
             //validate column order and get the appropriate column elements
             for (final String beanPathFragment : beanPathFragments) {
-                final String beanPath = element.getBeanPath() + PathUtil.BEAN_PATH_SEPARATOR + beanPathFragment;
+                final String beanPath = element.getBeanPath() + BeanPathUtil.BEAN_PATH_SEPARATOR + beanPathFragment;
                 final IBeanPathElement columnElement;
                 if (TableRemoveFromButtonColumnBeanPathElement.COLUMN_ID.equals(beanPathFragment)) {
                     columnElement = getRemoveFromButtonColumn();
