@@ -197,3 +197,7 @@ And again the same sample processing a javax.model.Element:
 ```
 
 You can also restrict processing beans to the first layer, without traversing deeper by calling `processor.withShallowOnly()`. You should always do this for performance purposes when the first layer is the only thing you are interested in.
+
+## Support
+
+If you need further assistance or have some ideas for improvements and don't want to create an issue here on github, feel free to ask a question in our [invesdwin-platform googlegroup](https://groups.google.com/forum/#!forum/invesdwin-platform).
