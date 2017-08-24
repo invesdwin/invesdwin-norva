@@ -1,5 +1,6 @@
 package de.invesdwin.norva.beanpath;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
@@ -15,6 +16,21 @@ public final class BeanPathObjects {
         public <T> T deepClone(final T obj) {
             //use java serialization as default deep clone provider
             return (T) org.apache.commons.lang3.SerializationUtils.clone((Serializable) obj);
+        }
+
+        @Override
+        public <T> T deserialize(final byte[] objectData) {
+            return org.apache.commons.lang3.SerializationUtils.deserialize(objectData);
+        }
+
+        @Override
+        public <T> T deserialize(final InputStream in) {
+            return org.apache.commons.lang3.SerializationUtils.deserialize(in);
+        }
+
+        @Override
+        public byte[] serialize(final Serializable obj) {
+            return org.apache.commons.lang3.SerializationUtils.serialize(obj);
         }
     };
 
@@ -93,11 +109,26 @@ public final class BeanPathObjects {
             }
         }
         if (obj instanceof Serializable) {
-            return (T) deepCloneProvider.deepClone((Serializable) obj);
+            return deepClone(obj);
         } else {
             throw new UnsupportedOperationException("Object [" + obj + "] is neither cloneable, nor serializable!");
         }
+    }
 
+    public static <T> T deepClone(final T obj) {
+        return deepCloneProvider.deepClone(obj);
+    }
+
+    public static <T> T deserialize(final byte[] objectData) {
+        return deepCloneProvider.deserialize(objectData);
+    }
+
+    public static <T> T deserialize(final InputStream in) {
+        return deepCloneProvider.deserialize(in);
+    }
+
+    public static byte[] serialize(final Serializable obj) {
+        return deepCloneProvider.serialize(obj);
     }
 
 }
