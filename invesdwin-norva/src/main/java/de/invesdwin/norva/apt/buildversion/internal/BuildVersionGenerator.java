@@ -2,7 +2,9 @@ package de.invesdwin.norva.apt.buildversion.internal;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -60,8 +62,11 @@ public class BuildVersionGenerator implements Runnable {
         //CHECKSTYLE:ON
         sb.append("\n\t */");
         sb.append("\n\tpublic static final String STATIC_VERSION = \"");
-        final long utcTime = System.currentTimeMillis();
-        sb.append(utcTime);
+        //CHECKSTYLE:OFF
+        final Calendar utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        //CHECKSTYLE:ON
+        final String utcTimeStr = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(utcTime.getTime());
+        sb.append(utcTimeStr);
         sb.append("\";");
         sb.append("\n");
         sb.append("\n\tpublic static String getDynamicVersion() {");
