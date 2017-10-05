@@ -79,6 +79,6 @@ public abstract class AColumnOrderHelper<E> {
 
     protected abstract Collection<? extends E> getRawColumns();
 
-    protected abstract IBeanPathElement getAssociatedHolderFromColumn(final E columnElement);
+    protected abstract IBeanPathElement getAssociatedHolderFromColumn(E columnElement);
 
 }

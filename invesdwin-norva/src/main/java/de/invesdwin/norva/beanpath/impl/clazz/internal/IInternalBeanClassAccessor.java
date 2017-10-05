@@ -36,7 +36,7 @@ public interface IInternalBeanClassAccessor {
 
     String getRawName();
 
-    <T extends Annotation> T getAnnotation(final Class<T> annotationType);
+    <T extends Annotation> T getAnnotation(Class<T> annotationType);
 
     boolean hasPublicGetterOrField();
 

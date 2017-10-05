@@ -5,12 +5,12 @@ import java.io.Serializable;
 
 public interface IDeepCloneProvider {
 
-    <T> T deepClone(final T obj);
+    <T> T deepClone(T obj);
 
-    <T> T deserialize(final byte[] objectData);
+    <T> T deserialize(byte[] objectData);
 
-    <T> T deserialize(final InputStream in);
+    <T> T deserialize(InputStream in);
 
-    byte[] serialize(final Serializable obj);
+    byte[] serialize(Serializable obj);
 
 }

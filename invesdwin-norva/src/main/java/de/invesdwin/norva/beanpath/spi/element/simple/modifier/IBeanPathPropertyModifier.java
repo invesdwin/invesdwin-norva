@@ -6,16 +6,16 @@ public interface IBeanPathPropertyModifier<E> {
 
     IBeanObjectAccessor getAccessor();
 
-    void setValue(final E value);
+    void setValue(E value);
 
     E getValue();
 
-    void setValueFromRoot(final Object root, final E value);
+    void setValueFromRoot(Object root, E value);
 
-    E getValueFromRoot(final Object root);
+    E getValueFromRoot(Object root);
 
-    void setValueFromTarget(final Object target, final E value);
+    void setValueFromTarget(Object target, E value);
 
-    E getValueFromTarget(final Object target);
+    E getValueFromTarget(Object target);
 
 }

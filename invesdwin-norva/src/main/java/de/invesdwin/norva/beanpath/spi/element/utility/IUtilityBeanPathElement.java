@@ -4,7 +4,7 @@ import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 
 public interface IUtilityBeanPathElement {
 
-    void setAttachedToElement(final IBeanPathElement attachedToElement);
+    void setAttachedToElement(IBeanPathElement attachedToElement);
 
     boolean isAttachedToElement();
 

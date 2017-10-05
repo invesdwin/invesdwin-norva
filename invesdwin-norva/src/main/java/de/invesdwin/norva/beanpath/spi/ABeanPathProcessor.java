@@ -178,29 +178,24 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                 if (duplicateBeanPathsFilter.add(actionElement.getBeanPath())) {
                     if (actionElement.getAccessor().getRawName().startsWith(DisableBeanPathElement.DISABLE_PREFIX)) {
                         new DisableBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor()
-                            .getRawName()
-                            .startsWith(ValidateBeanPathElement.VALIDATE_PREFIX)) {
+                    } else if (actionElement.getAccessor().getRawName().startsWith(
+                            ValidateBeanPathElement.VALIDATE_PREFIX)) {
                         new ValidateBeanPathElement(actionElement).accept();
                     } else if (actionElement.getAccessor().getRawName().startsWith(HideBeanPathElement.HIDE_PREFIX)) {
                         new HideBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor()
-                            .getRawName()
-                            .startsWith(RemoveFromBeanPathElement.REMOVE_FROM_PREFIX)) {
+                    } else if (actionElement.getAccessor().getRawName().startsWith(
+                            RemoveFromBeanPathElement.REMOVE_FROM_PREFIX)) {
                         new RemoveFromBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor()
-                            .getRawName()
-                            .equals(ContainerTitleBeanPathElement.CONTAINER_TITLE_BEAN_PATH_FRAGMENT)) {
+                    } else if (actionElement.getAccessor().getRawName().equals(
+                            ContainerTitleBeanPathElement.CONTAINER_TITLE_BEAN_PATH_FRAGMENT)) {
                         new ContainerTitleBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor()
-                            .getRawName()
-                            .equals(ColumnOrderBeanPathElement.COLUMN_ORDER_BEAN_PATH_FRAGMENT)) {
+                    } else if (actionElement.getAccessor().getRawName().equals(
+                            ColumnOrderBeanPathElement.COLUMN_ORDER_BEAN_PATH_FRAGMENT)) {
                         new ColumnOrderBeanPathElement(actionElement).accept();
                     } else if (actionElement.getAccessor().getRawName().endsWith(TitleBeanPathElement.TITLE_SUFFIX)) {
                         new TitleBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor()
-                            .getRawName()
-                            .endsWith(TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
+                    } else if (actionElement.getAccessor().getRawName().endsWith(
+                            TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
                         new TooltipBeanPathElement(actionElement).accept();
                     } else {
                         nonUtilityActionElements.add(actionElement);
@@ -213,9 +208,8 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private void processContainerOpenElement(final ContainerOpenBeanPathElement containerOpenElement) {
         IBeanPathContainer parent = containerOpenElement.getContainer();
         while (parent != null) {
-            if (!isShallowOnly() && parent.getType()
-                    .getQualifiedName()
-                    .equals(containerOpenElement.getAccessor().getType().getQualifiedName())) {
+            if (!isShallowOnly() && parent.getType().getQualifiedName().equals(
+                    containerOpenElement.getAccessor().getType().getQualifiedName())) {
                 //skip recursive loops
                 return;
             } else {
@@ -285,9 +279,8 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                         new ChoiceBeanPathElement(propertyElement, true).accept();
                     } else if (propertyElement.getAccessor().getRawName().endsWith(TitleBeanPathElement.TITLE_SUFFIX)) {
                         new TitleBeanPathElement(propertyElement).accept();
-                    } else if (propertyElement.getAccessor()
-                            .getRawName()
-                            .endsWith(TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
+                    } else if (propertyElement.getAccessor().getRawName().endsWith(
+                            TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
                         new TooltipBeanPathElement(propertyElement).accept();
                     } else {
                         nonUtilityPropertyElements.add(propertyElement);
@@ -385,10 +378,12 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     }
 
     private boolean hasUnexpectedParameters(final ABeanPathElement element) {
-        if (element.getAccessor().hasPublicSetterOrField() && element.getAccessor().getPublicSetterParameterCount() != 1) {
+        if (element.getAccessor().hasPublicSetterOrField()
+                && element.getAccessor().getPublicSetterParameterCount() != 1) {
             return true;
         }
-        if (element.getAccessor().hasPublicGetterOrField() && element.getAccessor().getPublicGetterParameterCount() != 0) {
+        if (element.getAccessor().hasPublicGetterOrField()
+                && element.getAccessor().getPublicGetterParameterCount() != 0) {
             return true;
         }
         if (element.getAccessor().hasPublicAction()) {
@@ -411,9 +406,8 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
             return true;
         }
         if (!ignoreBeanPathEndPointAnnotation) {
-            final boolean hasBeanPathEndPointAnnotation = propertyElement.getAccessor()
-                    .getRawType()
-                    .getAnnotation(BeanPathEndPoint.class) != null
+            final boolean hasBeanPathEndPointAnnotation = propertyElement.getAccessor().getRawType().getAnnotation(
+                    BeanPathEndPoint.class) != null
                     || propertyElement.getAccessor().getAnnotation(BeanPathEndPoint.class) != null;
             if (hasBeanPathEndPointAnnotation) {
                 return true;
@@ -435,7 +429,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         return result;
     }
 
-    protected abstract void innerScanContainerShallow(final C container, final ScanResult result);
+    protected abstract void innerScanContainerShallow(C container, ScanResult result);
 
     public static class ScanResult {
         private final List<SimplePropertyBeanPathElement> propertyMethods = new ArrayList<SimplePropertyBeanPathElement>();

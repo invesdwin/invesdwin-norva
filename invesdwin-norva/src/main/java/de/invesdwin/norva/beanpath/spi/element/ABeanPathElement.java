@@ -18,9 +18,9 @@ import de.invesdwin.norva.beanpath.annotation.Tooltip;
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectAccessor;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectContainer;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
-import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.utility.ContainerTitleBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.DisableBeanPathElement;
@@ -239,7 +239,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         return true;
     }
 
-    protected abstract void innerAccept(final IBeanPathVisitor visitor);
+    protected abstract void innerAccept(IBeanPathVisitor visitor);
 
     @Override
     public final String toString() {
@@ -330,12 +330,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                     }
                 }
                 parent = parent.getParentElement();
-                if (parent != null && getContainer() instanceof BeanObjectContainer) {
-                    final BeanObjectContainer parentContainer = (BeanObjectContainer) parent.getContainer();
-                    parentTarget = parentContainer.getObject();
-                } else {
-                    parentTarget = null;
-                }
+                parentTarget = getParentTarget(parent);
             }
         }
         return true;
@@ -375,14 +370,18 @@ public abstract class ABeanPathElement implements IBeanPathElement {
             }
             parent = parent.getParentElement();
             //check bean object container here so that annotations in hierarchy get processed properly
-            if (parent != null && getContainer() instanceof BeanObjectContainer) {
-                final BeanObjectContainer parentContainer = (BeanObjectContainer) parent.getContainer();
-                parentTarget = parentContainer.getObject();
-            } else {
-                parentTarget = null;
-            }
+            parentTarget = getParentTarget(parent);
         }
         return true;
+    }
+
+    private Object getParentTarget(final IBeanPathElement parent) {
+        if (parent != null && getContainer() instanceof BeanObjectContainer) {
+            final BeanObjectContainer parentContainer = (BeanObjectContainer) parent.getContainer();
+            return parentContainer.getObject();
+        } else {
+            return null;
+        }
     }
 
     protected boolean isStaticallyDisabled() {
@@ -400,12 +399,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                     return tooltip;
                 }
                 parent = parent.getParentElement();
-                if (parent != null && getContainer() instanceof BeanObjectContainer) {
-                    final BeanObjectContainer parentContainer = (BeanObjectContainer) parent.getContainer();
-                    parentTarget = parentContainer.getObject();
-                } else {
-                    parentTarget = null;
-                }
+                parentTarget = getParentTarget(parent);
             }
             //5. check tooltip property
             if (getTooltipElement() != null && getTooltipElement().isInvokerAvailable()) {
