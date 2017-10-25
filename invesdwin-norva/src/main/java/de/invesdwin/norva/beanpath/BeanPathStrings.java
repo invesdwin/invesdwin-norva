@@ -106,7 +106,7 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
     }
 
     public static StringBuilder removeEnd(final StringBuilder s, final int countCharacters) {
-        if (!isEmpty(s)) {
+        if (!isEmpty(s) && countCharacters > 0) {
             s.setLength(s.length() - countCharacters);
         }
         return s;
