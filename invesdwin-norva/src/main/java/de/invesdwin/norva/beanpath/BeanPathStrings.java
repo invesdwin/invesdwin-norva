@@ -106,14 +106,20 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
     }
 
     public static StringBuilder removeEnd(final StringBuilder s, final int countCharacters) {
-        if (!isEmpty(s) && countCharacters > 0) {
-            s.setLength(s.length() - countCharacters);
+        final int newLength = s.length() - countCharacters;
+        if (newLength >= 0) {
+            s.setLength(newLength);
         }
         return s;
     }
 
     public static String removeEnd(final String s, final int countCharacters) {
-        return s.substring(0, s.length() - countCharacters);
+        final int newLength = s.length() - countCharacters;
+        if (newLength >= 0) {
+            return s.substring(0, newLength);
+        } else {
+            return s;
+        }
     }
 
     public static String replaceEnd(final String s, final String end, final String replaceWith) {
