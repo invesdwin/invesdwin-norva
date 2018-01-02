@@ -9,6 +9,12 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.utility.ContainerTitleBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.utility.DisableBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.utility.HideBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.utility.TitleBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.utility.TooltipBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.utility.ValidateBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
 @NotThreadSafe
@@ -119,6 +125,40 @@ public final class ChoiceAsTableBeanPathElement extends ATableBeanPathElement {
     @Override
     public ColumnOrderBeanPathElement getColumnOrderElement() {
         return originalElement.getColumnOrderElement();
+    }
+
+    /**
+     * Make utilities available again
+     */
+
+    @Override
+    public HideBeanPathElement getHideElement() {
+        return originalElement.getHideElement();
+    }
+
+    @Override
+    public DisableBeanPathElement getDisableElement() {
+        return originalElement.getDisableElement();
+    }
+
+    @Override
+    public ContainerTitleBeanPathElement getContainerTitleElement() {
+        return originalElement.getContainerTitleElement();
+    }
+
+    @Override
+    public TitleBeanPathElement getTitleElement() {
+        return originalElement.getTitleElement();
+    }
+
+    @Override
+    public TooltipBeanPathElement getTooltipElement() {
+        return originalElement.getTooltipElement();
+    }
+
+    @Override
+    public ValidateBeanPathElement getValidateElement() {
+        return originalElement.getValidateElement();
     }
 
 }
