@@ -164,4 +164,10 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<scm>
+		<url>https://github.com/subes/invesdwin-norva</url>
+		<connection>scm:git:https://github.com/subes/invesdwin-norva.git</connection>
+		<tag>HEAD</tag>
+	</scm>
+
 </project>
