@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.invesdwin</groupId>
 		<artifactId>invesdwin-bom</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>invesdwin-norva</artifactId>
@@ -24,7 +24,7 @@
 		<version.compiler>1.6</version.compiler>
 
 		<version.maven-source-plugin>3.0.1</version.maven-source-plugin>
-		<version.invesdwin-maven-plugin>1.0.0-SNAPSHOT</version.invesdwin-maven-plugin>
+		<version.invesdwin-maven-plugin>1.0.1-SNAPSHOT</version.invesdwin-maven-plugin>
 
 		<version.hibernate-jpa-2.1-api>1.0.0.Final</version.hibernate-jpa-2.1-api>
 		<version.jboss-logging-generator>1.0.0.CR5</version.jboss-logging-generator>
