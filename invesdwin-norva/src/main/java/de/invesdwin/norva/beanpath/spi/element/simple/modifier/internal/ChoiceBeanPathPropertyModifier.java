@@ -19,12 +19,12 @@ public class ChoiceBeanPathPropertyModifier extends DelegateBeanPathPropertyModi
             final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier) {
         if (accessor.getRawType().isBoolean()) {
             return new BooleanBeanPathPropertyModifier(accessor);
-        } else if (accessor.getType().isEnum()) {
-            return new EnumConstantsBeanPathPropertyModifier(accessor);
         } else if (accessor.getRawType().isArray()) {
             return new ArrayBeanPathPropertyModifier(accessor, invalidChoiceModifier);
         } else if (accessor.getRawType().isIterable()) {
             return new IterableBeanPathPropertyModifier(accessor, invalidChoiceModifier);
+        } else if (accessor.getType().isEnum()) {
+            return new EnumConstantsBeanPathPropertyModifier(accessor);
         } else {
             throw new IllegalArgumentException(IBeanPathAccessor.class.getSimpleName() + " [" + accessor.toString()
                     + "] does not define a choice. Return type should be a boolean, enum, array or iterable.");
