@@ -95,7 +95,7 @@ The framework also understands `@NotNull` from the BeanValidation annotations an
 For bean path elements you can also add utility methods for various dynamic decisions:
 
 * `List<?> getXyzChoice()`: this can be used to define the choices a combo box has
-* `List<String> columnOrder()`: this can be used to change the column order of table columns dynamically
+* `List<String> columnOrder()`/`List<String> getXyzColumnOrder()`: this can be used to change the column order of table columns dynamically
 * `String title()`: with this you can define a title text for a container
 * `String disableXyz()`: with this you can dynamically disable elements, the return type can also be a boolean, when it is a string it denotes the reason why it is disabled (can be shown as a tooltip in the UI)
 * `String hideXyz()`: just as the disable utility method, only that it hides elements
