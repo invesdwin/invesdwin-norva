@@ -44,9 +44,7 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
                 } else if (getAccessor().getBeanPathFragment().endsWith(COLUMN_ORDER_SUFFIX)) {
                     return BeanPathUtil.maybeAddUtilitySuffix(parent.value(), COLUMN_ORDER_SUFFIX);
                 } else {
-                    throw new IllegalStateException("Expecting bean path fragment ["
-                            + getAccessor().getBeanPathFragment() + "] to either be [" + COLUMN_ORDER_BEAN_PATH_FRAGMENT
-                            + "] or to have a suffix of [" + COLUMN_ORDER_SUFFIX + "]");
+                    throw newInvalidUtilityException();
                 }
             }
         };
@@ -70,12 +68,25 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
 
     private IBeanPathPropertyModifier<List<?>> getColumnOrderModifier() {
         if (columnOrderModifier == null) {
-            columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier(
-                    new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ActionInvokerBeanObjectAccessor(
-                            getInvoker()),
-                    null);
+            if (getAccessor().getBeanPathFragment().equals(COLUMN_ORDER_BEAN_PATH_FRAGMENT)) {
+                columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier(
+                        new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ActionInvokerBeanObjectAccessor(
+                                getInvoker()),
+                        null);
+            } else if (getAccessor().getBeanPathFragment().endsWith(COLUMN_ORDER_SUFFIX)) {
+                columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier(
+                        getSimpleActionElement().getAccessor(), null);
+            } else {
+                throw newInvalidUtilityException();
+            }
         }
         return columnOrderModifier;
+    }
+
+    private IllegalStateException newInvalidUtilityException() {
+        return new IllegalStateException("Expecting bean path fragment [" + getAccessor().getBeanPathFragment()
+                + "] to either be [" + COLUMN_ORDER_BEAN_PATH_FRAGMENT + "] or to have a suffix of ["
+                + COLUMN_ORDER_SUFFIX + "]");
     }
 
     public List<String> getColumnOrder() {
