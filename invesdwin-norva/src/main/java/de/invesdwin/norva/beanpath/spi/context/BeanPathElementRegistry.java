@@ -129,13 +129,24 @@ public class BeanPathElementRegistry {
     }
 
     public ColumnOrderBeanPathElement getColumnOrderUtilityElementFor(final IBeanPathElement element) {
-        return getUtilityElementFor(element, new Function<IBeanPathElement, String>() {
-            @Override
-            public String apply(final IBeanPathElement input) {
-                return addUtilityBeanPathFragment(input.getBeanPath(),
-                        ColumnOrderBeanPathElement.COLUMN_ORDER_BEAN_PATH_FRAGMENT);
-            }
-        });
+        final ColumnOrderBeanPathElement utility = getUtilityElementFor(element,
+                new Function<IBeanPathElement, String>() {
+                    @Override
+                    public String apply(final IBeanPathElement input) {
+                        return input.getBeanPath() + ColumnOrderBeanPathElement.COLUMN_ORDER_SUFFIX;
+                    }
+                });
+        if (utility != null) {
+            return utility;
+        } else {
+            return getUtilityElementFor(element, new Function<IBeanPathElement, String>() {
+                @Override
+                public String apply(final IBeanPathElement input) {
+                    return addUtilityBeanPathFragment(input.getBeanPath(),
+                            ColumnOrderBeanPathElement.COLUMN_ORDER_BEAN_PATH_FRAGMENT);
+                }
+            });
+        }
     }
 
     public TitleBeanPathElement getTitleUtilityElementFor(final IBeanPathElement element) {

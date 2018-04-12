@@ -28,6 +28,7 @@ import de.invesdwin.norva.beanpath.spi.element.TableButtonColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TableTextColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TextFieldBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.UploadButtonBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.PropertyGetterActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
@@ -191,7 +192,12 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                         new ContainerTitleBeanPathElement(actionElement).accept();
                     } else if (actionElement.getAccessor().getRawName().equals(
                             ColumnOrderBeanPathElement.COLUMN_ORDER_BEAN_PATH_FRAGMENT)) {
-                        new ColumnOrderBeanPathElement(actionElement).accept();
+                        //we can't use column order in table rows, it needs to be configured via suffix instead
+                        if (!actionElement.getAccessor().getRawType().isIterable()) {
+                            new ColumnOrderBeanPathElement(actionElement).accept();
+                        } else {
+                            new HiddenBeanPathElement(actionElement).accept();
+                        }
                     } else if (actionElement.getAccessor().getRawName().endsWith(TitleBeanPathElement.TITLE_SUFFIX)) {
                         new TitleBeanPathElement(actionElement).accept();
                     } else if (actionElement.getAccessor().getRawName().endsWith(
@@ -277,6 +283,10 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                 if (duplicateBeanPathsFilter.add(propertyElement.getBeanPath())) {
                     if (propertyElement.getAccessor().getRawName().endsWith(ChoiceBeanPathElement.CHOICE_SUFFIX)) {
                         new ChoiceBeanPathElement(propertyElement, true).accept();
+                    } else if (propertyElement.getAccessor().getRawName().endsWith(
+                            ColumnOrderBeanPathElement.COLUMN_ORDER_SUFFIX)) {
+                        new ColumnOrderBeanPathElement(new PropertyGetterActionBeanPathElement(propertyElement))
+                                .accept();
                     } else if (propertyElement.getAccessor().getRawName().endsWith(TitleBeanPathElement.TITLE_SUFFIX)) {
                         new TitleBeanPathElement(propertyElement).accept();
                     } else if (propertyElement.getAccessor().getRawName().endsWith(

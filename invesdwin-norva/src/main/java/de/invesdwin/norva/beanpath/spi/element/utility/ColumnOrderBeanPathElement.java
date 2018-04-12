@@ -19,13 +19,12 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 public class ColumnOrderBeanPathElement extends AActionBeanPathElement implements IUtilityBeanPathElement {
 
     public static final String COLUMN_ORDER_BEAN_PATH_FRAGMENT = "columnOrder";
+    public static final String COLUMN_ORDER_SUFFIX = "ColumnOrder";
     private IBeanPathElement attachedToElement;
     private IBeanPathPropertyModifier<List<?>> columnOrderModifier;
 
     public ColumnOrderBeanPathElement(final SimpleActionBeanPathElement simpleActionElement) {
         super(simpleActionElement);
-        org.assertj.core.api.Assertions.assertThat(getAccessor().getBeanPathFragment())
-                .isEqualTo(COLUMN_ORDER_BEAN_PATH_FRAGMENT);
     }
 
     @Override
@@ -40,7 +39,15 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
 
             @Override
             public String value() {
-                return BeanPathUtil.maybeAddUtilityFragment(parent.value(), COLUMN_ORDER_BEAN_PATH_FRAGMENT);
+                if (getAccessor().getBeanPathFragment().equals(COLUMN_ORDER_BEAN_PATH_FRAGMENT)) {
+                    return BeanPathUtil.maybeAddUtilityFragment(parent.value(), COLUMN_ORDER_BEAN_PATH_FRAGMENT);
+                } else if (getAccessor().getBeanPathFragment().endsWith(COLUMN_ORDER_SUFFIX)) {
+                    return BeanPathUtil.maybeAddUtilitySuffix(parent.value(), COLUMN_ORDER_SUFFIX);
+                } else {
+                    throw new IllegalStateException("Expecting bean path fragment ["
+                            + getAccessor().getBeanPathFragment() + "] to either be [" + COLUMN_ORDER_BEAN_PATH_FRAGMENT
+                            + "] or to have a suffix of [" + COLUMN_ORDER_SUFFIX + "]");
+                }
             }
         };
     }
