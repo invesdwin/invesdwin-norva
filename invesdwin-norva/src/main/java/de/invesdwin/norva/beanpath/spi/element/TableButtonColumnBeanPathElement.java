@@ -50,6 +50,12 @@ public class TableButtonColumnBeanPathElement extends AActionBeanPathElement imp
         return false;
     }
 
+    @Deprecated
+    @Override
+    public boolean isVisible(final Object target) {
+        return isVisible();
+    }
+
     @Override
     public boolean isVisible() {
         return getTableElement().getColumns().contains(this);

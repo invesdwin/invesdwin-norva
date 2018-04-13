@@ -20,7 +20,7 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
     private final List<TabbedColumnBeanPathElement> rawColumns;
     private final List<HiddenBeanPathElement> invalidColumns;
     private ColumnOrderBeanPathElement columnOrderElement;
-    private List<TabbedColumnBeanPathElement> columns;
+    private AColumnOrderHelper<TabbedColumnBeanPathElement> columns;
     private TabbedColumnsAsChoiceBeanPathPropertyModifier choiceModifier;
 
     public TabbedBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement,
@@ -68,7 +68,7 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
     }
 
     /**
-     * These columns are ordered and filtered according to @ColumnOrder order a columnOrder() method.
+     * These columns are ordered and filtered according to @ColumnOrder or a columnOrder() method.
      */
     public List<TabbedColumnBeanPathElement> getColumns() {
         if (columns == null) {
@@ -96,9 +96,9 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
                     //not supported
                     return null;
                 }
-            }.getOrderedColumns();
+            };
         }
-        return Collections.unmodifiableList(columns);
+        return Collections.unmodifiableList(columns.getOrderedColumns());
     }
 
     @Override

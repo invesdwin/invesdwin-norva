@@ -12,7 +12,7 @@ import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElem
 @NotThreadSafe
 public abstract class ATableBeanPathElement extends AChoiceBeanPathElement {
 
-    private List<ITableColumnBeanPathElement> columns;
+    private AColumnOrderHelper<ITableColumnBeanPathElement> columns;
 
     public ATableBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement) {
         super(simplePropertyElement);
@@ -32,7 +32,7 @@ public abstract class ATableBeanPathElement extends AChoiceBeanPathElement {
     public abstract List<ITableColumnBeanPathElement> getRawColumns();
 
     /**
-     * These columns are ordered and filtered according to @ColumnOrder order a columnOrder() method.
+     * These columns are ordered and filtered according to @ColumnOrder or a columnOrder() method.
      */
     public List<ITableColumnBeanPathElement> getColumns() {
         if (columns == null) {
@@ -58,9 +58,9 @@ public abstract class ATableBeanPathElement extends AChoiceBeanPathElement {
                 protected IBeanPathElement getSelectionButtonColumn() {
                     return ATableBeanPathElement.this.getSelectionButtonColumn();
                 }
-            }.getOrderedColumns();
+            };
         }
-        return Collections.unmodifiableList(columns);
+        return Collections.unmodifiableList(columns.getOrderedColumns());
     }
 
 }

@@ -29,6 +29,12 @@ public class TableContainerColumnBeanPathElement extends APropertyBeanPathElemen
         return tableElement;
     }
 
+    @Deprecated
+    @Override
+    public boolean isVisible(final Object target) {
+        return isVisible();
+    }
+
     @Override
     public boolean isVisible() {
         return getTableElement().getColumns().contains(this);

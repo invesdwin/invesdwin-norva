@@ -20,6 +20,7 @@ public abstract class AColumnOrderHelper<E> {
     private final IBeanPathElement element;
     private final ColumnOrderBeanPathElement columnOrderElement;
     private final Class<E> columnType;
+    private List<E> unchangeableOrderedColumns;
 
     public AColumnOrderHelper(final IBeanPathElement element, final ColumnOrderBeanPathElement columnOrderElement,
             final Class<E> columnType) {
@@ -30,6 +31,9 @@ public abstract class AColumnOrderHelper<E> {
 
     @SuppressWarnings("unchecked")
     public List<E> getOrderedColumns() {
+        if (unchangeableOrderedColumns != null) {
+            return unchangeableOrderedColumns;
+        }
         final List<E> columns = new ArrayList<E>();
         final ColumnOrder annotation = element.getAccessor().getType().getAnnotation(ColumnOrder.class);
         if (annotation == null && columnOrderElement == null) {
@@ -68,6 +72,9 @@ public abstract class AColumnOrderHelper<E> {
                                 ColumnOrder.class.getSimpleName(), element.getBeanPath(), beanPath)
                         .isSameAs(element);
                 columns.add(castColumnElement);
+            }
+            if (columnOrderElement == null) {
+                unchangeableOrderedColumns = columns;
             }
         }
         return columns;
