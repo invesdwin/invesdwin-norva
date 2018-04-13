@@ -123,10 +123,10 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
         } else if (oldValue instanceof Collection) {
             //reuse existing collection if possible, because instantiating a new collection is not always possible
             try {
-                targetCollection = (Collection<Object>) oldValue.getClass().newInstance();
+                targetCollection = (Collection<Object>) BeanPathObjects.clone(oldValue);
             } catch (final Throwable e) {
                 try {
-                    targetCollection = (Collection<Object>) BeanPathObjects.clone(oldValue);
+                    targetCollection = (Collection<Object>) oldValue.getClass().newInstance();
                 } catch (final Throwable e1) {
                     targetCollection = newTargetCollectionFromType();
                 }
