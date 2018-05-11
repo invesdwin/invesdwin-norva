@@ -47,13 +47,10 @@ public class UploadButtonBeanPathElement extends AActionBeanPathElement implemen
         return getAccessor().getRawType().isArray() || getAccessor().getRawType().isIterable();
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void setUploadedFiles(final List<File> files) {
         if (!isMultiUpload()) {
             if (files.size() > 0) {
-                org.assertj.core.api.Assertions.assertThat(files.size())
-                        .as("MultiUpload is not supported!")
-                        .isEqualTo(1);
+                com.google.common.base.Preconditions.checkState(files.size() == 1, "MultiUpload is not supported!");
                 setUploadedFile(files.get(0));
             } else {
                 setUploadedFile(null);
@@ -63,7 +60,7 @@ public class UploadButtonBeanPathElement extends AActionBeanPathElement implemen
                 choiceModifier = new ChoiceBeanPathPropertyModifier(new ActionInvokerBeanObjectAccessor(getInvoker()),
                         null);
             }
-            choiceModifier.setValue((List) files);
+            choiceModifier.setValue(files);
         }
     }
 

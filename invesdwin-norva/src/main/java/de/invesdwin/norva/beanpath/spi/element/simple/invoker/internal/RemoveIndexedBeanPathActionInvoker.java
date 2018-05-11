@@ -16,7 +16,7 @@ public class RemoveIndexedBeanPathActionInvoker extends IndexedBeanPathActionInv
 
     @Override
     public Object invokeFromTarget(final Object target, final Object... params) {
-        org.assertj.core.api.Assertions.assertThat(params).isEmpty();
+        com.google.common.base.Preconditions.checkArgument(params.length == 0);
         return super.invokeFromTarget(getAccessor().getContainer().getObject(), target);
     }
 

@@ -177,8 +177,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                     }
                     if (hidden != null) {
                         if (!hidden.skip()) {
-                            org.assertj.core.api.Assertions.assertThat(new HiddenBeanPathElement(this).accept(visitors))
-                                    .isTrue();
+                            com.google.common.base.Preconditions
+                                    .checkState(new HiddenBeanPathElement(this).accept(visitors));
                         }
                         return false;
                     } else {
@@ -272,9 +272,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         //2. title annotation on property
         final Title titlePropertyAnnotation = getAccessor().getAnnotation(Title.class);
         if (titlePropertyAnnotation != null) {
-            org.assertj.core.api.Assertions.assertThat(BeanPathStrings.isNotBlank(titlePropertyAnnotation.value()))
-                    .as("@%s value on property [%s] must not be blank!", Title.class.getSimpleName(), getBeanPath())
-                    .isTrue();
+            com.google.common.base.Preconditions.checkState(BeanPathStrings.isNotBlank(titlePropertyAnnotation.value()),
+                    "@%s value on property [%s] must not be blank!", Title.class.getSimpleName(), getBeanPath());
             return titlePropertyAnnotation.value();
         }
         //3. title action on type
@@ -288,10 +287,9 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         //4. title annotation on type
         final Title titleTypeAnnotation = getAccessor().getType().getAnnotation(Title.class);
         if (titleTypeAnnotation != null) {
-            org.assertj.core.api.Assertions.assertThat(BeanPathStrings.isNotBlank(titleTypeAnnotation.value()))
-                    .as("@%s value on type [%s:%s] must not be blank!", Title.class.getSimpleName(), getBeanPath(),
-                            getAccessor().getType().getSimpleName())
-                    .isTrue();
+            com.google.common.base.Preconditions.checkState(BeanPathStrings.isNotBlank(titleTypeAnnotation.value()),
+                    "@%s value on type [%s:%s] must not be blank!", Title.class.getSimpleName(), getBeanPath(),
+                    getAccessor().getType().getSimpleName());
             return titleTypeAnnotation.value();
         }
         return getVisibleName();
@@ -412,9 +410,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
             //6. check tooltip annotation
             final Tooltip tooltipAnnotation = getAccessor().getAnnotation(Tooltip.class);
             if (tooltipAnnotation != null) {
-                org.assertj.core.api.Assertions.assertThat(BeanPathStrings.isNotBlank(tooltipAnnotation.value()))
-                        .as("@%s value should not be null!", Tooltip.class.getSimpleName())
-                        .isTrue();
+                com.google.common.base.Preconditions.checkState(BeanPathStrings.isNotBlank(tooltipAnnotation.value()),
+                        "@%s value should not be null!", Tooltip.class.getSimpleName());
                 return tooltipAnnotation.value();
             }
             return null;

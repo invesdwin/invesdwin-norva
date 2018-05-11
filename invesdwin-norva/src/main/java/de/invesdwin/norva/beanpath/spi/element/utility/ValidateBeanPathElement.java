@@ -46,7 +46,7 @@ public class ValidateBeanPathElement extends AActionBeanPathElement implements I
 
     @Override
     public void setAttachedToElement(final IBeanPathElement attachedToElement) {
-        org.assertj.core.api.Assertions.assertThat(this.attachedToElement).isNull();
+        com.google.common.base.Preconditions.checkState(this.attachedToElement == null);
         this.attachedToElement = attachedToElement;
     }
 

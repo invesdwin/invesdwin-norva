@@ -13,7 +13,7 @@ public class RootBeanPathElement extends ABeanPathElement {
 
     public RootBeanPathElement(final ABeanPathContext context) {
         super(context, context.getRootContainer(), new RootBeanPathAccessor(context));
-        org.assertj.core.api.Assertions.assertThat(getBeanPath()).isEqualTo(ROOT_BEAN_PATH);
+        com.google.common.base.Preconditions.checkArgument(ROOT_BEAN_PATH.equals(getBeanPath()));
     }
 
     @Override

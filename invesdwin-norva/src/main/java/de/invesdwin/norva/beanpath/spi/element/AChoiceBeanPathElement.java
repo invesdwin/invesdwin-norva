@@ -114,7 +114,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     }
 
     protected void verifyChoiceElementFound() {
-        org.assertj.core.api.Assertions.assertThat(choiceElement).as("No choice element found!").isNotNull();
+        com.google.common.base.Preconditions.checkNotNull(choiceElement, "No choice element found!");
     }
 
     private boolean isEnumChoice() {

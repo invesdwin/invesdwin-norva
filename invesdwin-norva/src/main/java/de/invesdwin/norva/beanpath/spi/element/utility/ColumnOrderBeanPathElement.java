@@ -52,7 +52,7 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
 
     @Override
     public void setAttachedToElement(final IBeanPathElement attachedToElement) {
-        org.assertj.core.api.Assertions.assertThat(this.attachedToElement).isNull();
+        com.google.common.base.Preconditions.checkState(this.attachedToElement == null);
         this.attachedToElement = attachedToElement;
     }
 
@@ -84,9 +84,9 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
     }
 
     private IllegalStateException newInvalidUtilityException() {
-        return new IllegalStateException("Expecting bean path fragment [" + getAccessor().getBeanPathFragment()
-                + "] to either be [" + COLUMN_ORDER_BEAN_PATH_FRAGMENT + "] or to have a suffix of ["
-                + COLUMN_ORDER_SUFFIX + "]");
+        return new IllegalStateException(
+                "Expecting bean path fragment [" + getAccessor().getBeanPathFragment() + "] to either be ["
+                        + COLUMN_ORDER_BEAN_PATH_FRAGMENT + "] or to have a suffix of [" + COLUMN_ORDER_SUFFIX + "]");
     }
 
     public List<String> getColumnOrder() {

@@ -16,7 +16,7 @@ public class BooleanBeanPathPropertyModifier implements IBeanPathPropertyModifie
 
     public BooleanBeanPathPropertyModifier(final IBeanPathAccessor accessor) {
         //explicitly checking rawType here for enum since the accessor should be for a selectionModifier anyway
-        org.assertj.core.api.Assertions.assertThat(accessor.getRawType().isBoolean()).isTrue();
+        com.google.common.base.Preconditions.checkArgument(accessor.getRawType().isBoolean());
         this.delegate = new BeanPathPropertyModifier(accessor);
     }
 

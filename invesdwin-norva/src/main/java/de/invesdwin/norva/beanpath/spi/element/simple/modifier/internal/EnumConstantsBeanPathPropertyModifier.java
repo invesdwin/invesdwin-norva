@@ -17,7 +17,7 @@ public class EnumConstantsBeanPathPropertyModifier implements IBeanPathPropertyM
 
     public EnumConstantsBeanPathPropertyModifier(final IBeanPathAccessor accessor) {
         //explicitly checking type here for enum since the accessor should be for a selectionModifier anyway
-        org.assertj.core.api.Assertions.assertThat(accessor.getType().isEnum()).isTrue();
+        com.google.common.base.Preconditions.checkArgument(accessor.getType().isEnum());
         this.delegate = new BeanPathPropertyModifier(accessor);
     }
 

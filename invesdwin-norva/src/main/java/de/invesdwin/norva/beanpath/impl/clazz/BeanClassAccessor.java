@@ -79,7 +79,7 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
                 classType = (Class<?>) typeVariable.getGenericDeclaration();
             } else {
                 final Type[] bounds = typeVariable.getBounds();
-                org.assertj.core.api.Assertions.assertThat(bounds).hasSize(1);
+                com.google.common.base.Preconditions.checkArgument(bounds.length == 1);
                 final Type bound = bounds[0];
                 return determineClassType(bound);
             }

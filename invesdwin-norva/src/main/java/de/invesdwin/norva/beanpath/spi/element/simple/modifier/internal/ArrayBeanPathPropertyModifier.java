@@ -19,7 +19,7 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
 
     public ArrayBeanPathPropertyModifier(final IBeanPathAccessor accessor,
             final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier) {
-        org.assertj.core.api.Assertions.assertThat(accessor.getRawType().isArray()).isTrue();
+        com.google.common.base.Preconditions.checkArgument(accessor.getRawType().isArray());
         this.delegate = new BeanPathPropertyModifier(accessor);
         this.invalidChoiceModifier = invalidChoiceModifier;
     }

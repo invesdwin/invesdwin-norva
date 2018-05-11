@@ -37,7 +37,7 @@ public final class BeanPathObjects {
     private BeanPathObjects() {}
 
     public static void setDeepCloneProvider(final IDeepCloneProvider deepCloneProvider) {
-        org.assertj.core.api.Assertions.assertThat(deepCloneProvider).isNotNull();
+        com.google.common.base.Preconditions.checkNotNull(deepCloneProvider);
         BeanPathObjects.deepCloneProvider = deepCloneProvider;
     }
 

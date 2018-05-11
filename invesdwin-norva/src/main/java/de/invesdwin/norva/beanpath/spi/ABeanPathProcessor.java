@@ -122,9 +122,8 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         processUtilityActionElements(result.getActions(), nonUtilityActionElements);
         // 2. accept root if not done so right after scanning his utility actions
         final boolean parentAccepted = parentElement.accept(visitors);
-        org.assertj.core.api.Assertions
-                .assertThat(!parentElement.getBeanPath().equals(RootBeanPathElement.ROOT_BEAN_PATH) || parentAccepted)
-                .isTrue();
+        com.google.common.base.Preconditions
+                .checkState(!parentElement.getBeanPath().equals(RootBeanPathElement.ROOT_BEAN_PATH) || parentAccepted);
         if (!parentAccepted) {
             return false;
         }

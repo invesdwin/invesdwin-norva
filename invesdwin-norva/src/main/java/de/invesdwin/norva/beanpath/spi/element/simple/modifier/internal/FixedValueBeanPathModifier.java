@@ -14,10 +14,9 @@ public class FixedValueBeanPathModifier<E> implements IBeanPathPropertyModifier<
     private final E fixedValue;
 
     public FixedValueBeanPathModifier(final IBeanPathAccessor accessor, final E fixedValue) {
-        org.assertj.core.api.Assertions.assertThat(accessor)
-                .as("%s is only available in a %s", IBeanPathPropertyModifier.class.getSimpleName(),
-                        BeanObjectContext.class.getSimpleName())
-                .isInstanceOf(IBeanObjectAccessor.class);
+        com.google.common.base.Preconditions.checkState(accessor instanceof IBeanObjectAccessor,
+                "%s is only available in a %s", IBeanPathPropertyModifier.class.getSimpleName(),
+                BeanObjectContext.class.getSimpleName());
         this.accessor = (IBeanObjectAccessor) accessor;
         this.fixedValue = fixedValue;
     }

@@ -58,19 +58,17 @@ public abstract class AColumnOrderHelper<E> {
                 } else {
                     columnElement = element.getContext().getElementRegistry().getElement(beanPath);
                 }
-                org.assertj.core.api.Assertions.assertThat(columnElement)
-                        .as("%s in [%s] specifies a column that does not exist: %s", ColumnOrder.class.getSimpleName(),
-                                element.getBeanPath(), beanPath)
-                        .isNotNull();
-                org.assertj.core.api.Assertions.assertThat(columnElement)
-                        .as("%s in [%s] specifies a column that is in fact not a column [%s]: %s",
-                                ColumnOrder.class.getSimpleName(), element.getBeanPath(), beanPath)
-                        .isInstanceOf(columnType);
+                com.google.common.base.Preconditions.checkNotNull(columnElement,
+                        "%s in [%s] specifies a column that does not exist: %s", ColumnOrder.class.getSimpleName(),
+                        element.getBeanPath(), beanPath);
+                com.google.common.base.Preconditions.checkState(columnType.isAssignableFrom(columnElement.getClass()),
+                        "%s in [%s] specifies a column that is in fact not a column [%s]: %s",
+                        ColumnOrder.class.getSimpleName(), element.getBeanPath(), beanPath);
                 final E castColumnElement = (E) columnElement;
-                org.assertj.core.api.Assertions.assertThat(getAssociatedHolderFromColumn(castColumnElement))
-                        .as("%s in [%s] specifies a column from a different table: %s",
-                                ColumnOrder.class.getSimpleName(), element.getBeanPath(), beanPath)
-                        .isSameAs(element);
+                com.google.common.base.Preconditions.checkState(
+                        getAssociatedHolderFromColumn(castColumnElement) == element,
+                        "%s in [%s] specifies a column from a different table: %s", ColumnOrder.class.getSimpleName(),
+                        element.getBeanPath(), beanPath);
                 columns.add(castColumnElement);
             }
             if (columnOrderElement == null) {

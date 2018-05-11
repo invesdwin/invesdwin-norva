@@ -13,10 +13,9 @@ public class BeanPathActionInvoker implements IBeanPathActionInvoker {
     private final IBeanObjectAccessor accessor;
 
     public BeanPathActionInvoker(final IBeanPathAccessor accessor) {
-        org.assertj.core.api.Assertions.assertThat(accessor)
-                .as("%s is only available in a %s", IBeanPathActionInvoker.class.getSimpleName(),
-                        BeanObjectContext.class.getSimpleName())
-                .isInstanceOf(IBeanObjectAccessor.class);
+        com.google.common.base.Preconditions.checkState(accessor instanceof IBeanObjectAccessor,
+                "%s is only available in a %s", IBeanPathActionInvoker.class.getSimpleName(),
+                BeanObjectContext.class.getSimpleName());
         this.accessor = (IBeanObjectAccessor) accessor;
     }
 

@@ -33,12 +33,11 @@ public class BeanPathElementRegistry {
         final IBeanPathElement oldElement = beanPath_element.put(e.getBeanPath(), e);
         if (oldElement instanceof IUtilityBeanPathElement) {
             final IUtilityBeanPathElement cOldElement = (IUtilityBeanPathElement) oldElement;
-            org.assertj.core.api.Assertions.assertThat(cOldElement.isAttachedToElement()).isTrue();
+            com.google.common.base.Preconditions.checkState(cOldElement.isAttachedToElement());
         } else {
-            org.assertj.core.api.Assertions.assertThat(oldElement)
-                    .as("Element %s [%s] cannot be added because another one already exists with that bean path.",
-                            e.getClass().getSimpleName(), e.getBeanPath())
-                    .isNull();
+            com.google.common.base.Preconditions.checkState(oldElement == null,
+                    "Element %s [%s] cannot be added because another one already exists with that bean path.",
+                    e.getClass().getSimpleName(), e.getBeanPath());
         }
     }
 
@@ -46,7 +45,7 @@ public class BeanPathElementRegistry {
         final String beanPath = BeanPathUtil.newBeanPath(redirector, redirect);
         //the first interceptor that is found is used, all others are ignored
         if (beanPath_redirect.get(beanPath) == null) {
-            org.assertj.core.api.Assertions.assertThat(beanPath_redirect.put(beanPath, redirector)).isNull();
+            com.google.common.base.Preconditions.checkState(beanPath_redirect.put(beanPath, redirector) == null);
         }
     }
 

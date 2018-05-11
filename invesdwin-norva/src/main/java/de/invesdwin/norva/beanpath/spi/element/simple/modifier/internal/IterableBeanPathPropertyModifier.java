@@ -22,8 +22,8 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
 
     public IterableBeanPathPropertyModifier(final IBeanPathAccessor accessor,
             final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier) {
-        org.assertj.core.api.Assertions.assertThat(accessor.getRawType().isArray()).isFalse();
-        org.assertj.core.api.Assertions.assertThat(accessor.getRawType().isIterable()).isTrue();
+        com.google.common.base.Preconditions.checkArgument(!accessor.getRawType().isArray());
+        com.google.common.base.Preconditions.checkArgument(accessor.getRawType().isIterable());
         this.delegate = new BeanPathPropertyModifier(accessor);
         this.invalidChoiceModifier = invalidChoiceModifier;
     }

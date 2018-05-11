@@ -13,10 +13,9 @@ public class BeanPathPropertyModifier implements IBeanPathPropertyModifier<Objec
     private final IBeanObjectAccessor accessor;
 
     public BeanPathPropertyModifier(final IBeanPathAccessor accessor) {
-        org.assertj.core.api.Assertions.assertThat(accessor)
-                .as("%s is only available in a %s", IBeanPathPropertyModifier.class.getSimpleName(),
-                        BeanObjectContext.class.getSimpleName())
-                .isInstanceOf(IBeanObjectAccessor.class);
+        com.google.common.base.Preconditions.checkState(accessor instanceof IBeanObjectAccessor,
+                "%s is only available in a %s", IBeanPathPropertyModifier.class.getSimpleName(),
+                BeanObjectContext.class.getSimpleName());
         this.accessor = (IBeanObjectAccessor) accessor;
     }
 

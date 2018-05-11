@@ -19,7 +19,7 @@ public class TabbedColumnBeanPathElement extends APropertyBeanPathElement {
     }
 
     void setTabbedElement(final TabbedBeanPathElement tabbedElement) {
-        org.assertj.core.api.Assertions.assertThat(this.tabbedElement).isNull();
+        com.google.common.base.Preconditions.checkState(this.tabbedElement == null);
         this.tabbedElement = tabbedElement;
     }
 

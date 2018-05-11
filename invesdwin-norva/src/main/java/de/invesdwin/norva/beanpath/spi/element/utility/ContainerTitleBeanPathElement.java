@@ -19,8 +19,8 @@ public class ContainerTitleBeanPathElement extends AActionBeanPathElement implem
 
     public ContainerTitleBeanPathElement(final SimpleActionBeanPathElement simpleActionElement) {
         super(simpleActionElement);
-        org.assertj.core.api.Assertions.assertThat(getAccessor().getBeanPathFragment())
-                .isEqualTo(CONTAINER_TITLE_BEAN_PATH_FRAGMENT);
+        com.google.common.base.Preconditions
+                .checkArgument(CONTAINER_TITLE_BEAN_PATH_FRAGMENT.equals(getAccessor().getBeanPathFragment()));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ContainerTitleBeanPathElement extends AActionBeanPathElement implem
 
     @Override
     public void setAttachedToElement(final IBeanPathElement attachedToElement) {
-        org.assertj.core.api.Assertions.assertThat(this.attachedToElement).isNull();
+        com.google.common.base.Preconditions.checkState(this.attachedToElement == null);
         this.attachedToElement = attachedToElement;
     }
 

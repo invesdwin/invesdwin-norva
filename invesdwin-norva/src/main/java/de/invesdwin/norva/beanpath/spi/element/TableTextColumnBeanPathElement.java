@@ -24,7 +24,7 @@ public class TableTextColumnBeanPathElement extends APropertyBeanPathElement imp
     }
 
     void setTableElement(final TableBeanPathElement tableElement) {
-        org.assertj.core.api.Assertions.assertThat(this.tableElement).isNull();
+        com.google.common.base.Preconditions.checkState(this.tableElement == null);
         this.tableElement = tableElement;
     }
 

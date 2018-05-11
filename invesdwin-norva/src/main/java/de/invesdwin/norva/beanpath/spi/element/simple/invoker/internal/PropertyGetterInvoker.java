@@ -39,9 +39,8 @@ public class PropertyGetterInvoker implements IBeanPathActionInvoker {
     }
 
     private void assertNoParams(final Object... params) {
-        org.assertj.core.api.Assertions.assertThat(params)
-                .as("Parameters are not supported in %s", getClass().getSimpleName())
-                .isEmpty();
+        com.google.common.base.Preconditions.checkState(params.length == 0, "Parameters are not supported in %s",
+                getClass().getSimpleName());
     }
 
 }
