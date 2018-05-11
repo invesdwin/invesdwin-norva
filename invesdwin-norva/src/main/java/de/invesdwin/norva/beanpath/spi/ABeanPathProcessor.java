@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.annotation.BeanPathEndPoint;
 import de.invesdwin.norva.beanpath.annotation.Tabbed;
@@ -122,7 +123,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         processUtilityActionElements(result.getActions(), nonUtilityActionElements);
         // 2. accept root if not done so right after scanning his utility actions
         final boolean parentAccepted = parentElement.accept(visitors);
-        com.google.common.base.Preconditions
+        BeanPathAssertions
                 .checkState(!parentElement.getBeanPath().equals(RootBeanPathElement.ROOT_BEAN_PATH) || parentAccepted);
         if (!parentAccepted) {
             return false;

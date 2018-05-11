@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectContext;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
@@ -13,9 +14,8 @@ public class BeanPathPropertyModifier implements IBeanPathPropertyModifier<Objec
     private final IBeanObjectAccessor accessor;
 
     public BeanPathPropertyModifier(final IBeanPathAccessor accessor) {
-        com.google.common.base.Preconditions.checkState(accessor instanceof IBeanObjectAccessor,
-                "%s is only available in a %s", IBeanPathPropertyModifier.class.getSimpleName(),
-                BeanObjectContext.class.getSimpleName());
+        BeanPathAssertions.checkState(accessor instanceof IBeanObjectAccessor, "%s is only available in a %s",
+                IBeanPathPropertyModifier.class.getSimpleName(), BeanObjectContext.class.getSimpleName());
         this.accessor = (IBeanObjectAccessor) accessor;
     }
 

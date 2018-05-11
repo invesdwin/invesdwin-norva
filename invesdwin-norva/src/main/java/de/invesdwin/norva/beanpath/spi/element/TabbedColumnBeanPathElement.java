@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
@@ -19,7 +20,7 @@ public class TabbedColumnBeanPathElement extends APropertyBeanPathElement {
     }
 
     void setTabbedElement(final TabbedBeanPathElement tabbedElement) {
-        com.google.common.base.Preconditions.checkState(this.tabbedElement == null);
+        BeanPathAssertions.checkState(this.tabbedElement == null);
         this.tabbedElement = tabbedElement;
     }
 

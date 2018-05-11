@@ -8,6 +8,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import de.invesdwin.norva.beanpath.BeanPathObjects;
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
@@ -177,8 +178,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                     }
                     if (hidden != null) {
                         if (!hidden.skip()) {
-                            com.google.common.base.Preconditions
-                                    .checkState(new HiddenBeanPathElement(this).accept(visitors));
+                            BeanPathAssertions.checkState(new HiddenBeanPathElement(this).accept(visitors));
                         }
                         return false;
                     } else {
@@ -272,7 +272,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         //2. title annotation on property
         final Title titlePropertyAnnotation = getAccessor().getAnnotation(Title.class);
         if (titlePropertyAnnotation != null) {
-            com.google.common.base.Preconditions.checkState(BeanPathStrings.isNotBlank(titlePropertyAnnotation.value()),
+            BeanPathAssertions.checkState(BeanPathStrings.isNotBlank(titlePropertyAnnotation.value()),
                     "@%s value on property [%s] must not be blank!", Title.class.getSimpleName(), getBeanPath());
             return titlePropertyAnnotation.value();
         }
@@ -287,7 +287,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         //4. title annotation on type
         final Title titleTypeAnnotation = getAccessor().getType().getAnnotation(Title.class);
         if (titleTypeAnnotation != null) {
-            com.google.common.base.Preconditions.checkState(BeanPathStrings.isNotBlank(titleTypeAnnotation.value()),
+            BeanPathAssertions.checkState(BeanPathStrings.isNotBlank(titleTypeAnnotation.value()),
                     "@%s value on type [%s:%s] must not be blank!", Title.class.getSimpleName(), getBeanPath(),
                     getAccessor().getType().getSimpleName());
             return titleTypeAnnotation.value();
@@ -410,7 +410,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
             //6. check tooltip annotation
             final Tooltip tooltipAnnotation = getAccessor().getAnnotation(Tooltip.class);
             if (tooltipAnnotation != null) {
-                com.google.common.base.Preconditions.checkState(BeanPathStrings.isNotBlank(tooltipAnnotation.value()),
+                BeanPathAssertions.checkState(BeanPathStrings.isNotBlank(tooltipAnnotation.value()),
                         "@%s value should not be null!", Tooltip.class.getSimpleName());
                 return tooltipAnnotation.value();
             }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.SelectionBeanPathPropertyModifier;
@@ -114,7 +115,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     }
 
     protected void verifyChoiceElementFound() {
-        com.google.common.base.Preconditions.checkNotNull(choiceElement, "No choice element found!");
+        BeanPathAssertions.checkNotNull(choiceElement, "No choice element found!");
     }
 
     private boolean isEnumChoice() {

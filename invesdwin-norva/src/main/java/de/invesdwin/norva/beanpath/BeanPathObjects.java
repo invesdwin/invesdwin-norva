@@ -37,7 +37,7 @@ public final class BeanPathObjects {
     private BeanPathObjects() {}
 
     public static void setDeepCloneProvider(final IDeepCloneProvider deepCloneProvider) {
-        com.google.common.base.Preconditions.checkNotNull(deepCloneProvider);
+        BeanPathAssertions.checkNotNull(deepCloneProvider);
         BeanPathObjects.deepCloneProvider = deepCloneProvider;
     }
 

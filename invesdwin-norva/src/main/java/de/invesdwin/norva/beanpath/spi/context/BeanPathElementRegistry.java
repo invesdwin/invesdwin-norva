@@ -3,11 +3,11 @@ package de.invesdwin.norva.beanpath.spi.context;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.google.common.base.Function;
-
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
@@ -33,9 +33,9 @@ public class BeanPathElementRegistry {
         final IBeanPathElement oldElement = beanPath_element.put(e.getBeanPath(), e);
         if (oldElement instanceof IUtilityBeanPathElement) {
             final IUtilityBeanPathElement cOldElement = (IUtilityBeanPathElement) oldElement;
-            com.google.common.base.Preconditions.checkState(cOldElement.isAttachedToElement());
+            BeanPathAssertions.checkState(cOldElement.isAttachedToElement());
         } else {
-            com.google.common.base.Preconditions.checkState(oldElement == null,
+            BeanPathAssertions.checkState(oldElement == null,
                     "Element %s [%s] cannot be added because another one already exists with that bean path.",
                     e.getClass().getSimpleName(), e.getBeanPath());
         }
@@ -45,7 +45,7 @@ public class BeanPathElementRegistry {
         final String beanPath = BeanPathUtil.newBeanPath(redirector, redirect);
         //the first interceptor that is found is used, all others are ignored
         if (beanPath_redirect.get(beanPath) == null) {
-            com.google.common.base.Preconditions.checkState(beanPath_redirect.put(beanPath, redirector) == null);
+            BeanPathAssertions.checkState(beanPath_redirect.put(beanPath, redirector) == null);
         }
     }
 

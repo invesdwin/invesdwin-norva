@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element.simple.invoker.internal;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInvoker;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
@@ -39,7 +40,7 @@ public class PropertyGetterInvoker implements IBeanPathActionInvoker {
     }
 
     private void assertNoParams(final Object... params) {
-        com.google.common.base.Preconditions.checkState(params.length == 0, "Parameters are not supported in %s",
+        BeanPathAssertions.checkState(params.length == 0, "Parameters are not supported in %s",
                 getClass().getSimpleName());
     }
 

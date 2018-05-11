@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
@@ -17,7 +18,7 @@ public class EnumConstantsBeanPathPropertyModifier implements IBeanPathPropertyM
 
     public EnumConstantsBeanPathPropertyModifier(final IBeanPathAccessor accessor) {
         //explicitly checking type here for enum since the accessor should be for a selectionModifier anyway
-        com.google.common.base.Preconditions.checkArgument(accessor.getType().isEnum());
+        BeanPathAssertions.checkArgument(accessor.getType().isEnum());
         this.delegate = new BeanPathPropertyModifier(accessor);
     }
 

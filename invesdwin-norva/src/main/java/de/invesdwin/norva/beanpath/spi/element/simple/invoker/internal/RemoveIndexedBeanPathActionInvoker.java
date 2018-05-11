@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 
 @NotThreadSafe
@@ -16,7 +17,7 @@ public class RemoveIndexedBeanPathActionInvoker extends IndexedBeanPathActionInv
 
     @Override
     public Object invokeFromTarget(final Object target, final Object... params) {
-        com.google.common.base.Preconditions.checkArgument(params.length == 0);
+        BeanPathAssertions.checkArgument(params.length == 0);
         return super.invokeFromTarget(getAccessor().getContainer().getObject(), target);
     }
 

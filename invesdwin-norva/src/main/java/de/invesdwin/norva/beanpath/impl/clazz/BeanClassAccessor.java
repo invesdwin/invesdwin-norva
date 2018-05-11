@@ -12,6 +12,7 @@ import java.lang.reflect.WildcardType;
 import javax.annotation.concurrent.Immutable;
 
 import de.invesdwin.norva.beanpath.BeanPathObjects;
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.clazz.internal.FieldInternalBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.clazz.internal.IInternalBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.clazz.internal.MethodInternalBeanClassAccessor;
@@ -79,7 +80,7 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
                 classType = (Class<?>) typeVariable.getGenericDeclaration();
             } else {
                 final Type[] bounds = typeVariable.getBounds();
-                com.google.common.base.Preconditions.checkArgument(bounds.length == 1);
+                BeanPathAssertions.checkArgument(bounds.length == 1);
                 final Type bound = bounds[0];
                 return determineClassType(bound);
             }

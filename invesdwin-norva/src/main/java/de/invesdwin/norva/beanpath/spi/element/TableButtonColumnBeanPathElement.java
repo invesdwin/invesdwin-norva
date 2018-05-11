@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInvoker;
 import de.invesdwin.norva.beanpath.spi.element.simple.invoker.internal.IndexedBeanPathActionInvoker;
@@ -24,7 +25,7 @@ public class TableButtonColumnBeanPathElement extends AActionBeanPathElement imp
     }
 
     void setTableElement(final ATableBeanPathElement tableElement) {
-        com.google.common.base.Preconditions.checkState(this.tableElement == null);
+        BeanPathAssertions.checkState(this.tableElement == null);
         this.tableElement = tableElement;
     }
 

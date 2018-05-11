@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
@@ -19,7 +20,7 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
 
     public ArrayBeanPathPropertyModifier(final IBeanPathAccessor accessor,
             final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier) {
-        com.google.common.base.Preconditions.checkArgument(accessor.getRawType().isArray());
+        BeanPathAssertions.checkArgument(accessor.getRawType().isArray());
         this.delegate = new BeanPathPropertyModifier(accessor);
         this.invalidChoiceModifier = invalidChoiceModifier;
     }

@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.IndexedBeanPathPropertyModifier;
@@ -24,7 +25,7 @@ public class TableTextColumnBeanPathElement extends APropertyBeanPathElement imp
     }
 
     void setTableElement(final TableBeanPathElement tableElement) {
-        com.google.common.base.Preconditions.checkState(this.tableElement == null);
+        BeanPathAssertions.checkState(this.tableElement == null);
         this.tableElement = tableElement;
     }
 

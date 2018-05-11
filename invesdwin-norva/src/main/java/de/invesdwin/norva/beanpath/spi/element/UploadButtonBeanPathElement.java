@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassType;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ActionInvokerBeanObjectAccessor;
@@ -50,7 +51,7 @@ public class UploadButtonBeanPathElement extends AActionBeanPathElement implemen
     public void setUploadedFiles(final List<File> files) {
         if (!isMultiUpload()) {
             if (files.size() > 0) {
-                com.google.common.base.Preconditions.checkState(files.size() == 1, "MultiUpload is not supported!");
+                BeanPathAssertions.checkState(files.size() == 1, "MultiUpload is not supported!");
                 setUploadedFile(files.get(0));
             } else {
                 setUploadedFile(null);

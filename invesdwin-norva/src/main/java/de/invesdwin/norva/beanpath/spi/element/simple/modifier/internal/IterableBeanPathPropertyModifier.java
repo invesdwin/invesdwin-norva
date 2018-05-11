@@ -1,6 +1,7 @@
 package de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
@@ -22,8 +24,8 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
 
     public IterableBeanPathPropertyModifier(final IBeanPathAccessor accessor,
             final IBeanPathPropertyModifier<List<?>> invalidChoiceModifier) {
-        com.google.common.base.Preconditions.checkArgument(!accessor.getRawType().isArray());
-        com.google.common.base.Preconditions.checkArgument(accessor.getRawType().isIterable());
+        BeanPathAssertions.checkArgument(!accessor.getRawType().isArray());
+        BeanPathAssertions.checkArgument(accessor.getRawType().isIterable());
         this.delegate = new BeanPathPropertyModifier(accessor);
         this.invalidChoiceModifier = invalidChoiceModifier;
     }
@@ -78,7 +80,7 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
             }
         }
         //do not reuse exising list, instead create a new copy to allow modification of it
-        final List<Object> list = com.google.common.collect.Lists.newArrayList(value);
+        final List<Object> list = new ArrayList<Object>(Arrays.asList(value));
         if (invalidChoices != null) {
             final List<Object> filtedInvalidChoices = new ArrayList<Object>();
             for (final Object invalidChoice : invalidChoices) {

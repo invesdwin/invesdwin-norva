@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.annotation.ColumnOrder;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
@@ -58,15 +59,14 @@ public abstract class AColumnOrderHelper<E> {
                 } else {
                     columnElement = element.getContext().getElementRegistry().getElement(beanPath);
                 }
-                com.google.common.base.Preconditions.checkNotNull(columnElement,
+                BeanPathAssertions.checkNotNull(columnElement,
                         "%s in [%s] specifies a column that does not exist: %s", ColumnOrder.class.getSimpleName(),
                         element.getBeanPath(), beanPath);
-                com.google.common.base.Preconditions.checkState(columnType.isAssignableFrom(columnElement.getClass()),
+                BeanPathAssertions.checkState(columnType.isAssignableFrom(columnElement.getClass()),
                         "%s in [%s] specifies a column that is in fact not a column [%s]: %s",
                         ColumnOrder.class.getSimpleName(), element.getBeanPath(), beanPath);
                 final E castColumnElement = (E) columnElement;
-                com.google.common.base.Preconditions.checkState(
-                        getAssociatedHolderFromColumn(castColumnElement) == element,
+                BeanPathAssertions.checkState(getAssociatedHolderFromColumn(castColumnElement) == element,
                         "%s in [%s] specifies a column from a different table: %s", ColumnOrder.class.getSimpleName(),
                         element.getBeanPath(), beanPath);
                 columns.add(castColumnElement);

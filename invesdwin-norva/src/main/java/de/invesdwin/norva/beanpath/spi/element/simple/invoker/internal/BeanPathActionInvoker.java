@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element.simple.invoker.internal;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectContext;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
@@ -13,9 +14,8 @@ public class BeanPathActionInvoker implements IBeanPathActionInvoker {
     private final IBeanObjectAccessor accessor;
 
     public BeanPathActionInvoker(final IBeanPathAccessor accessor) {
-        com.google.common.base.Preconditions.checkState(accessor instanceof IBeanObjectAccessor,
-                "%s is only available in a %s", IBeanPathActionInvoker.class.getSimpleName(),
-                BeanObjectContext.class.getSimpleName());
+        BeanPathAssertions.checkState(accessor instanceof IBeanObjectAccessor, "%s is only available in a %s",
+                IBeanPathActionInvoker.class.getSimpleName(), BeanObjectContext.class.getSimpleName());
         this.accessor = (IBeanObjectAccessor) accessor;
     }
 

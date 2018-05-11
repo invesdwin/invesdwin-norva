@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.spi.RootBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
@@ -13,7 +14,7 @@ public class RootBeanPathElement extends ABeanPathElement {
 
     public RootBeanPathElement(final ABeanPathContext context) {
         super(context, context.getRootContainer(), new RootBeanPathAccessor(context));
-        com.google.common.base.Preconditions.checkArgument(ROOT_BEAN_PATH.equals(getBeanPath()));
+        BeanPathAssertions.checkArgument(ROOT_BEAN_PATH.equals(getBeanPath()));
     }
 
     @Override

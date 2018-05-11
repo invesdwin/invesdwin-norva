@@ -117,21 +117,29 @@ public class BeanModelAccessor extends ABeanPathAccessor {
 
     private BeanModelType determineType() {
         final TypeMirror typeMirror;
-        if (rawType.getTypeMirror() instanceof ArrayType) {
-            final ArrayType rawTypeMirror = (ArrayType) rawType.getTypeMirror();
-            typeMirror = rawTypeMirror.getComponentType();
+        final TypeMirror rawTypeMirror = rawType.getTypeMirror();
+        if (rawTypeMirror instanceof ArrayType) {
+            final ArrayType cRawTypeMirror = (ArrayType) rawTypeMirror;
+            TypeMirror componentTypeMirror;
+            try {
+                componentTypeMirror = cRawTypeMirror.getComponentType();
+            } catch (final Throwable t) {
+                //java.lang.ClassCastException: com.sun.tools.javac.code.Type$ClassType cannot be cast to com.sun.tools.javac.code.Type$ArrayType
+                componentTypeMirror = rawTypeMirror;
+            }
+            typeMirror = componentTypeMirror;
         } else if (rawType.isIterable()) {
-            final DeclaredType rawDeclaredType = (DeclaredType) rawType.getTypeMirror();
+            final DeclaredType rawDeclaredType = (DeclaredType) rawTypeMirror;
             final List<? extends TypeMirror> typeArguments = rawDeclaredType.getTypeArguments();
             if (typeArguments.size() == 1) {
                 typeMirror = typeArguments.get(0);
             } else {
                 //fallback to rawType, since this is not a generic iterable collection
-                typeMirror = rawType.getTypeMirror();
+                typeMirror = rawTypeMirror;
             }
         } else {
             //fallback to rawType, since this is not an array or generic
-            typeMirror = rawType.getTypeMirror();
+            typeMirror = rawTypeMirror;
         }
         return new BeanModelType(context.getEnv(), typeMirror, determineTypeElement(typeMirror));
     }

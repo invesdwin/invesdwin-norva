@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.AActionBeanPathElement;
@@ -19,7 +20,7 @@ public class ContainerTitleBeanPathElement extends AActionBeanPathElement implem
 
     public ContainerTitleBeanPathElement(final SimpleActionBeanPathElement simpleActionElement) {
         super(simpleActionElement);
-        com.google.common.base.Preconditions
+        BeanPathAssertions
                 .checkArgument(CONTAINER_TITLE_BEAN_PATH_FRAGMENT.equals(getAccessor().getBeanPathFragment()));
     }
 
@@ -42,7 +43,7 @@ public class ContainerTitleBeanPathElement extends AActionBeanPathElement implem
 
     @Override
     public void setAttachedToElement(final IBeanPathElement attachedToElement) {
-        com.google.common.base.Preconditions.checkState(this.attachedToElement == null);
+        BeanPathAssertions.checkState(this.attachedToElement == null);
         this.attachedToElement = attachedToElement;
     }
 

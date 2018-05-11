@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.AActionBeanPathElement;
@@ -40,7 +41,7 @@ public class RemoveFromBeanPathElement extends AActionBeanPathElement implements
 
     @Override
     public void setAttachedToElement(final IBeanPathElement attachedToElement) {
-        com.google.common.base.Preconditions.checkState(this.attachedToElement == null);
+        BeanPathAssertions.checkState(this.attachedToElement == null);
         this.attachedToElement = attachedToElement;
     }
 
