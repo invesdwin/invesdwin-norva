@@ -1,7 +1,6 @@
 package de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -80,7 +79,10 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
             }
         }
         //do not reuse exising list, instead create a new copy to allow modification of it
-        final List<Object> list = new ArrayList<Object>(Arrays.asList(value));
+        final List<Object> list = new ArrayList<Object>();
+        for (final Object o : value) {
+            list.add(o);
+        }
         if (invalidChoices != null) {
             final List<Object> filtedInvalidChoices = new ArrayList<Object>();
             for (final Object invalidChoice : invalidChoices) {
