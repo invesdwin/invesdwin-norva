@@ -59,7 +59,7 @@ public class UploadButtonBeanPathElement extends AActionBeanPathElement implemen
         } else {
             if (choiceModifier == null) {
                 choiceModifier = new ChoiceBeanPathPropertyModifier(new ActionInvokerBeanObjectAccessor(getInvoker()),
-                        null);
+                        null, false);
             }
             choiceModifier.setValue(files);
         }

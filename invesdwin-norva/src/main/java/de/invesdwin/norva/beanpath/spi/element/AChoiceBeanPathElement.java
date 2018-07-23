@@ -25,6 +25,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     private ColumnOrderBeanPathElement columnOrderElement;
     private TableRemoveFromButtonColumnBeanPathElement removeFromButtonColumn;
     private TableSelectionButtonColumnBeanPathElement selectionButtonColumn;
+    private boolean allowEnum;
 
     public AChoiceBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement) {
         super(simplePropertyElement);
@@ -76,7 +77,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     public IBeanPathPropertyModifier<List<?>> getChoiceModifier() {
         if (choiceModifier == null) {
             choiceModifier = new ChoiceBeanPathPropertyModifier(getChoiceElement().getAccessor(),
-                    getSelectionModifier());
+                    getSelectionModifier(), allowEnum);
         }
         return choiceModifier;
     }
@@ -90,6 +91,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
             this.modifierIsRedirectedChoice = isCollectionModifier();
             //redirect to this property as choice for enums
             this.choiceElement = new ChoiceBeanPathElement(getSimplePropertyElement(), false);
+            this.allowEnum = true;
         }
         verifyChoiceElementFound();
 

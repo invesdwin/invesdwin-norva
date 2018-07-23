@@ -73,10 +73,10 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
                 columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier(
                         new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ActionInvokerBeanObjectAccessor(
                                 getInvoker()),
-                        null);
+                        null, false);
             } else if (getAccessor().getBeanPathFragment().endsWith(COLUMN_ORDER_SUFFIX)) {
                 columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier(
-                        getSimpleActionElement().getAccessor(), null);
+                        getSimpleActionElement().getAccessor(), null, false);
             } else {
                 throw newInvalidUtilityException();
             }
