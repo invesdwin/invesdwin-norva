@@ -111,7 +111,8 @@ public final class BeanPathObjects {
         if (obj instanceof Serializable) {
             return deepClone(obj);
         } else {
-            throw new UnsupportedOperationException("Object [" + obj + "] is neither cloneable, nor serializable!");
+            throw new UnsupportedOperationException("Object [" + obj + "] of type [" + obj.getClass().getName()
+                    + "] is neither cloneable, nor serializable!");
         }
     }
 
