@@ -36,7 +36,7 @@ public class UploadButtonBeanPathElement extends AActionBeanPathElement implemen
 
     @Override
     public BeanClassType getValidatableType() {
-        return getInvoker().getAccessor().getRawType();
+        return getInvoker().getBeanClassAccessor().getRawType();
     }
 
     @Override

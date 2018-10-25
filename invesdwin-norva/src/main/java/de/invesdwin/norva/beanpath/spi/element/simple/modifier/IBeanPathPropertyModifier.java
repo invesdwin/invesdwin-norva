@@ -1,10 +1,16 @@
 package de.invesdwin.norva.beanpath.spi.element.simple.modifier;
 
+import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
+import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 
 public interface IBeanPathPropertyModifier<E> {
 
-    IBeanObjectAccessor getAccessor();
+    IBeanClassAccessor getBeanClassAccessor();
+
+    IBeanObjectAccessor getBeanObjectAccessor();
+
+    IBeanPathAccessor getAccessor();
 
     void setValue(E value);
 

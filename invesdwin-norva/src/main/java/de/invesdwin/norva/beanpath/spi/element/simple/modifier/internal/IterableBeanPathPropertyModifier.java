@@ -10,6 +10,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.BeanPathObjects;
+import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
@@ -30,8 +31,18 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
     }
 
     @Override
-    public IBeanObjectAccessor getAccessor() {
+    public IBeanPathAccessor getAccessor() {
         return delegate.getAccessor();
+    }
+
+    @Override
+    public IBeanClassAccessor getBeanClassAccessor() {
+        return delegate.getBeanClassAccessor();
+    }
+
+    @Override
+    public IBeanObjectAccessor getBeanObjectAccessor() {
+        return delegate.getBeanObjectAccessor();
     }
 
     @Override
@@ -163,7 +174,7 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
     }
 
     private Class<?> getCollectionTypeToBeCreated() {
-        final Class<?> type = getAccessor().getRawType().getType();
+        final Class<?> type = getBeanClassAccessor().getRawType().getType();
         if (type.equals(List.class) || type.equals(Collection.class) || type.equals(Iterable.class)) {
             return ArrayList.class;
         } else if (type.equals(Set.class)) {

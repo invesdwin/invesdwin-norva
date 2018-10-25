@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
@@ -16,8 +17,18 @@ public class NoObjectBeanPathPropertyModifier implements IBeanPathPropertyModifi
     }
 
     @Override
-    public IBeanObjectAccessor getAccessor() {
+    public IBeanPathAccessor getAccessor() {
         return delegate.getAccessor();
+    }
+
+    @Override
+    public IBeanClassAccessor getBeanClassAccessor() {
+        return delegate.getBeanClassAccessor();
+    }
+
+    @Override
+    public IBeanObjectAccessor getBeanObjectAccessor() {
+        return delegate.getBeanObjectAccessor();
     }
 
     @Override
@@ -26,8 +37,8 @@ public class NoObjectBeanPathPropertyModifier implements IBeanPathPropertyModifi
     }
 
     private UnsupportedOperationException newUnsupportedOperationException() {
-        return new UnsupportedOperationException("There is no default uniquely defined object for this property: "
-                + getAccessor());
+        return new UnsupportedOperationException(
+                "There is no default uniquely defined object for this property: " + getAccessor());
     }
 
     @Override

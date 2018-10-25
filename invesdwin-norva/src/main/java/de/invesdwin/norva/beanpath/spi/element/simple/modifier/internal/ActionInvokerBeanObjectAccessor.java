@@ -12,7 +12,7 @@ public class ActionInvokerBeanObjectAccessor extends DelegateBeanObjectAccessor 
     private final ActionInvokerBeanClassAccessor beanClassAccessor;
 
     public ActionInvokerBeanObjectAccessor(final IBeanPathActionInvoker invoker) {
-        super(invoker.getAccessor());
+        super(invoker.getBeanObjectAccessor());
         this.beanClassAccessor = new ActionInvokerBeanClassAccessor(invoker);
     }
 

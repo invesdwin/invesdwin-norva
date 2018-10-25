@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInvoker;
@@ -102,8 +103,18 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
             }
 
             @Override
-            public IBeanObjectAccessor getAccessor() {
+            public IBeanPathAccessor getAccessor() {
                 return SelectionBeanPathPropertyModifier.this.getAccessor();
+            }
+
+            @Override
+            public IBeanClassAccessor getBeanClassAccessor() {
+                return SelectionBeanPathPropertyModifier.this.getBeanClassAccessor();
+            }
+
+            @Override
+            public IBeanObjectAccessor getBeanObjectAccessor() {
+                return SelectionBeanPathPropertyModifier.this.getBeanObjectAccessor();
             }
         };
     }

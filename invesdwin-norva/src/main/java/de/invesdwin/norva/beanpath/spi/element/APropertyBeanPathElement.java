@@ -31,7 +31,7 @@ public abstract class APropertyBeanPathElement extends ABeanPathElement
 
     @Override
     public BeanClassType getValidatableType() {
-        return getModifier().getAccessor().getRawType();
+        return getModifier().getBeanClassAccessor().getRawType();
     }
 
     @Override

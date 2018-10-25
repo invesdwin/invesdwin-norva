@@ -3,7 +3,9 @@ package de.invesdwin.norva.beanpath.spi.element.simple.invoker.internal;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
+import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
+import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInvoker;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 
@@ -17,8 +19,18 @@ public class PropertyGetterInvoker implements IBeanPathActionInvoker {
     }
 
     @Override
-    public IBeanObjectAccessor getAccessor() {
+    public IBeanPathAccessor getAccessor() {
         return modifier.getAccessor();
+    }
+
+    @Override
+    public IBeanClassAccessor getBeanClassAccessor() {
+        return modifier.getBeanClassAccessor();
+    }
+
+    @Override
+    public IBeanObjectAccessor getBeanObjectAccessor() {
+        return modifier.getBeanObjectAccessor();
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
+import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
@@ -22,8 +23,18 @@ public class BooleanBeanPathPropertyModifier implements IBeanPathPropertyModifie
     }
 
     @Override
-    public IBeanObjectAccessor getAccessor() {
+    public IBeanPathAccessor getAccessor() {
         return delegate.getAccessor();
+    }
+
+    @Override
+    public IBeanClassAccessor getBeanClassAccessor() {
+        return delegate.getBeanClassAccessor();
+    }
+
+    @Override
+    public IBeanObjectAccessor getBeanObjectAccessor() {
+        return delegate.getBeanObjectAccessor();
     }
 
     @Override

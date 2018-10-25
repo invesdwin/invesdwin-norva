@@ -10,7 +10,7 @@ import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInv
 public class ActionInvokerBeanClassAccessor extends DelegateBeanClassAccessor {
 
     public ActionInvokerBeanClassAccessor(final IBeanPathActionInvoker invoker) {
-        super(invoker.getAccessor().getBeanClassAccessor());
+        super(invoker.getBeanClassAccessor());
     }
 
     @Override
@@ -51,9 +51,9 @@ public class ActionInvokerBeanClassAccessor extends DelegateBeanClassAccessor {
 
     public static UnsupportedOperationException newInvokerHasNoArgumentsException(final IBeanPathAccessor accessor,
             final Object value) {
-        return new UnsupportedOperationException(IBeanPathActionInvoker.class.getSimpleName() + " for "
-                + IBeanPathAccessor.class.getSimpleName() + " [" + accessor
-                + "] has no arguments, thus unable to set value [" + value + "]!");
+        return new UnsupportedOperationException(
+                IBeanPathActionInvoker.class.getSimpleName() + " for " + IBeanPathAccessor.class.getSimpleName() + " ["
+                        + accessor + "] has no arguments, thus unable to set value [" + value + "]!");
     }
 
 }

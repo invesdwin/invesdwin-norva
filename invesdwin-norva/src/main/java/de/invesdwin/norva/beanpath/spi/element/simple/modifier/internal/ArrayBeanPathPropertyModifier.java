@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
+import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
@@ -26,8 +27,18 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
     }
 
     @Override
-    public IBeanObjectAccessor getAccessor() {
+    public IBeanPathAccessor getAccessor() {
         return delegate.getAccessor();
+    }
+
+    @Override
+    public IBeanClassAccessor getBeanClassAccessor() {
+        return delegate.getBeanClassAccessor();
+    }
+
+    @Override
+    public IBeanObjectAccessor getBeanObjectAccessor() {
+        return delegate.getBeanObjectAccessor();
     }
 
     @Override
@@ -71,7 +82,8 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
             return null;
         } else {
             try {
-                final Object[] newArray = (Object[]) Array.newInstance(getAccessor().getType().getType(), value.size());
+                final Object[] newArray = (Object[]) Array.newInstance(getBeanClassAccessor().getType().getType(),
+                        value.size());
                 return value.toArray(newArray);
             } catch (final Exception e) {
                 throw new RuntimeException(e);
