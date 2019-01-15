@@ -7,8 +7,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
+import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;

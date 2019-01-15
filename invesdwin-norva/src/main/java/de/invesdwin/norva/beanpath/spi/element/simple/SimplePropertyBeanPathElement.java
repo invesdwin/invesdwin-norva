@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element.simple;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.annotation.Format;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
@@ -25,6 +26,19 @@ public class SimplePropertyBeanPathElement extends ABeanPathElement implements I
     @Override
     public boolean isProperty() {
         return true;
+    }
+
+    @Override
+    public String getFormatString() {
+        final Format annotation = getAccessor().getAnnotation(Format.class);
+        if (annotation != null) {
+            if (org.apache.commons.lang3.StringUtils.isBlank(annotation.value())) {
+                throw new IllegalStateException("@" + Format.class.getSimpleName() + " format should not be blank: \""
+                        + annotation.value() + "\"");
+            }
+            return annotation.value();
+        }
+        return null;
     }
 
     @Override

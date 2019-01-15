@@ -8,4 +8,6 @@ public interface IPropertyBeanPathElement extends IBeanPathElement {
 
     boolean isModifierAvailable();
 
+    String getFormatString();
+
 }

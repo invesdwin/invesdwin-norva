@@ -29,6 +29,11 @@ public class TableSelectionButtonColumnBeanPathElement extends ABeanPathElement
     }
 
     @Override
+    public String getFormatString() {
+        return tableElement.getFormatString();
+    }
+
+    @Override
     public boolean isVisible() {
         //selection cannot be filtered
         return true;

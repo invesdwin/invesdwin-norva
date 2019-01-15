@@ -25,6 +25,11 @@ public abstract class APropertyBeanPathElement extends ABeanPathElement
     }
 
     @Override
+    public String getFormatString() {
+        return getSimplePropertyElement().getFormatString();
+    }
+
+    @Override
     public ValidateBeanPathElement getValidateElement() {
         return validateElement;
     }
