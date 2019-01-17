@@ -27,6 +27,8 @@ public interface IBeanPathElement extends IBeanPathFragment {
 
     boolean isAction();
 
+    boolean isForced();
+
     IBeanPathElement getParentElement();
 
     @Override

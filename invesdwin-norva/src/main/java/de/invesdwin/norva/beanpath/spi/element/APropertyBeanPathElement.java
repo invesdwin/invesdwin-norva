@@ -30,6 +30,11 @@ public abstract class APropertyBeanPathElement extends ABeanPathElement
     }
 
     @Override
+    public boolean isEager() {
+        return getSimplePropertyElement().isEager();
+    }
+
+    @Override
     public ValidateBeanPathElement getValidateElement() {
         return validateElement;
     }

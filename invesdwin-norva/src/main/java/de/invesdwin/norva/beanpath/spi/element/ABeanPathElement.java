@@ -13,6 +13,7 @@ import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
 import de.invesdwin.norva.beanpath.annotation.Disabled;
+import de.invesdwin.norva.beanpath.annotation.Forced;
 import de.invesdwin.norva.beanpath.annotation.Hidden;
 import de.invesdwin.norva.beanpath.annotation.Title;
 import de.invesdwin.norva.beanpath.annotation.Tooltip;
@@ -92,6 +93,17 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean isForced() {
+        if (getAccessor().getAnnotation(Forced.class) != null) {
+            return true;
+        }
+        if (getContainer().getType().getAnnotation(Forced.class) != null) {
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -10,4 +10,6 @@ public interface IPropertyBeanPathElement extends IBeanPathElement {
 
     String getFormatString();
 
+    boolean isEager();
+
 }

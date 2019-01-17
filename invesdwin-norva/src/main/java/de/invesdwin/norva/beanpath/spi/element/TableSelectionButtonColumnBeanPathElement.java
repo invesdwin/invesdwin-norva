@@ -34,6 +34,11 @@ public class TableSelectionButtonColumnBeanPathElement extends ABeanPathElement
     }
 
     @Override
+    public boolean isEager() {
+        return tableElement.isEager();
+    }
+
+    @Override
     public boolean isVisible() {
         //selection cannot be filtered
         return true;
