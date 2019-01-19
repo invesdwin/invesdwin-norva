@@ -39,4 +39,14 @@ public abstract class AActionBeanPathElement extends ABeanPathElement implements
         return simpleActionElement;
     }
 
+    @Override
+    public boolean isModalCloser() {
+        return getSimpleActionElement().isModalCloser();
+    }
+
+    @Override
+    public boolean isModalOpener() {
+        return getSimpleActionElement().isModalOpener();
+    }
+
 }

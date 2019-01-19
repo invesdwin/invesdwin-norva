@@ -8,4 +8,8 @@ public interface IActionBeanPathElement extends IBeanPathElement {
 
     boolean isInvokerAvailable();
 
+    boolean isModalCloser();
+
+    boolean isModalOpener();
+
 }

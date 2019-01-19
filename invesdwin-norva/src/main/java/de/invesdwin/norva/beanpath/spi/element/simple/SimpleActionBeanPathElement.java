@@ -2,6 +2,8 @@ package de.invesdwin.norva.beanpath.spi.element.simple;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.annotation.ModalCloser;
+import de.invesdwin.norva.beanpath.annotation.ModalOpener;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
@@ -52,6 +54,22 @@ public class SimpleActionBeanPathElement extends ABeanPathElement implements IAc
 
     @Override
     public boolean shouldBeAddedToElementRegistry() {
+        return false;
+    }
+
+    @Override
+    public boolean isModalCloser() {
+        if (getAccessor().getAnnotation(ModalCloser.class) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isModalOpener() {
+        if (getAccessor().getAnnotation(ModalOpener.class) != null) {
+            return true;
+        }
         return false;
     }
 }

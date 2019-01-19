@@ -55,6 +55,16 @@ public class TableSelectionButtonColumnBeanPathElement extends ABeanPathElement
     }
 
     @Override
+    public boolean isModalCloser() {
+        return false;
+    }
+
+    @Override
+    public boolean isModalOpener() {
+        return false;
+    }
+
+    @Override
     protected void innerAccept(final IBeanPathVisitor visitor) {
         throw new UnsupportedOperationException();
     }
