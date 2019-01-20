@@ -4,6 +4,7 @@ import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
 import de.invesdwin.norva.beanpath.spi.IBeanPathFragment;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.TitleBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ContainerTitleBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.DisableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.HideBeanPathElement;
@@ -43,6 +44,8 @@ public interface IBeanPathElement extends IBeanPathFragment {
     ContainerTitleBeanPathElement getContainerTitleElement();
 
     TitleBeanPathElement getTitleElement();
+
+    TitleBeanPathPropertyModifier getTitleModifier();
 
     TooltipBeanPathElement getTooltipElement();
 

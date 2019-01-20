@@ -24,6 +24,7 @@ import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.TitleBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ContainerTitleBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.DisableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.HideBeanPathElement;
@@ -57,6 +58,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
     private ContainerTitleBeanPathElement containerTitleElement;
     private TitleBeanPathElement titleElement;
     private TooltipBeanPathElement tooltipElement;
+    private TitleBeanPathPropertyModifier titleModifier;
 
     public ABeanPathElement(final ABeanPathContext context, final IBeanPathContainer container,
             final IBeanPathAccessor accessor) {
@@ -124,6 +126,14 @@ public abstract class ABeanPathElement implements IBeanPathElement {
     @Override
     public TitleBeanPathElement getTitleElement() {
         return titleElement;
+    }
+
+    @Override
+    public TitleBeanPathPropertyModifier getTitleModifier() {
+        if (titleModifier == null) {
+            titleModifier = new TitleBeanPathPropertyModifier(this);
+        }
+        return titleModifier;
     }
 
     @Override
