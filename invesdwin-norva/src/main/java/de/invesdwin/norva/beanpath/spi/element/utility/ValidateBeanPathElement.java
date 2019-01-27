@@ -61,4 +61,14 @@ public class ValidateBeanPathElement extends AActionBeanPathElement implements I
         return message;
     }
 
+    public String validateFromRoot(final Object root, final Object newValue) {
+        final String message = BeanPathStrings.asString(getInvoker().invokeFromRoot(root, newValue));
+        return message;
+    }
+
+    public String validateFromTarget(final Object target, final Object newValue) {
+        final String message = BeanPathStrings.asString(getInvoker().invokeFromTarget(target, newValue));
+        return message;
+    }
+
 }
