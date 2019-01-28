@@ -5,6 +5,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.norva.beanpath.annotation.Eager;
 import de.invesdwin.norva.beanpath.annotation.Format;
 import de.invesdwin.norva.beanpath.annotation.Lazy;
+import de.invesdwin.norva.beanpath.impl.clazz.BeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
@@ -83,7 +84,7 @@ public class SimplePropertyBeanPathElement extends ABeanPathElement implements I
 
     @Override
     public boolean isModifierAvailable() {
-        return getAccessor() instanceof BeanObjectAccessor;
+        return getAccessor() instanceof BeanObjectAccessor || getAccessor() instanceof BeanClassAccessor;
     }
 
     @Override

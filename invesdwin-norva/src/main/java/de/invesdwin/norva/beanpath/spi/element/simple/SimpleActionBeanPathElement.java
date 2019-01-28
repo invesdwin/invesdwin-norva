@@ -4,6 +4,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.annotation.ModalCloser;
 import de.invesdwin.norva.beanpath.annotation.ModalOpener;
+import de.invesdwin.norva.beanpath.impl.clazz.BeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
@@ -34,7 +35,7 @@ public class SimpleActionBeanPathElement extends ABeanPathElement implements IAc
 
     @Override
     public boolean isInvokerAvailable() {
-        return getAccessor() instanceof BeanObjectAccessor;
+        return getAccessor() instanceof BeanObjectAccessor || getAccessor() instanceof BeanClassAccessor;
     }
 
     @Override
