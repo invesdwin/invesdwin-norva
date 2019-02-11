@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -27,7 +28,6 @@
 		<version.maven-source-plugin>3.0.1</version.maven-source-plugin>
 		<version.invesdwin-maven-plugin>1.0.3-SNAPSHOT</version.invesdwin-maven-plugin>
 
-		<version.hibernate-jpa-2.1-api>1.0.2.Final</version.hibernate-jpa-2.1-api>
 		<version.jboss-logging-generator>1.0.0.CR5</version.jboss-logging-generator>
 	</properties>
 
@@ -45,9 +45,8 @@
 			<artifactId>spring-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<version>${version.hibernate-jpa-2.1-api}</version>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
