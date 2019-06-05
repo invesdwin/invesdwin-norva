@@ -95,14 +95,14 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
             list.add(o);
         }
         if (invalidChoices != null) {
-            final List<Object> filtedInvalidChoices = new ArrayList<Object>();
+            final List<Object> filteredInvalidChoices = new ArrayList<Object>();
             for (final Object invalidChoice : invalidChoices) {
                 if (invalidChoiceModifier != null && !list.contains(invalidChoice)
                         && (invalidChoice != null || invalidChoiceModifier.getAccessor().isNullable())) {
-                    filtedInvalidChoices.add(invalidChoice);
+                    filteredInvalidChoices.add(invalidChoice);
                 }
             }
-            list.addAll(0, filtedInvalidChoices);
+            list.addAll(0, filteredInvalidChoices);
         }
         return list;
     }
