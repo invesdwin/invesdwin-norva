@@ -50,7 +50,7 @@ public class SimplePropertyBeanPathElement extends ABeanPathElement implements I
         IBeanPathElement parent = this;
         while (parent != null) {
             if (!parent.isProperty()) {
-                return false;
+                return getContext().getDefaultEager();
             }
             if (parent.getAccessor().getAnnotation(Lazy.class) != null) {
                 return false;
