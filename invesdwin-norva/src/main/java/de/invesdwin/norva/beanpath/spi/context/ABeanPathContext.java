@@ -22,4 +22,8 @@ public abstract class ABeanPathContext {
         return elementRegistry;
     }
 
+    public boolean getDefaultEager() {
+        return false;
+    }
+
 }

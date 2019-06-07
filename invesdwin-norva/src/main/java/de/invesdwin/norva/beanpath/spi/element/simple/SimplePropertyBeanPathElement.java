@@ -66,7 +66,7 @@ public class SimplePropertyBeanPathElement extends ABeanPathElement implements I
             }
             parent = parent.getParentElement();
         }
-        return false;
+        return getContext().getDefaultEager();
     }
 
     @Override
