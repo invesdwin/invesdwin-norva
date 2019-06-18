@@ -161,5 +161,10 @@
 		<connection>scm:git:https://github.com/subes/invesdwin-norva.git</connection>
 		<tag>HEAD</tag>
 	</scm>
+	
+	<ciManagement>
+		<system>jenkins</system>
+		<url>https://invesdwin.de/jenkins/job/dgr-deploy-invesdwin-norva/</url>
+	</ciManagement>
 
 </project>
