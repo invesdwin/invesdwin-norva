@@ -26,7 +26,7 @@
 		<version.compiler>1.6</version.compiler>
 
 		<version.maven-source-plugin>3.0.1</version.maven-source-plugin>
-		<version.invesdwin-maven-plugin>1.0.5-SNAPSHOT</version.invesdwin-maven-plugin>
+		<version.invesdwin-maven-plugin>null</version.invesdwin-maven-plugin>
 
 		<version.jboss-logging-generator>1.0.0.CR5</version.jboss-logging-generator>
 	</properties>
