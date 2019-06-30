@@ -23,7 +23,7 @@
 		<version.compiler>1.6</version.compiler>
 
 		<version.maven-source-plugin>3.0.1</version.maven-source-plugin>
-		<version.invesdwin-maven-plugin>1.0.5-SNAPSHOT</version.invesdwin-maven-plugin>
+		<project.version.invesdwin-maven-plugin>1.0.5-SNAPSHOT</project.version.invesdwin-maven-plugin>
 
 		<version.jboss-logging-generator>1.0.0.CR5</version.jboss-logging-generator>
 	</properties>
@@ -33,7 +33,7 @@
 			<dependency>
 				<groupId>de.invesdwin</groupId>
 				<artifactId>invesdwin-maven-plugin</artifactId>
-				<version>${version.invesdwin-maven-plugin}</version>
+				<version>${project.version.invesdwin-maven-plugin}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -119,7 +119,7 @@
 			<plugin>
 				<groupId>de.invesdwin</groupId>
 				<artifactId>invesdwin-maven-plugin</artifactId>
-				<version>${version.invesdwin-maven-plugin}</version>
+				<version>${project.version.invesdwin-maven-plugin}</version>
 				<executions>
 					<execution>
 						<goals>
