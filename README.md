@@ -15,7 +15,7 @@ Dependency declaration:
 <dependency>
 	<groupId>de.invesdwin</groupId>
 	<artifactId>invesdwin-norva</artifactId>
-	<version>1.0.0-SNAPSHOT</version><!---version.invesdwin-norva-->
+	<version>1.0.1</version><!---version.invesdwin-norva-->
 </dependency>
 ```
 
