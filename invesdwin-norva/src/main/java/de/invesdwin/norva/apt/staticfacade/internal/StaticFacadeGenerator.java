@@ -51,8 +51,9 @@ public class StaticFacadeGenerator implements Runnable {
 
         final FileObject fileObject;
         try {
-            fileObject = env.getFiler().createResource(StandardLocation.SOURCE_OUTPUT, staticFacadePackage,
-                    staticFacadeClassName + ".java");
+            fileObject = env.getFiler()
+                    .createResource(StandardLocation.SOURCE_OUTPUT, staticFacadePackage,
+                            staticFacadeClassName + ".java");
 
             final Writer gen = fileObject.openWriter();
             try {
@@ -103,31 +104,16 @@ public class StaticFacadeGenerator implements Runnable {
                 && modifiers.contains(Modifier.PUBLIC) && modifiers.contains(Modifier.STATIC)) {
             final ExecutableElement m = (ExecutableElement) element;
             final List<? extends VariableElement> params = m.getParameters();
-            String methodSignature = "";
             final List<String> paramNames = new ArrayList<String>();
             for (final VariableElement p : params) {
                 paramNames.add(p.getSimpleName().toString());
             }
 
-            // method signature
-            methodSignature += "public static ";
-            // generic type variables
-            methodSignature += generateGenericTypeArguments(m);
-            // return type
-            methodSignature += typeToString(m.getReturnType(), false);
-            // method name
-            methodSignature += " " + m.getSimpleName() + "(";
-            // params
-            for (int i = 0; i < params.size(); i++) {
-                final boolean isVarArgsParam = m.isVarArgs() && i == params.size() - 1;
-                methodSignature += typeToString(params.get(i).asType(), isVarArgsParam);
-                methodSignature += " " + paramNames.get(i);
-                if (i < params.size() - 1) {
-                    methodSignature += ", ";
-                }
+            final String seeMethodSignature = newSeeMethodSignature(targetClass, m, params);
+            if (org.apache.commons.lang3.StringUtils.equalsAny(seeMethodSignature, def.filterSeeMethodSignatures())) {
+                return;
             }
-            methodSignature += ") ";
-
+            final String methodSignature = newMethodSignature(m, params, paramNames);
             for (final String filterExpression : def.filterMethodSignatureExpressions()) {
                 if (methodSignature.matches(filterExpression)) {
                     return;
@@ -135,9 +121,36 @@ public class StaticFacadeGenerator implements Runnable {
             }
 
             if (duplicateMethodSignatureFilter.add(methodSignature)) {
-                addMethodSignature(sb, targetClass, m, params, methodSignature, paramNames);
+                addMethodSignature(sb, targetClass, m, params, methodSignature, seeMethodSignature, paramNames);
             }
         }
+    }
+
+    private String newMethodSignature(final ExecutableElement m, final List<? extends VariableElement> params,
+            final List<String> paramNames) {
+        final StringBuilder sb = new StringBuilder();
+        // method signature
+        sb.append("public static ");
+        // generic type variables
+        sb.append(generateGenericTypeArguments(m));
+        // return type
+        sb.append(typeToString(m.getReturnType(), false));
+        // method name
+        sb.append(" ");
+        sb.append(m.getSimpleName());
+        sb.append("(");
+        // params
+        for (int i = 0; i < params.size(); i++) {
+            final boolean isVarArgsParam = m.isVarArgs() && i == params.size() - 1;
+            sb.append(typeToString(params.get(i).asType(), isVarArgsParam));
+            sb.append(" ");
+            sb.append(paramNames.get(i));
+            if (i < params.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append(")");
+        return sb.toString();
     }
 
     private String generateGenericTypeArguments(final ExecutableElement m) {
@@ -168,18 +181,12 @@ public class StaticFacadeGenerator implements Runnable {
     }
 
     private void addMethodSignature(final StringBuilder sb, final TypeElement targetClass, final ExecutableElement m,
-            final List<? extends VariableElement> params, final String methodSignature, final List<String> paramNames) {
+            final List<? extends VariableElement> params, final String methodSignature, final String seeMethodSignature,
+            final List<String> paramNames) {
         // javadoc
-        sb.append("    /** @see " + targetClass.getQualifiedName() + "#" + m.getSimpleName() + "(");
-        for (int i = 0; i < params.size(); i++) {
-            final boolean isVarArgsParam = m.isVarArgs() && i == params.size() - 1;
-            sb.append(BeanPathObjects
-                    .removeGenericsFromQualifiedName(typeToString(params.get(i).asType(), isVarArgsParam)));
-            if (i < params.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append(") */\n");
+        sb.append("    /** @see ");
+        sb.append(seeMethodSignature);
+        sb.append(" */\n");
         if (BeanPathReflections.getAnnotation(env, m, Deprecated.class) != null) {
             sb.append("    @");
             sb.append(Deprecated.class.getName());
@@ -187,6 +194,7 @@ public class StaticFacadeGenerator implements Runnable {
         }
         sb.append("    ");
         sb.append(methodSignature);
+        sb.append(" ");
         // throws
         final List<? extends TypeMirror> genericExceptionTypes = m.getThrownTypes();
         if (genericExceptionTypes.size() > 0) {
@@ -214,6 +222,22 @@ public class StaticFacadeGenerator implements Runnable {
         sb.append(");\n");
         sb.append("    }\n");
         sb.append("\n");
+    }
+
+    private String newSeeMethodSignature(final TypeElement targetClass, final ExecutableElement m,
+            final List<? extends VariableElement> params) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(targetClass.getQualifiedName() + "#" + m.getSimpleName() + "(");
+        for (int i = 0; i < params.size(); i++) {
+            final boolean isVarArgsParam = m.isVarArgs() && i == params.size() - 1;
+            sb.append(BeanPathObjects
+                    .removeGenericsFromQualifiedName(typeToString(params.get(i).asType(), isVarArgsParam)));
+            if (i < params.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append(")");
+        return sb.toString();
     }
 
     private List<? extends TypeMirror> getTargetClasses() {
