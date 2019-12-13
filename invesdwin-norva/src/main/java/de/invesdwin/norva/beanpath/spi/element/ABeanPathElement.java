@@ -423,7 +423,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
             }
             //5. check tooltip property
             if (getTooltipElement() != null && getTooltipElement().isInvokerAvailable()) {
-                final Object returnValue = getTooltipElement().getInvoker().invoke();
+                final Object returnValue = getTooltipElement().getInvoker().invokeFromTarget(target);
                 final String tooltip = BeanPathStrings.asString(returnValue);
                 if (BeanPathStrings.isNotBlank(tooltip)) {
                     return tooltip;
