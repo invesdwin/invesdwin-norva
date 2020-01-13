@@ -23,6 +23,7 @@ import javax.lang.model.type.TypeMirror;
 
 import de.invesdwin.norva.marker.IDate;
 import de.invesdwin.norva.marker.IDecimal;
+import de.invesdwin.norva.marker.SerializableVoid;
 
 @Immutable
 public final class BeanPathReflections extends org.springframework.util.ReflectionUtils {
@@ -42,7 +43,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
     private BeanPathReflections() {}
 
     public static boolean isVoid(final Class<?> type) {
-        return type == Void.class || type == void.class;
+        return type == Void.class || type == void.class || type == SerializableVoid.class;
     }
 
     public static boolean isNumber(final Class<?> type) {
