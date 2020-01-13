@@ -1,11 +1,9 @@
 package de.invesdwin.norva.marker;
 
-import java.io.Serializable;
-
 import javax.annotation.concurrent.Immutable;
 
 @Immutable
-public final class SerializableVoid implements Serializable {
+public final class SerializableVoid implements ISerializableValueObject {
 
     /*
      * The Void class cannot be instantiated.
