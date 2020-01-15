@@ -7,7 +7,7 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
 
     private BeanPathStrings() {}
 
-    public static String eventuallyAddSuffix(final String s, final String suffix) {
+    public static String putSuffix(final String s, final String suffix) {
         if (s == null) {
             return null;
         }
@@ -18,7 +18,18 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         }
     }
 
-    public static String eventuallyAddPrefix(final String s, final String prefix) {
+    public static String putSuffixIgnoreCase(final String s, final String suffix) {
+        if (s == null) {
+            return null;
+        }
+        if (suffix == null || org.apache.commons.lang3.StringUtils.endsWithIgnoreCase(s, suffix)) {
+            return s;
+        } else {
+            return s + suffix;
+        }
+    }
+
+    public static String putPrefix(final String s, final String prefix) {
         if (s == null) {
             return null;
         }
@@ -29,11 +40,33 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         }
     }
 
-    public static String eventuallyAddPrefixAndCapitalize(final String s, final String prefix) {
+    public static String putPrefixIgnoreCase(final String s, final String prefix) {
+        if (s == null) {
+            return null;
+        }
+        if (prefix == null || org.apache.commons.lang3.StringUtils.startsWithIgnoreCase(s, prefix)) {
+            return s;
+        } else {
+            return prefix + s;
+        }
+    }
+
+    public static String putPrefixAndCapitalize(final String s, final String prefix) {
         if (s == null) {
             return null;
         }
         if (prefix == null || s.startsWith(prefix)) {
+            return s;
+        } else {
+            return prefix + capitalize(s);
+        }
+    }
+
+    public static String putPrefixAndCapitalizeIgnoreCase(final String s, final String prefix) {
+        if (s == null) {
+            return null;
+        }
+        if (prefix == null || org.apache.commons.lang3.StringUtils.startsWithIgnoreCase(s, prefix)) {
             return s;
         } else {
             return prefix + capitalize(s);
@@ -84,12 +117,36 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         return false;
     }
 
+    public static boolean startsWithAnyIgnoreCase(final String s, final String[] possiblePrefixes) {
+        if (s == null) {
+            return false;
+        }
+        for (final String prefix : possiblePrefixes) {
+            if (prefix != null && org.apache.commons.lang3.StringUtils.startsWithIgnoreCase(s, prefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean equalsAny(final String string, final String... searchStrings) {
         if (string == null) {
             return false;
         }
         for (final String search : searchStrings) {
             if (string.equals(search)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean equalsAnyIgnoreCase(final String string, final String... searchStrings) {
+        if (string == null) {
+            return false;
+        }
+        for (final String search : searchStrings) {
+            if (string.equalsIgnoreCase(search)) {
                 return true;
             }
         }

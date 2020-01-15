@@ -45,7 +45,7 @@ public final class BeanPathObjects {
         final String[] split = BeanPathStrings.split(qualifiedName.replace(" ", ""), "<");
         String simpleName = split[0];
         if (qualifiedName.endsWith("[]")) {
-            simpleName = BeanPathStrings.eventuallyAddSuffix(simpleName, "[]");
+            simpleName = BeanPathStrings.putSuffix(simpleName, "[]");
         }
         return simpleName;
     }
@@ -73,7 +73,7 @@ public final class BeanPathObjects {
             }
         }
         if (qualifiedName.endsWith("[]")) {
-            simpleName = BeanPathStrings.eventuallyAddSuffix(simpleName, "[]");
+            simpleName = BeanPathStrings.putSuffix(simpleName, "[]");
         }
         return simpleName;
     }
