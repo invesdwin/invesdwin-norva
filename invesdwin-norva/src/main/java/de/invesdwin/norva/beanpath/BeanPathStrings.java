@@ -2,6 +2,8 @@ package de.invesdwin.norva.beanpath;
 
 import javax.annotation.concurrent.Immutable;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 @Immutable
 public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils {
 
@@ -85,7 +87,7 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
     /**
      * Prevents the result from becoming empty when the string equals the start string.
      */
-    public static String removeAnyStartIfNotEqual(final String s, final String[] starts) {
+    public static String removeAnyStartIfNotEqual(final String s, final String... starts) {
         for (final String start : starts) {
             if (s.startsWith(start) && !s.equals(start)) {
                 return removeStart(s, start);
@@ -105,7 +107,7 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         }
     }
 
-    public static boolean startsWithAny(final String s, final String[] possiblePrefixes) {
+    public static boolean startsWithAny(final String s, final String... possiblePrefixes) {
         if (s == null) {
             return false;
         }
@@ -117,7 +119,7 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         return false;
     }
 
-    public static boolean startsWithAnyIgnoreCase(final String s, final String[] possiblePrefixes) {
+    public static boolean startsWithAnyIgnoreCase(final String s, final String... possiblePrefixes) {
         if (s == null) {
             return false;
         }
@@ -186,6 +188,18 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         } else {
             return s;
         }
+    }
+
+    public static boolean endsWithAnyIgnoreCase(final CharSequence sequence, final CharSequence... searchStrings) {
+        if (isEmpty(sequence) || ArrayUtils.isEmpty(searchStrings)) {
+            return false;
+        }
+        for (final CharSequence searchString : searchStrings) {
+            if (endsWithIgnoreCase(sequence, searchString)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
