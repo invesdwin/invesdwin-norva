@@ -84,6 +84,24 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         return s;
     }
 
+    public static String removeAnyStartIgnoreCase(final String s, final String... starts) {
+        for (final String start : starts) {
+            if (startsWithIgnoreCase(s, start)) {
+                return removeStartIgnoreCase(s, start);
+            }
+        }
+        return s;
+    }
+
+    public static String removeAnyEndIgnoreCase(final String s, final String... ends) {
+        for (final String end : ends) {
+            if (endsWithIgnoreCase(s, end)) {
+                return removeEndIgnoreCase(s, end);
+            }
+        }
+        return s;
+    }
+
     /**
      * Prevents the result from becoming empty when the string equals the start string.
      */
