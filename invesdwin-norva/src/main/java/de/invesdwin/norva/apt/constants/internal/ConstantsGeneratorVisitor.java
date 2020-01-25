@@ -11,8 +11,6 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
@@ -55,7 +53,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         sb.append("\t/** ");
         sb.append(e.getClass().getSimpleName().toString());
         sb.append(": ");
-        sb.append(StringEscapeUtils.escapeHtml4(e.getTypePath()));
+        sb.append(org.apache.commons.text.StringEscapeUtils.escapeHtml4(e.getTypePath()));
         sb.append(" */\n");
         sb.append("\tpublic static final String ");
         sb.append(beanPath.replace(BeanPathUtil.BEAN_PATH_SEPARATOR, "_"));
@@ -80,8 +78,9 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         final String content = generateContent(elements, targetClassName, packageName);
         final FileObject fileObject;
         try {
-            fileObject = getContext().getEnv().getFiler().createResource(StandardLocation.SOURCE_OUTPUT, packageName,
-                    targetClassName + ".java");
+            fileObject = getContext().getEnv()
+                    .getFiler()
+                    .createResource(StandardLocation.SOURCE_OUTPUT, packageName, targetClassName + ".java");
             final Writer w = fileObject.openWriter();
             try {
                 w.write(content);
