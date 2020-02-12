@@ -7,7 +7,8 @@ import org.apache.commons.lang3.ArrayUtils;
 @Immutable
 public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils {
 
-    private BeanPathStrings() {}
+    private BeanPathStrings() {
+    }
 
     public static String putSuffix(final String s, final String suffix) {
         if (s == null) {
@@ -218,6 +219,24 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
             }
         }
         return false;
+    }
+
+    public static int lastIndexOfAnyIgnoreCase(final CharSequence str, final CharSequence... searchStrs) {
+        if (str == null || searchStrs == null) {
+            return INDEX_NOT_FOUND;
+        }
+        int ret = INDEX_NOT_FOUND;
+        int tmp = 0;
+        for (final CharSequence search : searchStrs) {
+            if (search == null) {
+                continue;
+            }
+            tmp = lastIndexOfIgnoreCase(str, search, str.length());
+            if (tmp > ret) {
+                ret = tmp;
+            }
+        }
+        return ret;
     }
 
 }
