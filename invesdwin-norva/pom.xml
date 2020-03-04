@@ -7,7 +7,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>invesdwin-norva</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.2</version>
 	<packaging>jar</packaging>
 
 	<licenses>
@@ -170,7 +170,7 @@
 	<scm>
 		<url>https://github.com/subes/invesdwin-norva</url>
 		<connection>scm:git:https://github.com/subes/invesdwin-norva.git</connection>
-		<tag>HEAD</tag>
+		<tag>invesdwin-norva-1.0.2</tag>
 	</scm>
 
 	<ciManagement>
