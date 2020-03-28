@@ -5,7 +5,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 
 import de.invesdwin.norva.beanpath.BeanPathReflections;
-import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.spi.ABeanPathProcessor;
 import de.invesdwin.norva.beanpath.spi.element.ContainerOpenBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
@@ -28,8 +27,7 @@ public class BeanModelProcessor extends ABeanPathProcessor<BeanModelContext, Bea
                     result.addPropertyField(new SimplePropertyBeanPathElement(getContext(), container,
                             new BeanModelAccessor(getContext(), container, element)));
                 } else if (element.getKind() == ElementKind.METHOD) {
-                    if (BeanPathStrings.startsWithAny(element.getSimpleName(),
-                            BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+                    if (BeanPathReflections.isPropertyMethodName(element.getSimpleName())) {
                         result.addPropertyMethod(new SimplePropertyBeanPathElement(getContext(), container,
                                 new BeanModelAccessor(getContext(), container, element)));
                     } else {

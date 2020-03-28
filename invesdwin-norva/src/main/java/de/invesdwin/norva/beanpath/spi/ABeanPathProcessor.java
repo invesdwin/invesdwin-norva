@@ -179,19 +179,23 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                 if (duplicateBeanPathsFilter.add(actionElement.getBeanPath())) {
                     if (actionElement.getAccessor().getRawName().startsWith(DisableBeanPathElement.DISABLE_PREFIX)) {
                         new DisableBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor().getRawName().startsWith(
-                            ValidateBeanPathElement.VALIDATE_PREFIX)) {
+                    } else if (actionElement.getAccessor()
+                            .getRawName()
+                            .startsWith(ValidateBeanPathElement.VALIDATE_PREFIX)) {
                         new ValidateBeanPathElement(actionElement).accept();
                     } else if (actionElement.getAccessor().getRawName().startsWith(HideBeanPathElement.HIDE_PREFIX)) {
                         new HideBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor().getRawName().startsWith(
-                            RemoveFromBeanPathElement.REMOVE_FROM_PREFIX)) {
+                    } else if (actionElement.getAccessor()
+                            .getRawName()
+                            .startsWith(RemoveFromBeanPathElement.REMOVE_FROM_PREFIX)) {
                         new RemoveFromBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor().getRawName().equals(
-                            ContainerTitleBeanPathElement.CONTAINER_TITLE_BEAN_PATH_FRAGMENT)) {
+                    } else if (actionElement.getAccessor()
+                            .getRawName()
+                            .equals(ContainerTitleBeanPathElement.CONTAINER_TITLE_BEAN_PATH_FRAGMENT)) {
                         new ContainerTitleBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor().getRawName().equals(
-                            ColumnOrderBeanPathElement.COLUMN_ORDER_BEAN_PATH_FRAGMENT)) {
+                    } else if (actionElement.getAccessor()
+                            .getRawName()
+                            .equals(ColumnOrderBeanPathElement.COLUMN_ORDER_BEAN_PATH_FRAGMENT)) {
                         //we can't use column order in table rows, it needs to be configured via suffix instead
                         if (!actionElement.getAccessor().getRawType().isIterable()) {
                             new ColumnOrderBeanPathElement(actionElement).accept();
@@ -200,8 +204,9 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                         }
                     } else if (actionElement.getAccessor().getRawName().endsWith(TitleBeanPathElement.TITLE_SUFFIX)) {
                         new TitleBeanPathElement(actionElement).accept();
-                    } else if (actionElement.getAccessor().getRawName().endsWith(
-                            TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
+                    } else if (actionElement.getAccessor()
+                            .getRawName()
+                            .endsWith(TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
                         new TooltipBeanPathElement(actionElement).accept();
                     } else {
                         nonUtilityActionElements.add(actionElement);
@@ -214,8 +219,9 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private void processContainerOpenElement(final ContainerOpenBeanPathElement containerOpenElement) {
         IBeanPathContainer parent = containerOpenElement.getContainer();
         while (parent != null) {
-            if (!isShallowOnly() && parent.getType().getQualifiedName().equals(
-                    containerOpenElement.getAccessor().getType().getQualifiedName())) {
+            if (!isShallowOnly() && parent.getType()
+                    .getQualifiedName()
+                    .equals(containerOpenElement.getAccessor().getType().getQualifiedName())) {
                 //skip recursive loops
                 return;
             } else {
@@ -271,8 +277,9 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     }
 
     private boolean hasChoice(final SimplePropertyBeanPathElement propertyElement) {
-        return propertyElement.getContext().getElementRegistry().getElement(
-                propertyElement.getBeanPath() + ChoiceBeanPathElement.CHOICE_SUFFIX) != null;
+        return propertyElement.getContext()
+                .getElementRegistry()
+                .getElement(propertyElement.getBeanPath() + ChoiceBeanPathElement.CHOICE_SUFFIX) != null;
     }
 
     private void processUtilityPropertyElements(final List<SimplePropertyBeanPathElement> propertyElements,
@@ -283,14 +290,16 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                 if (duplicateBeanPathsFilter.add(propertyElement.getBeanPath())) {
                     if (propertyElement.getAccessor().getRawName().endsWith(ChoiceBeanPathElement.CHOICE_SUFFIX)) {
                         new ChoiceBeanPathElement(propertyElement, true).accept();
-                    } else if (propertyElement.getAccessor().getRawName().endsWith(
-                            ColumnOrderBeanPathElement.COLUMN_ORDER_SUFFIX)) {
+                    } else if (propertyElement.getAccessor()
+                            .getRawName()
+                            .endsWith(ColumnOrderBeanPathElement.COLUMN_ORDER_SUFFIX)) {
                         new ColumnOrderBeanPathElement(new PropertyGetterActionBeanPathElement(propertyElement))
                                 .accept();
                     } else if (propertyElement.getAccessor().getRawName().endsWith(TitleBeanPathElement.TITLE_SUFFIX)) {
                         new TitleBeanPathElement(propertyElement).accept();
-                    } else if (propertyElement.getAccessor().getRawName().endsWith(
-                            TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
+                    } else if (propertyElement.getAccessor()
+                            .getRawName()
+                            .endsWith(TooltipBeanPathElement.TOOLTIP_SUFFIX)) {
                         new TooltipBeanPathElement(propertyElement).accept();
                     } else {
                         nonUtilityPropertyElements.add(propertyElement);
@@ -416,8 +425,9 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
             return true;
         }
         if (!ignoreBeanPathEndPointAnnotation) {
-            final boolean hasBeanPathEndPointAnnotation = propertyElement.getAccessor().getRawType().getAnnotation(
-                    BeanPathEndPoint.class) != null
+            final boolean hasBeanPathEndPointAnnotation = propertyElement.getAccessor()
+                    .getRawType()
+                    .getAnnotation(BeanPathEndPoint.class) != null
                     || propertyElement.getAccessor().getAnnotation(BeanPathEndPoint.class) != null;
             if (hasBeanPathEndPointAnnotation) {
                 return true;

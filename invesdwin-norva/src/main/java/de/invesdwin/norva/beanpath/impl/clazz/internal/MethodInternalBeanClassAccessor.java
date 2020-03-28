@@ -1,6 +1,5 @@
 package de.invesdwin.norva.beanpath.impl.clazz.internal;
 
-import java.beans.Introspector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -52,7 +51,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     }
 
     private Method determinePublicActionMethod() {
-        if (!BeanPathStrings.startsWithAny(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+        if (!BeanPathReflections.isPropertyMethodName(getRawName())) {
             final Method actionMethod = rawMethod;
             if (actionMethod != null && BeanPathReflections.isPublic(actionMethod)) {
                 return actionMethod;
@@ -62,7 +61,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     }
 
     private Method determinePublicGetterMethod(final BeanClassContainer container) {
-        if (BeanPathStrings.startsWithAny(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+        if (BeanPathReflections.isPropertyMethodName(getRawName())) {
             Method getterMethod = BeanPathReflections.findMethod(container.getType().getType(),
                     BeanPathReflections.PROPERTY_GET_METHOD_PREFIX + BeanPathStrings.capitalize(getBeanPathFragment()));
             if (getterMethod == null) {
@@ -78,7 +77,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     }
 
     private Method determinePublicSetterMethod(final BeanClassContainer container) {
-        if (BeanPathStrings.startsWithAny(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+        if (BeanPathReflections.isPropertyMethodName(getRawName())) {
             final String setterMethodName = BeanPathReflections.PROPERTY_SET_METHOD_PREFIX
                     + BeanPathStrings.capitalize(getBeanPathFragment());
             Method setterMethod = BeanPathReflections.findMethod(container.getType().getType(), setterMethodName,
@@ -109,8 +108,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public String getBeanPathFragment() {
-        return Introspector.decapitalize(
-                BeanPathStrings.removeAnyStartIfNotEqual(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES));
+        return BeanPathReflections.getPropertyBeanPathFragment(getRawName());
     }
 
     @Override

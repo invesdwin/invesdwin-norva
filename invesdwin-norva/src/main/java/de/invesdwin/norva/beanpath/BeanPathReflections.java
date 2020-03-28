@@ -1,5 +1,6 @@
 package de.invesdwin.norva.beanpath;
 
+import java.beans.Introspector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -40,7 +41,8 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
             BigDecimal.class, IDecimal.class };
     public static final Class<?>[] TYPES_DATE = { Date.class, Calendar.class, IDate.class };
 
-    private BeanPathReflections() {}
+    private BeanPathReflections() {
+    }
 
     public static boolean isVoid(final Class<?> type) {
         return type == Void.class || type == void.class || type == SerializableVoid.class;
@@ -126,7 +128,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
                 superClazz = superClazz.getSuperclass();
             }
         }
-        return (T) null;
+        return null;
     }
 
     private static <T extends Annotation> T getAnnotationRecursive(final Annotation[] annotations,
@@ -151,7 +153,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
                 }
             }
         }
-        return (T) null;
+        return null;
     }
 
     public static boolean isJavaType(final String qualifiedName) {
@@ -185,7 +187,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
                 }
             }
         }
-        return (A) null;
+        return null;
     }
 
     public static Method findMethodByName(final Class<?> type, final String methodName) {
@@ -271,6 +273,30 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
         } else {
             return simpleName;
         }
+    }
+
+    public static boolean isPropertyMethodName(final CharSequence methodName) {
+        for (final String prefix : PROPERTY_METHOD_PREFIXES) {
+            if (BeanPathStrings.startsWith(methodName, prefix) && methodName.length() > prefix.length()) {
+                final char nextChar = methodName.charAt(prefix.length());
+                if (Character.isUpperCase(nextChar)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static String getPropertyBeanPathFragment(final String methodName) {
+        for (final String prefix : PROPERTY_METHOD_PREFIXES) {
+            if (BeanPathStrings.startsWith(methodName, prefix) && methodName.length() > prefix.length()) {
+                final char nextChar = methodName.charAt(prefix.length());
+                if (Character.isUpperCase(nextChar)) {
+                    return Introspector.decapitalize(BeanPathStrings.removeStart(methodName, prefix));
+                }
+            }
+        }
+        return methodName;
     }
 
 }

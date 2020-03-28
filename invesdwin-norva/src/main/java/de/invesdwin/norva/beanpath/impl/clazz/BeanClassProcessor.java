@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathReflections;
-import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.spi.ABeanPathProcessor;
 import de.invesdwin.norva.beanpath.spi.element.ContainerOpenBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
@@ -29,8 +28,7 @@ public class BeanClassProcessor extends ABeanPathProcessor<BeanClassContext, Bea
         }
         for (final Method method : container.getType().getType().getMethods()) {
             //check for getXyz but ignore get
-            if (BeanPathStrings.startsWithAny(method.getName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)
-                    && !BeanPathStrings.equalsAny(method.getName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+            if (BeanPathReflections.isPropertyMethodName(method.getName())) {
                 result.addPropertyMethod(new SimplePropertyBeanPathElement(getContext(), container,
                         new BeanClassAccessor(getContext(), container, method)));
             } else {

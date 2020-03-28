@@ -63,7 +63,7 @@ public class BeanModelAccessor extends ABeanPathAccessor {
     }
 
     private ExecutableElement determinePublicActionMethodElement() {
-        if (!BeanPathStrings.startsWithAny(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+        if (!BeanPathReflections.isPropertyMethodName(getRawName())) {
             final Element actionMethod = rawMethodElement;
             if (actionMethod != null && BeanPathReflections.isPublic(actionMethod)) {
                 return (ExecutableElement) actionMethod;
@@ -73,7 +73,7 @@ public class BeanModelAccessor extends ABeanPathAccessor {
     }
 
     private ExecutableElement determinePublicGetterMethodElement() {
-        if (BeanPathStrings.startsWithAny(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+        if (BeanPathReflections.isPropertyMethodName(getRawName())) {
             ExecutableElement getterMethod = BeanPathReflections.findMethod(container.getType().getTypeElement(),
                     BeanPathReflections.PROPERTY_GET_METHOD_PREFIX + BeanPathStrings.capitalize(getBeanPathFragment()));
             if (getterMethod == null) {
@@ -89,7 +89,7 @@ public class BeanModelAccessor extends ABeanPathAccessor {
     }
 
     private ExecutableElement determinePublicSetterMethodElement() {
-        if (BeanPathStrings.startsWithAny(getRawName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+        if (BeanPathReflections.isPropertyMethodName(getRawName())) {
             final String setterMethodName = BeanPathReflections.PROPERTY_SET_METHOD_PREFIX
                     + BeanPathStrings.capitalize(getBeanPathFragment());
             ExecutableElement setterMethod = BeanPathReflections.findMethod(container.getType().getTypeElement(),
@@ -227,8 +227,7 @@ public class BeanModelAccessor extends ABeanPathAccessor {
         case FIELD:
             return Introspector.decapitalize(getRawName());
         case METHOD:
-            return Introspector.decapitalize(BeanPathStrings.removeAnyStartIfNotEqual(getRawName(),
-                    BeanPathReflections.PROPERTY_METHOD_PREFIXES));
+            return BeanPathReflections.getPropertyBeanPathFragment(getRawName());
         default:
             throw new IllegalArgumentException(
                     "Unknown " + ElementKind.class.getSimpleName() + ": " + rawElement.getKind());

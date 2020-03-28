@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathReflections;
-import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.spi.ABeanPathProcessor;
 import de.invesdwin.norva.beanpath.spi.element.ContainerOpenBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
@@ -24,16 +23,16 @@ public class BeanObjectProcessor extends ABeanPathProcessor<BeanObjectContext, B
     @Override
     protected void innerScanContainerShallow(final BeanObjectContainer container, final ScanResult result) {
         for (final Field field : container.getType().getType().getFields()) {
-            result.addPropertyField(new SimplePropertyBeanPathElement(getContext(), container, new BeanObjectAccessor(
-                    getContext(), container, field)));
+            result.addPropertyField(new SimplePropertyBeanPathElement(getContext(), container,
+                    new BeanObjectAccessor(getContext(), container, field)));
         }
         for (final Method method : container.getType().getType().getMethods()) {
-            if (BeanPathStrings.startsWithAny(method.getName(), BeanPathReflections.PROPERTY_METHOD_PREFIXES)) {
+            if (BeanPathReflections.isPropertyMethodName(method.getName())) {
                 result.addPropertyMethod(new SimplePropertyBeanPathElement(getContext(), container,
                         new BeanObjectAccessor(getContext(), container, method)));
             } else {
-                result.addActionMethod(new SimpleActionBeanPathElement(getContext(), container, new BeanObjectAccessor(
-                        getContext(), container, method)));
+                result.addActionMethod(new SimpleActionBeanPathElement(getContext(), container,
+                        new BeanObjectAccessor(getContext(), container, method)));
             }
 
         }
