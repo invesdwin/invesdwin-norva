@@ -34,7 +34,8 @@ public final class BeanPathObjects {
         }
     };
 
-    private BeanPathObjects() {}
+    private BeanPathObjects() {
+    }
 
     public static void setDeepCloneProvider(final IDeepCloneProvider deepCloneProvider) {
         BeanPathAssertions.checkNotNull(deepCloneProvider);
@@ -42,7 +43,7 @@ public final class BeanPathObjects {
     }
 
     public static String removeGenericsFromQualifiedName(final String qualifiedName) {
-        final String[] split = BeanPathStrings.split(qualifiedName.replace(" ", ""), "<");
+        final String[] split = BeanPathStrings.splitPreserveAllTokens(qualifiedName.replace(" ", ""), "<");
         String simpleName = split[0];
         if (qualifiedName.endsWith("[]")) {
             simpleName = BeanPathStrings.putSuffix(simpleName, "[]");
@@ -52,12 +53,12 @@ public final class BeanPathObjects {
 
     public static String simplifyQualifiedName(final String qualifiedName) {
         String simpleName = "";
-        final String[] splitLayer = BeanPathStrings.split(qualifiedName.replace(" ", ""), "<");
+        final String[] splitLayer = BeanPathStrings.splitPreserveAllTokens(qualifiedName.replace(" ", ""), "<");
         for (final String layer : splitLayer) {
             if (BeanPathStrings.endsWithAny(qualifiedName, new String[] { ">", ">[]" }) && simpleName.length() > 0) {
                 simpleName += "<";
             }
-            final String[] splitComma = BeanPathStrings.split(layer, ",");
+            final String[] splitComma = BeanPathStrings.splitPreserveAllTokens(layer, ",");
             boolean firstComma = true;
             for (final String s : splitComma) {
                 if (!firstComma) {
