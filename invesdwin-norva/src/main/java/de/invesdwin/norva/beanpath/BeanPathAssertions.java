@@ -5,7 +5,8 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class BeanPathAssertions {
 
-    private BeanPathAssertions() {}
+    private BeanPathAssertions() {
+    }
 
     public static void checkArgument(final boolean expression) {
         if (!expression) {
@@ -16,7 +17,9 @@ public final class BeanPathAssertions {
     public static void checkArgument(final boolean expression, final String errorMessageTemplate,
             final Object... errorMessageArgs) {
         if (!expression) {
+            //CHECKSTYLE:OFF
             throw new IllegalArgumentException(String.format(errorMessageTemplate, errorMessageArgs));
+            //CHECKSTYLE:ON
         }
     }
 
@@ -29,7 +32,9 @@ public final class BeanPathAssertions {
     public static void checkState(final boolean expression, final String errorMessageTemplate,
             final Object... errorMessageArgs) {
         if (!expression) {
+            //CHECKSTYLE:OFF
             throw new IllegalStateException(String.format(errorMessageTemplate, errorMessageArgs));
+            //CHECKSTYLE:ON
         }
     }
 
@@ -42,7 +47,9 @@ public final class BeanPathAssertions {
     public static void checkNotNull(final Object value, final String errorMessageTemplate,
             final Object... errorMessageArgs) {
         if (value == null) {
+            //CHECKSTYLE:OFF
             throw new IllegalStateException(String.format(errorMessageTemplate, errorMessageArgs));
+            //CHECKSTYLE:ON
         }
     }
 
