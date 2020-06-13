@@ -177,7 +177,7 @@ public class StaticFacadeGenerator implements Runnable {
             }
             genericTypeArgument += "> ";
         }
-        return genericTypeArgument;
+        return genericTypeArgument.replace(" extends java.lang.Object", "");
     }
 
     private void addMethodSignature(final StringBuilder sb, final TypeElement targetClass, final ExecutableElement m,
