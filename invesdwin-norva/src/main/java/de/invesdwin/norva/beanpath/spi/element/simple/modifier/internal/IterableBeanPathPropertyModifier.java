@@ -141,7 +141,7 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
                 targetCollection = (Collection<Object>) BeanPathObjects.clone(oldValue);
             } catch (final Throwable e) {
                 try {
-                    targetCollection = (Collection<Object>) oldValue.getClass().newInstance();
+                    targetCollection = (Collection<Object>) oldValue.getClass().getDeclaredConstructor().newInstance();
                 } catch (final Throwable e1) {
                     targetCollection = newTargetCollectionFromType();
                 }
@@ -165,10 +165,8 @@ public class IterableBeanPathPropertyModifier implements IBeanPathPropertyModifi
 
     private Collection<Object> newTargetCollectionFromType() {
         try {
-            return (Collection<Object>) getCollectionTypeToBeCreated().newInstance();
-        } catch (final InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (final IllegalAccessException e) {
+            return (Collection<Object>) getCollectionTypeToBeCreated().getDeclaredConstructor().newInstance();
+        } catch (final Exception e) {
             throw new RuntimeException(e);
         }
     }
