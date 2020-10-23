@@ -34,8 +34,7 @@ public final class BeanPathObjects {
         }
     };
 
-    private BeanPathObjects() {
-    }
+    private BeanPathObjects() {}
 
     public static void setDeepCloneProvider(final IDeepCloneProvider deepCloneProvider) {
         BeanPathAssertions.checkNotNull(deepCloneProvider);
@@ -52,31 +51,32 @@ public final class BeanPathObjects {
     }
 
     public static String simplifyQualifiedName(final String qualifiedName) {
-        String simpleName = "";
+        final StringBuilder simpleName = new StringBuilder();
         final String[] splitLayer = BeanPathStrings.splitPreserveAllTokens(qualifiedName.replace(" ", ""), "<");
         for (final String layer : splitLayer) {
             if (BeanPathStrings.endsWithAny(qualifiedName, new String[] { ">", ">[]" }) && simpleName.length() > 0) {
-                simpleName += "<";
+                simpleName.append("<");
             }
             final String[] splitComma = BeanPathStrings.splitPreserveAllTokens(layer, ",");
             boolean firstComma = true;
             for (final String s : splitComma) {
                 if (!firstComma) {
-                    simpleName += ", ";
+                    simpleName.append(", ");
                 }
                 firstComma = false;
                 final int lastDotPos = s.lastIndexOf(".");
                 if (lastDotPos != -1) {
-                    simpleName += s.substring(lastDotPos + 1);
+                    simpleName.append(s.substring(lastDotPos + 1));
                 } else {
-                    simpleName += s;
+                    simpleName.append(s);
                 }
             }
         }
         if (qualifiedName.endsWith("[]")) {
-            simpleName = BeanPathStrings.putSuffix(simpleName, "[]");
+            return BeanPathStrings.putSuffix(simpleName.toString(), "[]");
+        } else {
+            return simpleName.toString();
         }
-        return simpleName;
     }
 
     /**
