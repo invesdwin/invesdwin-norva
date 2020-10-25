@@ -7,7 +7,7 @@ A unified visitor pattern implementation for processing Objects, Classes and jav
 
 Releases and snapshots are deployed to this maven repository:
 ```
-https://invesdwin.de/artifactory/invesdwin-oss-remote
+https://invesdwin.de/repo/invesdwin-oss-remote
 ```
 
 Dependency declaration:
