@@ -358,8 +358,23 @@ public class BeanModelAccessor extends ABeanPathAccessor {
     }
 
     @Override
+    public boolean hasPublicGetter() {
+        return publicGetterMethodElement != null;
+    }
+
+    @Override
     public boolean hasPublicSetterOrField() {
         return publicSetterMethodElement != null || publicFieldElement != null;
+    }
+
+    @Override
+    public boolean hasPublicSetter() {
+        return publicSetterMethodElement != null;
+    }
+
+    @Override
+    public boolean hasPublicField() {
+        return publicFieldElement != null;
     }
 
     @Override

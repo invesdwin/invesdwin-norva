@@ -11,8 +11,8 @@ import java.lang.reflect.WildcardType;
 
 import javax.annotation.concurrent.Immutable;
 
-import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
+import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.impl.clazz.internal.FieldInternalBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.clazz.internal.IInternalBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.clazz.internal.MethodInternalBeanClassAccessor;
@@ -249,8 +249,23 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
     }
 
     @Override
+    public boolean hasPublicGetter() {
+        return internal.hasPublicGetter();
+    }
+
+    @Override
     public boolean hasPublicSetterOrField() {
         return internal.hasPublicSetterOrField();
+    }
+
+    @Override
+    public boolean hasPublicSetter() {
+        return internal.hasPublicSetter();
+    }
+
+    @Override
+    public boolean hasPublicField() {
+        return internal.hasPublicField();
     }
 
     @Override

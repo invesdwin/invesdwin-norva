@@ -40,7 +40,13 @@ public interface IInternalBeanClassAccessor {
 
     boolean hasPublicGetterOrField();
 
+    boolean hasPublicGetter();
+
     boolean hasPublicSetterOrField();
+
+    boolean hasPublicSetter();
+
+    boolean hasPublicField();
 
     boolean hasPublicAction();
 
@@ -49,4 +55,5 @@ public interface IInternalBeanClassAccessor {
     Integer getPublicSetterParameterCount();
 
     Integer getPublicActionParameterCount();
+
 }

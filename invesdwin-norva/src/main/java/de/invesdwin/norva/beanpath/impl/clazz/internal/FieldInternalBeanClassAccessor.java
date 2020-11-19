@@ -117,7 +117,22 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
     }
 
     @Override
+    public boolean hasPublicGetter() {
+        return false;
+    }
+
+    @Override
     public boolean hasPublicSetterOrField() {
+        return publicField != null;
+    }
+
+    @Override
+    public boolean hasPublicSetter() {
+        return false;
+    }
+
+    @Override
+    public boolean hasPublicField() {
         return publicField != null;
     }
 

@@ -126,8 +126,23 @@ public class BeanObjectAccessor extends ABeanPathAccessor implements IBeanObject
     }
 
     @Override
+    public boolean hasPublicGetter() {
+        return beanClassAccessor.hasPublicGetter();
+    }
+
+    @Override
     public boolean hasPublicSetterOrField() {
         return beanClassAccessor.hasPublicSetterOrField();
+    }
+
+    @Override
+    public boolean hasPublicSetter() {
+        return beanClassAccessor.hasPublicSetter();
+    }
+
+    @Override
+    public boolean hasPublicField() {
+        return beanClassAccessor.hasPublicField();
     }
 
     @Override

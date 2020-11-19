@@ -11,6 +11,8 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
 
+import de.invesdwin.norva.beanpath.BeanPathReflections;
+import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
@@ -21,7 +23,7 @@ import de.invesdwin.norva.beanpath.spi.visitor.SimpleBeanPathVisitorSupport;
 @NotThreadSafe
 public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
-    private final List<StringBuilder> constants = new ArrayList<StringBuilder>();
+    private final List<IBeanPathElement> constants = new ArrayList<IBeanPathElement>();
 
     public ConstantsGeneratorVisitor(final BeanModelContext context) {
         super(context);
@@ -34,33 +36,34 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
     @Override
     public void visitProperty(final IPropertyBeanPathElement e) {
-        generateConstant(e);
+        constants.add(e);
     }
 
     @Override
     public void visitAction(final IActionBeanPathElement e) {
-        generateConstant(e);
+        constants.add(e);
     }
 
     @Override
     public void visitOther(final IBeanPathElement e) {
-        generateConstant(e);
+        constants.add(e);
     }
 
-    private void generateConstant(final IBeanPathElement e) {
+    private CharSequence generateConstant(final IBeanPathElement e, final String value, final String indent) {
         final StringBuilder sb = new StringBuilder();
-        final String beanPath = e.getBeanPath();
-        sb.append("\t/** ");
+        sb.append(indent);
+        sb.append("/** ");
         sb.append(e.getClass().getSimpleName().toString());
         sb.append(": ");
         sb.append(org.apache.commons.text.StringEscapeUtils.escapeHtml4(e.getTypePath()));
         sb.append(" */\n");
-        sb.append("\tpublic static final String ");
-        sb.append(beanPath.replace(BeanPathUtil.BEAN_PATH_SEPARATOR, "_"));
+        sb.append(indent);
+        sb.append("public static final String ");
+        sb.append(e.getBeanPath().replace(BeanPathUtil.BEAN_PATH_SEPARATOR, "_"));
         sb.append(" = \"");
-        sb.append(beanPath);
+        sb.append(value);
         sb.append("\";\n");
-        constants.add(sb);
+        return sb;
     }
 
     @Override
@@ -111,12 +114,101 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         sb.append("() {}\n");
         //CHECKSTYLE:ON
         sb.append("\n");
-        for (final StringBuilder constant : constants) {
-            sb.append(constant);
+        for (final IBeanPathElement constant : constants) {
+            sb.append(generateConstant(constant, constant.getBeanPath(), "\t"));
         }
         sb.append("\n");
+
+        //getters
+        final StringBuilder getters = newGetters(targetClassName);
+        if (getters != null) {
+            sb.append(getters);
+        }
+
+        //setters
+        final StringBuilder setters = newSetters(targetClassName);
+        if (setters != null) {
+            sb.append(setters);
+        }
+
         sb.append("}\n");
         return sb.toString();
+    }
+
+    private StringBuilder newGetters(final String targetClassName) {
+        final StringBuilder sb = new StringBuilder();
+        final String getTargetClassName = targetClassName + "Get";
+        sb.append("\tpublic static final ");
+        sb.append(getTargetClassName);
+        sb.append(" GET = new ");
+        sb.append(getTargetClassName);
+        sb.append("();");
+        sb.append("\n\n");
+        sb.append("\tpublic static final class ");
+        sb.append(getTargetClassName);
+        sb.append(" {\n");
+        sb.append("\n");
+        sb.append("\t\tprivate ");
+        sb.append(getTargetClassName);
+        //CHECKSTYLE:OFF
+        sb.append("() {}\n");
+        //CHECKSTYLE:ON
+        sb.append("\n");
+        boolean found = false;
+        for (final IBeanPathElement constant : constants) {
+            if (!constant.getBeanPath().contains(BeanPathUtil.BEAN_PATH_SEPARATOR)
+                    && constant.getAccessor().hasPublicGetter()) {
+                final String getter = BeanPathReflections.PROPERTY_GET_METHOD_PREFIX
+                        + BeanPathStrings.capitalize(constant.getBeanPath());
+                sb.append(generateConstant(constant, getter, "\t\t"));
+                found = true;
+            }
+        }
+        sb.append("\n");
+        sb.append("\t}\n");
+        if (found) {
+            return sb;
+        } else {
+            return null;
+        }
+    }
+
+    private StringBuilder newSetters(final String targetClassName) {
+        final StringBuilder sb = new StringBuilder();
+        final String setTargetClassName = targetClassName + "Set";
+        sb.append("\tpublic static final ");
+        sb.append(setTargetClassName);
+        sb.append(" SET = new ");
+        sb.append(setTargetClassName);
+        sb.append("();");
+        sb.append("\n\n");
+        sb.append("\tpublic static final class ");
+        sb.append(setTargetClassName);
+        sb.append(" {\n");
+        sb.append("\n");
+        sb.append("\t\tprivate ");
+        sb.append(setTargetClassName);
+        //CHECKSTYLE:OFF
+        sb.append("() {}\n");
+        //CHECKSTYLE:ON
+        sb.append("\n");
+        boolean found = false;
+        for (final IBeanPathElement constant : constants) {
+            if (!constant.getBeanPath().contains(BeanPathUtil.BEAN_PATH_SEPARATOR)
+                    && constant.getAccessor().hasPublicSetter()) {
+                final String setter = BeanPathReflections.PROPERTY_SET_METHOD_PREFIX
+                        + BeanPathStrings.capitalize(constant.getBeanPath());
+                sb.append(generateConstant(constant, setter, "\t\t"));
+                found = true;
+            }
+        }
+        sb.append("\n");
+        sb.append("\t}\n");
+        if (found) {
+            return sb;
+        } else {
+            return null;
+        }
     }
 
 }

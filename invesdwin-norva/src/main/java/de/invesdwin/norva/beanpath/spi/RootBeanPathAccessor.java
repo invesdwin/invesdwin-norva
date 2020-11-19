@@ -100,4 +100,19 @@ public class RootBeanPathAccessor implements IBeanPathAccessor {
         return false;
     }
 
+    @Override
+    public boolean hasPublicGetter() {
+        return false;
+    }
+
+    @Override
+    public boolean hasPublicSetter() {
+        return false;
+    }
+
+    @Override
+    public boolean hasPublicField() {
+        return false;
+    }
+
 }

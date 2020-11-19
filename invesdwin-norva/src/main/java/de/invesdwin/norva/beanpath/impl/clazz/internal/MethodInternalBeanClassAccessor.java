@@ -282,11 +282,30 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     }
 
     @Override
+    public boolean hasPublicGetter() {
+        return publicGetterMethod != null;
+    }
+
+    @Override
     public boolean hasPublicSetterOrField() {
         if (publicSetterMethod != null) {
             return true;
         } else if (fieldDelegate != null) {
             return fieldDelegate.hasPublicSetterOrField();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean hasPublicSetter() {
+        return publicSetterMethod != null;
+    }
+
+    @Override
+    public boolean hasPublicField() {
+        if (fieldDelegate != null) {
+            return fieldDelegate.hasPublicField();
         } else {
             return false;
         }

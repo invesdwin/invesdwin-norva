@@ -57,7 +57,13 @@ public interface IBeanPathAccessor {
 
     boolean hasPublicGetterOrField();
 
+    boolean hasPublicGetter();
+
     boolean hasPublicSetterOrField();
+
+    boolean hasPublicSetter();
+
+    boolean hasPublicField();
 
     boolean hasPublicAction();
 
