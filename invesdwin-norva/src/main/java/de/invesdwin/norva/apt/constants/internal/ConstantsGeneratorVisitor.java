@@ -262,19 +262,19 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
     private StringBuilder newActions(final String targetClassName) {
         final StringBuilder sb = new StringBuilder();
-        final String fieldTargetClassName = targetClassName + "Field";
+        final String actionTargetClassName = targetClassName + "Action";
         sb.append("\tpublic static final ");
-        sb.append(fieldTargetClassName);
+        sb.append(actionTargetClassName);
         sb.append(" ACTION = new ");
-        sb.append(fieldTargetClassName);
+        sb.append(actionTargetClassName);
         sb.append("();");
         sb.append("\n\n");
         sb.append("\tpublic static final class ");
-        sb.append(fieldTargetClassName);
+        sb.append(actionTargetClassName);
         sb.append(" {\n");
         sb.append("\n");
         sb.append("\t\tprivate ");
-        sb.append(fieldTargetClassName);
+        sb.append(actionTargetClassName);
         //CHECKSTYLE:OFF
         sb.append("() {}\n");
         //CHECKSTYLE:ON
