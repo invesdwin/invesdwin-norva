@@ -131,6 +131,18 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
             sb.append(setters);
         }
 
+        //fields
+        final StringBuilder fields = newFields(targetClassName);
+        if (fields != null) {
+            sb.append(fields);
+        }
+
+        //actions
+        final StringBuilder actions = newActions(targetClassName);
+        if (actions != null) {
+            sb.append(actions);
+        }
+
         sb.append("}\n");
         return sb.toString();
     }
@@ -199,6 +211,80 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
                 final String setter = BeanPathReflections.PROPERTY_SET_METHOD_PREFIX
                         + BeanPathStrings.capitalize(constant.getBeanPath());
                 sb.append(generateConstant(constant, setter, "\t\t"));
+                found = true;
+            }
+        }
+        sb.append("\n");
+        sb.append("\t}\n");
+        if (found) {
+            return sb;
+        } else {
+            return null;
+        }
+    }
+
+    private StringBuilder newFields(final String targetClassName) {
+        final StringBuilder sb = new StringBuilder();
+        final String fieldTargetClassName = targetClassName + "Field";
+        sb.append("\tpublic static final ");
+        sb.append(fieldTargetClassName);
+        sb.append(" FIELD = new ");
+        sb.append(fieldTargetClassName);
+        sb.append("();");
+        sb.append("\n\n");
+        sb.append("\tpublic static final class ");
+        sb.append(fieldTargetClassName);
+        sb.append(" {\n");
+        sb.append("\n");
+        sb.append("\t\tprivate ");
+        sb.append(fieldTargetClassName);
+        //CHECKSTYLE:OFF
+        sb.append("() {}\n");
+        //CHECKSTYLE:ON
+        sb.append("\n");
+        boolean found = false;
+        for (final IBeanPathElement constant : constants) {
+            if (!constant.getBeanPath().contains(BeanPathUtil.BEAN_PATH_SEPARATOR)
+                    && constant.getAccessor().hasPublicField()) {
+                final String field = constant.getBeanPath();
+                sb.append(generateConstant(constant, field, "\t\t"));
+                found = true;
+            }
+        }
+        sb.append("\n");
+        sb.append("\t}\n");
+        if (found) {
+            return sb;
+        } else {
+            return null;
+        }
+    }
+
+    private StringBuilder newActions(final String targetClassName) {
+        final StringBuilder sb = new StringBuilder();
+        final String fieldTargetClassName = targetClassName + "Field";
+        sb.append("\tpublic static final ");
+        sb.append(fieldTargetClassName);
+        sb.append(" ACTION = new ");
+        sb.append(fieldTargetClassName);
+        sb.append("();");
+        sb.append("\n\n");
+        sb.append("\tpublic static final class ");
+        sb.append(fieldTargetClassName);
+        sb.append(" {\n");
+        sb.append("\n");
+        sb.append("\t\tprivate ");
+        sb.append(fieldTargetClassName);
+        //CHECKSTYLE:OFF
+        sb.append("() {}\n");
+        //CHECKSTYLE:ON
+        sb.append("\n");
+        boolean found = false;
+        for (final IBeanPathElement constant : constants) {
+            if (!constant.getBeanPath().contains(BeanPathUtil.BEAN_PATH_SEPARATOR)
+                    && constant.getAccessor().hasPublicAction()) {
+                final String action = constant.getBeanPath();
+                sb.append(generateConstant(constant, action, "\t\t"));
                 found = true;
             }
         }
