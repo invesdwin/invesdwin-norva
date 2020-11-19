@@ -67,4 +67,12 @@ public interface IBeanPathAccessor {
 
     boolean hasPublicAction();
 
+    String getPublicGetterName();
+
+    String getPublicSetterName();
+
+    String getPublicFieldName();
+
+    String getPublicActionName();
+
 }

@@ -13,6 +13,8 @@ import de.invesdwin.norva.beanpath.spi.element.TabbedBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TextFieldBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.UploadButtonBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 
 @NotThreadSafe
 public class BeanPathVisitorSupport extends ABeanPathVisitor {
@@ -22,39 +24,59 @@ public class BeanPathVisitorSupport extends ABeanPathVisitor {
     }
 
     @Override
-    public void visitRoot(final RootBeanPathElement e) {}
+    public void visitRoot(final RootBeanPathElement e) {
+    }
 
     @Override
-    public void visitContainerOpen(final ContainerOpenBeanPathElement e) {}
+    public void visitContainerOpen(final ContainerOpenBeanPathElement e) {
+    }
 
     @Override
-    public void visitTextField(final TextFieldBeanPathElement e) {}
+    public void visitTextField(final TextFieldBeanPathElement e) {
+    }
 
     @Override
-    public void visitCheckBox(final CheckBoxBeanPathElement e) {}
+    public void visitCheckBox(final CheckBoxBeanPathElement e) {
+    }
 
     @Override
-    public void visitComboBox(final ComboBoxBeanPathElement e) {}
+    public void visitComboBox(final ComboBoxBeanPathElement e) {
+    }
 
     @Override
-    public void visitTable(final TableBeanPathElement e) {}
+    public void visitTable(final TableBeanPathElement e) {
+    }
 
     @Override
-    public void visitTabbed(final TabbedBeanPathElement e) {}
+    public void visitTabbed(final TabbedBeanPathElement e) {
+    }
 
     @Override
-    public void visitButton(final ButtonBeanPathElement e) {}
+    public void visitButton(final ButtonBeanPathElement e) {
+    }
 
     @Override
-    public void visitUploadButton(final UploadButtonBeanPathElement e) {}
+    public void visitUploadButton(final UploadButtonBeanPathElement e) {
+    }
 
     @Override
-    public void visitHidden(final HiddenBeanPathElement e) {}
+    public void visitHidden(final HiddenBeanPathElement e) {
+    }
 
     @Override
-    public void visitContainerClose() {}
+    public void visitContainerClose() {
+    }
 
     @Override
-    public void finish() {}
+    public void visitInvalidAction(final SimpleActionBeanPathElement e) {
+    }
+
+    @Override
+    public void visitInvalidProperty(final SimplePropertyBeanPathElement e) {
+    }
+
+    @Override
+    public void finish() {
+    }
 
 }

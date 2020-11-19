@@ -17,9 +17,19 @@ import de.invesdwin.norva.beanpath.spi.element.RootBeanPathElement;
 public class PrintVisitor extends ASimpleBeanPathVisitor {
 
     private int indentCount = 1;
+    private boolean printInvalid = false;
 
     public PrintVisitor(final ABeanPathContext context) {
         super(context);
+    }
+
+    public PrintVisitor withPrintInvalid() {
+        return withPrintInvalid(true);
+    }
+
+    public PrintVisitor withPrintInvalid(final boolean printInvalid) {
+        this.printInvalid = printInvalid;
+        return this;
     }
 
     @Override
@@ -37,17 +47,24 @@ public class PrintVisitor extends ASimpleBeanPathVisitor {
 
     @Override
     public void visitOther(final IBeanPathElement e) {
-        print(e);
+        print(e, "Other");
     }
 
     @Override
     public void visitProperty(final IPropertyBeanPathElement e) {
-        print(e);
+        print(e, "Property");
     }
 
     @Override
     public void visitAction(final IActionBeanPathElement e) {
-        print(e);
+        print(e, "Action");
+    }
+
+    @Override
+    protected void visitInvalid(final IBeanPathElement e) {
+        if (printInvalid) {
+            print(e, "Invalid");
+        }
     }
 
     @Override
@@ -55,9 +72,10 @@ public class PrintVisitor extends ASimpleBeanPathVisitor {
         indentCount--;
     }
 
-    private void print(final IBeanPathElement e) {
+    protected void print(final IBeanPathElement e, final String type) {
         //CHECKSTYLE:OFF
-        System.out.println(indent() + e.getClass().getSimpleName() + ": " + e.getBeanPath() + " | " + e.getTypePath());
+        System.out.println(indent() + type + ": " + e.getClass().getSimpleName() + ": " + e.getBeanPath() + " | "
+                + e.getTypePath());
         //CHECKSTYLE:ON
     }
 

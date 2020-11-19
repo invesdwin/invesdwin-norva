@@ -11,6 +11,8 @@ import de.invesdwin.norva.beanpath.spi.element.TabbedBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TextFieldBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.UploadButtonBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 
 public interface IBeanPathVisitor {
 
@@ -37,6 +39,10 @@ public interface IBeanPathVisitor {
     void visitHidden(HiddenBeanPathElement e);
 
     void visitContainerClose();
+
+    void visitInvalidAction(SimpleActionBeanPathElement e);
+
+    void visitInvalidProperty(SimplePropertyBeanPathElement e);
 
     void finish();
 

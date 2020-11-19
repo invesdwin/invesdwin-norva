@@ -15,21 +15,31 @@ public class SimpleBeanPathVisitorSupport extends ASimpleBeanPathVisitor {
     }
 
     @Override
-    public void finish() {}
+    public void finish() {
+    }
 
     @Override
-    public void visitProperty(final IPropertyBeanPathElement e) {}
+    public void visitProperty(final IPropertyBeanPathElement e) {
+    }
 
     @Override
-    public void visitAction(final IActionBeanPathElement e) {}
+    public void visitAction(final IActionBeanPathElement e) {
+    }
 
     @Override
-    public void visitOther(final IBeanPathElement e) {}
+    public void visitOther(final IBeanPathElement e) {
+    }
 
     @Override
-    protected void visitSubElementsOpen() {}
+    protected void visitSubElementsOpen() {
+    }
 
     @Override
-    protected void visitSubElementsClose() {}
+    protected void visitSubElementsClose() {
+    }
+
+    @Override
+    protected void visitInvalid(final IBeanPathElement e) {
+    }
 
 }

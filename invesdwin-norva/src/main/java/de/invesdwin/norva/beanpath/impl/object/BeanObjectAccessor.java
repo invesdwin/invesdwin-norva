@@ -150,4 +150,24 @@ public class BeanObjectAccessor extends ABeanPathAccessor implements IBeanObject
         return beanClassAccessor.hasPublicAction();
     }
 
+    @Override
+    public String getPublicActionName() {
+        return beanClassAccessor.getPublicActionName();
+    }
+
+    @Override
+    public String getPublicFieldName() {
+        return beanClassAccessor.getPublicFieldName();
+    }
+
+    @Override
+    public String getPublicGetterName() {
+        return beanClassAccessor.getPublicGetterName();
+    }
+
+    @Override
+    public String getPublicSetterName() {
+        return beanClassAccessor.getPublicSetterName();
+    }
+
 }

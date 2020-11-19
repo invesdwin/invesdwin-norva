@@ -273,4 +273,24 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
         return internal.hasPublicAction();
     }
 
+    @Override
+    public String getPublicActionName() {
+        return internal.getPublicActionName();
+    }
+
+    @Override
+    public String getPublicFieldName() {
+        return internal.getPublicFieldName();
+    }
+
+    @Override
+    public String getPublicGetterName() {
+        return internal.getPublicGetterName();
+    }
+
+    @Override
+    public String getPublicSetterName() {
+        return internal.getPublicSetterName();
+    }
+
 }

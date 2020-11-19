@@ -21,6 +21,8 @@ import de.invesdwin.norva.beanpath.spi.element.TableContainerColumnBeanPathEleme
 import de.invesdwin.norva.beanpath.spi.element.TableSelectionButtonColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TextFieldBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.UploadButtonBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 
 @NotThreadSafe
 public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {
@@ -185,6 +187,16 @@ public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {
         }
     }
 
+    @Override
+    public void visitInvalidAction(final SimpleActionBeanPathElement e) {
+        visitInvalid(e);
+    }
+
+    @Override
+    public void visitInvalidProperty(final SimplePropertyBeanPathElement e) {
+        visitInvalid(e);
+    }
+
     public abstract void visitOther(IBeanPathElement e);
 
     public abstract void visitProperty(IPropertyBeanPathElement e);
@@ -194,5 +206,7 @@ public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {
     protected abstract void visitSubElementsOpen();
 
     protected abstract void visitSubElementsClose();
+
+    protected abstract void visitInvalid(IBeanPathElement e);
 
 }

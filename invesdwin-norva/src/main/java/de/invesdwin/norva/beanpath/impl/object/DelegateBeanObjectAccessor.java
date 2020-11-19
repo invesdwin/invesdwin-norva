@@ -136,4 +136,24 @@ public class DelegateBeanObjectAccessor implements IBeanObjectAccessor {
         return delegate.isNullable();
     }
 
+    @Override
+    public String getPublicActionName() {
+        return delegate.getPublicActionName();
+    }
+
+    @Override
+    public String getPublicFieldName() {
+        return delegate.getPublicFieldName();
+    }
+
+    @Override
+    public String getPublicGetterName() {
+        return delegate.getPublicGetterName();
+    }
+
+    @Override
+    public String getPublicSetterName() {
+        return delegate.getPublicSetterName();
+    }
+
 }

@@ -316,4 +316,36 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
         return publicActionMethod != null;
     }
 
+    @Override
+    public String getPublicActionName() {
+        if (publicActionMethod != null) {
+            return publicActionMethod.getName();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getPublicFieldName() {
+        return null;
+    }
+
+    @Override
+    public String getPublicGetterName() {
+        if (publicGetterMethod != null) {
+            return publicGetterMethod.getName();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getPublicSetterName() {
+        if (publicSetterMethod != null) {
+            return publicSetterMethod.getName();
+        } else {
+            return null;
+        }
+    }
+
 }

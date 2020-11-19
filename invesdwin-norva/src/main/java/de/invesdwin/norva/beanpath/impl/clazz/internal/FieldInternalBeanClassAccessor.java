@@ -137,6 +137,30 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
     }
 
     @Override
+    public String getPublicFieldName() {
+        if (publicField != null) {
+            return publicField.getName();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getPublicActionName() {
+        return null;
+    }
+
+    @Override
+    public String getPublicGetterName() {
+        return null;
+    }
+
+    @Override
+    public String getPublicSetterName() {
+        return null;
+    }
+
+    @Override
     public boolean hasPublicAction() {
         return false;
     }

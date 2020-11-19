@@ -115,4 +115,24 @@ public class RootBeanPathAccessor implements IBeanPathAccessor {
         return false;
     }
 
+    @Override
+    public String getPublicGetterName() {
+        return null;
+    }
+
+    @Override
+    public String getPublicSetterName() {
+        return null;
+    }
+
+    @Override
+    public String getPublicFieldName() {
+        return null;
+    }
+
+    @Override
+    public String getPublicActionName() {
+        return null;
+    }
+
 }

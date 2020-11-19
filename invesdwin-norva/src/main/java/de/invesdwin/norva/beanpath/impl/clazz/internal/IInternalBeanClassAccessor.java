@@ -56,4 +56,12 @@ public interface IInternalBeanClassAccessor {
 
     Integer getPublicActionParameterCount();
 
+    String getPublicActionName();
+
+    String getPublicFieldName();
+
+    String getPublicGetterName();
+
+    String getPublicSetterName();
+
 }

@@ -55,6 +55,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private final X context;
     private final IBeanPathVisitor[] visitors;
     private final Set<String> duplicateBeanPathsFilter = new HashSet<String>();
+    private final Set<String> duplicateInvalidBeanPathsFilter = new HashSet<String>();
 
     private boolean shallowOnly;
     private boolean ignoreBeanPathEndPointAnnotation;
@@ -212,6 +213,12 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                         nonUtilityActionElements.add(actionElement);
                     }
                 }
+            } else {
+                if (duplicateInvalidBeanPathsFilter.add(actionElement.getBeanPath())) {
+                    for (final IBeanPathVisitor visitor : visitors) {
+                        visitor.visitInvalidAction(actionElement);
+                    }
+                }
             }
         }
     }
@@ -303,6 +310,12 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                         new TooltipBeanPathElement(propertyElement).accept();
                     } else {
                         nonUtilityPropertyElements.add(propertyElement);
+                    }
+                }
+            } else {
+                if (duplicateInvalidBeanPathsFilter.add(propertyElement.getBeanPath())) {
+                    for (final IBeanPathVisitor visitor : visitors) {
+                        visitor.visitInvalidProperty(propertyElement);
                     }
                 }
             }

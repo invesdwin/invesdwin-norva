@@ -382,4 +382,40 @@ public class BeanModelAccessor extends ABeanPathAccessor {
         return publicActionMethodElement != null;
     }
 
+    @Override
+    public String getPublicActionName() {
+        if (publicActionMethodElement != null) {
+            return String.valueOf(publicActionMethodElement.getSimpleName());
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getPublicFieldName() {
+        if (publicFieldElement != null) {
+            return String.valueOf(publicFieldElement.getSimpleName());
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getPublicGetterName() {
+        if (publicGetterMethodElement != null) {
+            return String.valueOf(publicGetterMethodElement.getSimpleName());
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getPublicSetterName() {
+        if (publicSetterMethodElement != null) {
+            return String.valueOf(publicSetterMethodElement.getSimpleName());
+        } else {
+            return null;
+        }
+    }
+
 }
