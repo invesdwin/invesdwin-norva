@@ -467,7 +467,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     public static class ScanResult {
         private final List<SimplePropertyBeanPathElement> propertyMethods = new ArrayList<SimplePropertyBeanPathElement>();
         private final List<SimplePropertyBeanPathElement> propertyFields = new ArrayList<SimplePropertyBeanPathElement>();
-        private final List<SimpleActionBeanPathElement> actionsMethods = new ArrayList<SimpleActionBeanPathElement>();
+        private final List<SimpleActionBeanPathElement> actionMethods = new ArrayList<SimpleActionBeanPathElement>();
 
         public void addPropertyMethod(final SimplePropertyBeanPathElement propertyMethod) {
             propertyMethods.add(propertyMethod);
@@ -478,7 +478,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         }
 
         public void addActionMethod(final SimpleActionBeanPathElement actionMethod) {
-            actionsMethods.add(actionMethod);
+            actionMethods.add(actionMethod);
         }
 
         /**
@@ -487,7 +487,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         public void sort() {
             Collections.sort(propertyMethods, ABeanPathElement.COMPARATOR);
             Collections.sort(propertyFields, ABeanPathElement.COMPARATOR);
-            Collections.sort(actionsMethods, ABeanPathElement.COMPARATOR);
+            Collections.sort(actionMethods, ABeanPathElement.COMPARATOR);
         }
 
         public List<SimplePropertyBeanPathElement> getProperties() {
@@ -499,7 +499,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         }
 
         public List<SimpleActionBeanPathElement> getActions() {
-            return Collections.unmodifiableList(actionsMethods);
+            return Collections.unmodifiableList(actionMethods);
         }
     }
 }
