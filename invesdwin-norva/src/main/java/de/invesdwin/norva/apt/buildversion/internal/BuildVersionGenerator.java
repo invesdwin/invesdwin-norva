@@ -8,6 +8,7 @@ import java.util.TimeZone;
 
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.lang.model.element.Element;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
 
@@ -18,10 +19,13 @@ public class BuildVersionGenerator implements Runnable {
 
     private final ProcessingEnvironment env;
     private final BuildVersionDefinition def;
+    private final Element originatingElement;
 
-    public BuildVersionGenerator(final ProcessingEnvironment env, final BuildVersionDefinition def) {
+    public BuildVersionGenerator(final ProcessingEnvironment env, final BuildVersionDefinition def,
+            final Element originatingElement) {
         this.env = env;
         this.def = def;
+        this.originatingElement = originatingElement;
     }
 
     @Override
@@ -35,8 +39,9 @@ public class BuildVersionGenerator implements Runnable {
 
         final FileObject fileObject;
         try {
-            fileObject = env.getFiler().createResource(StandardLocation.SOURCE_OUTPUT, buildVersionPackage,
-                    buildVersionClassName + ".java");
+            fileObject = env.getFiler()
+                    .createResource(StandardLocation.SOURCE_OUTPUT, buildVersionPackage,
+                            buildVersionClassName + ".java", originatingElement);
 
             final Writer gen = fileObject.openWriter();
             try {

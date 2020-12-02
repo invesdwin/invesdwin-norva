@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
@@ -26,6 +27,7 @@ import de.invesdwin.norva.beanpath.spi.visitor.SimpleBeanPathVisitorSupport;
 @NotThreadSafe
 public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
+    private final Element originatingElement;
     private final List<IBeanPathElement> constants = new ArrayList<>();
     private final List<IBeanPathElement> getters = new ArrayList<>();
     private final List<IBeanPathElement> setters = new ArrayList<>();
@@ -33,8 +35,9 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
     private final List<IBeanPathElement> actions = new ArrayList<>();
     private final List<IBeanPathElement> methods = new ArrayList<>();
 
-    public ConstantsGeneratorVisitor(final ABeanPathContext context) {
+    public ConstantsGeneratorVisitor(final ABeanPathContext context, final Element originatingElement) {
         super(context);
+        this.originatingElement = originatingElement;
     }
 
     @Override
@@ -126,7 +129,8 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         try {
             fileObject = modelContext.getEnv()
                     .getFiler()
-                    .createResource(StandardLocation.SOURCE_OUTPUT, packageName, targetClassName + ".java");
+                    .createResource(StandardLocation.SOURCE_OUTPUT, packageName, targetClassName + ".java",
+                            originatingElement);
             final Writer w = fileObject.openWriter();
             try {
                 w.write(content);

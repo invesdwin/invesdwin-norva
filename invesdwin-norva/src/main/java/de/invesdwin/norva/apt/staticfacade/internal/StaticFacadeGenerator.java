@@ -32,10 +32,13 @@ public class StaticFacadeGenerator implements Runnable {
 
     private final ProcessingEnvironment env;
     private final StaticFacadeDefinition def;
+    private final Element originatingElement;
 
-    public StaticFacadeGenerator(final ProcessingEnvironment env, final StaticFacadeDefinition def) {
+    public StaticFacadeGenerator(final ProcessingEnvironment env, final StaticFacadeDefinition def,
+            final Element originatingElement) {
         this.env = env;
         this.def = def;
+        this.originatingElement = originatingElement;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class StaticFacadeGenerator implements Runnable {
         try {
             fileObject = env.getFiler()
                     .createResource(StandardLocation.SOURCE_OUTPUT, staticFacadePackage,
-                            staticFacadeClassName + ".java");
+                            staticFacadeClassName + ".java", originatingElement);
 
             final Writer gen = fileObject.openWriter();
             try {

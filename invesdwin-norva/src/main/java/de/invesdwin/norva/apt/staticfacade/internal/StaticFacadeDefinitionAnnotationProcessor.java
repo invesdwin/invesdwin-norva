@@ -24,7 +24,7 @@ public class StaticFacadeDefinitionAnnotationProcessor extends AAnnotationProces
                 final StaticFacadeDefinition staticFacadeDefinition = getAnnotation(typeElement,
                         StaticFacadeDefinition.class);
                 if (staticFacadeDefinition != null) {
-                    new StaticFacadeGenerator(processingEnv, staticFacadeDefinition).run();
+                    new StaticFacadeGenerator(processingEnv, staticFacadeDefinition, element).run();
                 }
             }
         }

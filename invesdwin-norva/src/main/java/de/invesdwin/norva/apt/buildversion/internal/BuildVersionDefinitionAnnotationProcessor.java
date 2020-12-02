@@ -24,7 +24,7 @@ public class BuildVersionDefinitionAnnotationProcessor extends AAnnotationProces
                 final BuildVersionDefinition buildVersionDefinition = getAnnotation(typeElement,
                         BuildVersionDefinition.class);
                 if (buildVersionDefinition != null) {
-                    new BuildVersionGenerator(processingEnv, buildVersionDefinition).run();
+                    new BuildVersionGenerator(processingEnv, buildVersionDefinition, element).run();
                 }
             }
         }

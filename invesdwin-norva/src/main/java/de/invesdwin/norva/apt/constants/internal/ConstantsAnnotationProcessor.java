@@ -33,10 +33,10 @@ public class ConstantsAnnotationProcessor extends AAnnotationProcessor {
                         if (noBeanPathRoot != null) {
                             continue;
                         }
-                        final BeanModelContainer rootContainer = new BeanModelContainer(new BeanModelType(
-                                processingEnv, typeElement.asType(), typeElement));
+                        final BeanModelContainer rootContainer = new BeanModelContainer(
+                                new BeanModelType(processingEnv, typeElement.asType(), typeElement));
                         final BeanModelContext context = new BeanModelContext(rootContainer, processingEnv);
-                        new BeanModelProcessor(context, new ConstantsGeneratorVisitor(context)).process();
+                        new BeanModelProcessor(context, new ConstantsGeneratorVisitor(context, element)).process();
                     }
                 }
             }
