@@ -176,8 +176,8 @@
 	</pluginRepositories>
 
 	<scm>
-		<url>https://github.com/subes/invesdwin-norva</url>
-		<connection>scm:git:https://github.com/subes/invesdwin-norva.git</connection>
+		<url>https://github.com/invesdwin/invesdwin-norva</url>
+		<connection>scm:git:https://github.com/invesdwin/invesdwin-norva.git</connection>
 		<tag>HEAD</tag>
 	</scm>
 
