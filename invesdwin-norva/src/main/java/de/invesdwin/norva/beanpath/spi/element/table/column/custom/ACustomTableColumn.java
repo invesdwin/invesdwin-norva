@@ -3,6 +3,9 @@ package de.invesdwin.norva.beanpath.spi.element.table.column.custom;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathObjects;
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
+import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
+import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
 import de.invesdwin.norva.beanpath.spi.element.APropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.table.ATableBeanPathElement;
@@ -21,6 +24,11 @@ public abstract class ACustomTableColumn<M, V> extends APropertyBeanPathElement
     public ACustomTableColumn(final ATableBeanPathElement tableElement) {
         super(tableElement.getSimplePropertyElement());
         this.tableElement = tableElement;
+    }
+
+    @Override
+    protected String newBeanPath(final IBeanPathContainer container, final IBeanPathAccessor accessor) {
+        return super.newBeanPath(container, accessor) + BeanPathUtil.BEAN_PATH_SEPARATOR + getColumnId();
     }
 
     @Override

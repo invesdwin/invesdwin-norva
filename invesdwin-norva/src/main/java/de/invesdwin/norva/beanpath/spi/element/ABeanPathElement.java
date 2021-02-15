@@ -65,10 +65,14 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         this.context = context;
         this.container = container;
         this.accessor = accessor;
-        this.beanPath = BeanPathUtil.newBeanPath(container, accessor);
+        this.beanPath = newBeanPath(container, accessor);
         //add interceptor
         this.redirect = extractRedirectAnnotation(accessor);
         init();
+    }
+
+    protected String newBeanPath(final IBeanPathContainer container, final IBeanPathAccessor accessor) {
+        return BeanPathUtil.newBeanPath(container, accessor);
     }
 
     public BeanPathRedirect extractRedirectAnnotation(final IBeanPathAccessor accessor) {
