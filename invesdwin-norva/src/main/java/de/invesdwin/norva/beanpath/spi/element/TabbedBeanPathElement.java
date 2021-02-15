@@ -7,10 +7,10 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import de.invesdwin.norva.beanpath.spi.element.internal.AColumnOrderHelper;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.TabbedColumnsAsChoiceBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.TabbedColumnsAsChoiceBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.table.column.internal.ATableColumnOrderHelper;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
@@ -20,7 +20,7 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
     private final List<TabbedColumnBeanPathElement> rawColumns;
     private final List<HiddenBeanPathElement> invalidColumns;
     private ColumnOrderBeanPathElement columnOrderElement;
-    private AColumnOrderHelper<TabbedColumnBeanPathElement> columns;
+    private ATableColumnOrderHelper<TabbedColumnBeanPathElement> columns;
     private TabbedColumnsAsChoiceBeanPathPropertyModifier choiceModifier;
 
     public TabbedBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement,
@@ -72,7 +72,7 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
      */
     public List<TabbedColumnBeanPathElement> getColumns() {
         if (columns == null) {
-            columns = new AColumnOrderHelper<TabbedColumnBeanPathElement>(this, getColumnOrderElement(),
+            columns = new ATableColumnOrderHelper<TabbedColumnBeanPathElement>(this, getColumnOrderElement(),
                     TabbedColumnBeanPathElement.class) {
                 @Override
                 protected Collection<? extends TabbedColumnBeanPathElement> getRawColumns() {

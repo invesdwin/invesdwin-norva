@@ -24,7 +24,7 @@ import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.TitleBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.TitleBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ContainerTitleBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.DisableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.HideBeanPathElement;
@@ -247,7 +247,8 @@ public abstract class ABeanPathElement implements IBeanPathElement {
     /**
      * Can be overriden to do additional things after first accept.
      */
-    protected void afterFirstAccept(final IBeanPathVisitor... visitors) {}
+    protected void afterFirstAccept(final IBeanPathVisitor... visitors) {
+    }
 
     protected boolean shouldAttachToContainerTitleElement() {
         return true;
@@ -282,7 +283,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
      * Passing null here results in static title.
      */
     @Override
-    public final String getTitle(final Object target) {
+    public String getTitle(final Object target) {
         //1. title property on property
         if (getTitleElement() != null && getTitleElement().isInvokerAvailable() && target != null) {
             final Object returnValue = getTitleElement().getInvoker().invokeFromTarget(target);

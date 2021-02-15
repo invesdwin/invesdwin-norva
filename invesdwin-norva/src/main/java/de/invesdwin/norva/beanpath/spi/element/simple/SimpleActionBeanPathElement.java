@@ -11,8 +11,8 @@ import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.ABeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.invoker.BeanPathActionInvoker;
 import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInvoker;
-import de.invesdwin.norva.beanpath.spi.element.simple.invoker.internal.BeanPathActionInvoker;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
 @NotThreadSafe

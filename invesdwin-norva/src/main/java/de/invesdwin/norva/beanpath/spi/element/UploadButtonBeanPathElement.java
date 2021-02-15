@@ -8,8 +8,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassType;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ActionInvokerBeanObjectAccessor;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.ActionInvokerBeanObjectAccessor;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.ChoiceBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ValidateBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 

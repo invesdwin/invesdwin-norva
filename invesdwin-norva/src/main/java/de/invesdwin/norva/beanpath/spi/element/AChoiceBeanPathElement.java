@@ -7,10 +7,12 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.ChoiceBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.FixedValueBeanPathModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.SelectionBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.FixedValueBeanPathModifier;
+import de.invesdwin.norva.beanpath.spi.element.table.TableRemoveFromButtonColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.TableSelectionButtonColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.RemoveFromBeanPathElement;

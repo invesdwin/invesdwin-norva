@@ -8,11 +8,6 @@ import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInvoker;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ArrayBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.BeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.DelegateBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.IterableBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ListWrapperBeanPathPropertyModifier;
 
 @NotThreadSafe
 public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyModifier<List<?>> {

@@ -10,11 +10,11 @@ import de.invesdwin.norva.beanpath.spi.element.ContainerOpenBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.HiddenBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.RootBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TabbedBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.TableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TextFieldBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.UploadButtonBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.TableBeanPathElement;
 
 @NotThreadSafe
 public class BeanPathVisitorSupport extends ABeanPathVisitor {

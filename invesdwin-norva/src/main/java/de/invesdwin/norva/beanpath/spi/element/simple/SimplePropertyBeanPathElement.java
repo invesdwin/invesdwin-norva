@@ -13,8 +13,8 @@ import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.ABeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IPropertyBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.BeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.BeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
 @NotThreadSafe

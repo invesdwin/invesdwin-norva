@@ -3,7 +3,7 @@ package de.invesdwin.norva.beanpath.spi.element.simple;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.spi.element.simple.invoker.IBeanPathActionInvoker;
-import de.invesdwin.norva.beanpath.spi.element.simple.invoker.internal.PropertyGetterInvoker;
+import de.invesdwin.norva.beanpath.spi.element.simple.invoker.PropertyGetterInvoker;
 
 /**
  * This one calls the getter of a property element as an action.

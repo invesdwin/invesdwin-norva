@@ -70,12 +70,12 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
     private IBeanPathPropertyModifier<List<?>> getColumnOrderModifier() {
         if (columnOrderModifier == null) {
             if (getAccessor().getBeanPathFragment().equals(COLUMN_ORDER_BEAN_PATH_FRAGMENT)) {
-                columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier(
-                        new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ActionInvokerBeanObjectAccessor(
+                columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.ChoiceBeanPathPropertyModifier(
+                        new de.invesdwin.norva.beanpath.spi.element.simple.modifier.ActionInvokerBeanObjectAccessor(
                                 getInvoker()),
                         null, false);
             } else if (getAccessor().getBeanPathFragment().endsWith(COLUMN_ORDER_SUFFIX)) {
-                columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ChoiceBeanPathPropertyModifier(
+                columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.ChoiceBeanPathPropertyModifier(
                         getSimpleActionElement().getAccessor(), null, false);
             } else {
                 throw newInvalidUtilityException();

@@ -11,18 +11,18 @@ import de.invesdwin.norva.beanpath.spi.element.HiddenBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IPropertyBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.ITableColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IValidatableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.RootBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TabbedBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TabbedColumnBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.TableBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.TableContainerColumnBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.TableSelectionButtonColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.TextFieldBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.UploadButtonBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.ITableColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.TableBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.TableContainerColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.TableSelectionButtonColumnBeanPathElement;
 
 @NotThreadSafe
 public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {

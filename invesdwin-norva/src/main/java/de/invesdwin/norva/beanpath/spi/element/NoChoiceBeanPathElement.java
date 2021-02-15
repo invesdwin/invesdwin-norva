@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.simple.modifier.internal.ListWrapperBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.ListWrapperBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ContainerTitleBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.DisableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.HideBeanPathElement;
