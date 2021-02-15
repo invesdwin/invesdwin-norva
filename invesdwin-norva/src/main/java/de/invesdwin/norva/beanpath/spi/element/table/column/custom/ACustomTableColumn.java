@@ -27,7 +27,7 @@ public abstract class ACustomTableColumn<M, V> extends APropertyBeanPathElement
     }
 
     @Override
-    protected String newBeanPath(final IBeanPathContainer container, final IBeanPathAccessor accessor) {
+    protected final String newBeanPath(final IBeanPathContainer container, final IBeanPathAccessor accessor) {
         return super.newBeanPath(container, accessor) + BeanPathUtil.BEAN_PATH_SEPARATOR + getColumnId();
     }
 
