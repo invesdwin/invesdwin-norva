@@ -1,9 +1,9 @@
-package de.invesdwin.norva.beanpath.spi.element.table.column;
+package de.invesdwin.norva.beanpath.spi.element.table.column.custom;
 
 import java.util.List;
 
 import de.invesdwin.norva.beanpath.spi.element.table.ATableBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.ITableColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.ITableColumnBeanPathElement;
 
 public interface ICustomTableColumnProvider {
 

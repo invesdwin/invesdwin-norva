@@ -1,6 +1,7 @@
-package de.invesdwin.norva.beanpath.spi.element.table;
+package de.invesdwin.norva.beanpath.spi.element.table.column;
 
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.ATableBeanPathElement;
 
 public interface ITableColumnBeanPathElement extends IBeanPathElement {
 
@@ -9,7 +10,5 @@ public interface ITableColumnBeanPathElement extends IBeanPathElement {
     boolean isVisible();
 
     String getColumnId();
-
-    void setTableElement(ATableBeanPathElement tableElement);
 
 }

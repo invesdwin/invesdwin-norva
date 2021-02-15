@@ -11,8 +11,8 @@ import de.invesdwin.norva.beanpath.spi.element.simple.modifier.ChoiceBeanPathPro
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.FixedValueBeanPathModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.SelectionBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.table.TableRemoveFromButtonColumnBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.TableSelectionButtonColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableRemoveFromButtonColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableSelectionButtonColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.RemoveFromBeanPathElement;

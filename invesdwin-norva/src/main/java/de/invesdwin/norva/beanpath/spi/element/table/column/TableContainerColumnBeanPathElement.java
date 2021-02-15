@@ -1,4 +1,4 @@
-package de.invesdwin.norva.beanpath.spi.element.table;
+package de.invesdwin.norva.beanpath.spi.element.table.column;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -29,11 +29,6 @@ public class TableContainerColumnBeanPathElement extends APropertyBeanPathElemen
     @Override
     public ChoiceAsTableBeanPathElement getTableElement() {
         return tableElement;
-    }
-
-    @Override
-    public void setTableElement(final ATableBeanPathElement tableElement) {
-        //noop
     }
 
     @Deprecated

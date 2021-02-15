@@ -10,7 +10,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.TabbedColumnsAsChoiceBeanPathPropertyModifier;
-import de.invesdwin.norva.beanpath.spi.element.table.column.internal.ATableColumnOrderHelper;
+import de.invesdwin.norva.beanpath.spi.element.table.column.custom.internal.ATableColumnOrderHelper;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 

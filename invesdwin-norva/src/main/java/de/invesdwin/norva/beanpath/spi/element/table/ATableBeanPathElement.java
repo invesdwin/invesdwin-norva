@@ -9,7 +9,11 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.norva.beanpath.spi.element.AChoiceBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.column.internal.ATableColumnOrderHelper;
+import de.invesdwin.norva.beanpath.spi.element.table.column.ITableColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableButtonColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableContainerColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableTextColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.custom.internal.ATableColumnOrderHelper;
 
 @NotThreadSafe
 public abstract class ATableBeanPathElement extends AChoiceBeanPathElement {

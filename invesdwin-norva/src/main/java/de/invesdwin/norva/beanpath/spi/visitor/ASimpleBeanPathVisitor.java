@@ -19,10 +19,10 @@ import de.invesdwin.norva.beanpath.spi.element.TextFieldBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.UploadButtonBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.ITableColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.TableBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.TableContainerColumnBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.TableSelectionButtonColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.ITableColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableContainerColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableSelectionButtonColumnBeanPathElement;
 
 @NotThreadSafe
 public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {

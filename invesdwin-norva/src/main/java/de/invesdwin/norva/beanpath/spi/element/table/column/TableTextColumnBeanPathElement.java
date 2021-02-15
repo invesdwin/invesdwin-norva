@@ -1,4 +1,4 @@
-package de.invesdwin.norva.beanpath.spi.element.table;
+package de.invesdwin.norva.beanpath.spi.element.table.column;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -8,6 +8,7 @@ import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElem
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IndexedBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.NoObjectBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.table.ATableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
 @NotThreadSafe
@@ -26,7 +27,6 @@ public class TableTextColumnBeanPathElement extends APropertyBeanPathElement
         return tableElement;
     }
 
-    @Override
     public void setTableElement(final ATableBeanPathElement tableElement) {
         BeanPathAssertions.checkState(this.tableElement == null);
         this.tableElement = tableElement;

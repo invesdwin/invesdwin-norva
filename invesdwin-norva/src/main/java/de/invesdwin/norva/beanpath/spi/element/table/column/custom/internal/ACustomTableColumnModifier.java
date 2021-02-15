@@ -1,4 +1,4 @@
-package de.invesdwin.norva.beanpath.spi.element.table.column.internal;
+package de.invesdwin.norva.beanpath.spi.element.table.column.custom.internal;
 
 import javax.annotation.concurrent.NotThreadSafe;
 

@@ -30,8 +30,8 @@ import de.invesdwin.norva.beanpath.spi.element.simple.PropertyGetterActionBeanPa
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.TableBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.TableButtonColumnBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.TableTextColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableButtonColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableTextColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ContainerTitleBeanPathElement;

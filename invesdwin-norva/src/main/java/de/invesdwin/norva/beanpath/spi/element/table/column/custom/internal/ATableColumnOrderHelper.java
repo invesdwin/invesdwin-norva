@@ -1,4 +1,4 @@
-package de.invesdwin.norva.beanpath.spi.element.table.column.internal;
+package de.invesdwin.norva.beanpath.spi.element.table.column.custom.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,11 +16,11 @@ import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
 import de.invesdwin.norva.beanpath.spi.element.AChoiceBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.ATableBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.ITableColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.TableBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.TableRemoveFromButtonColumnBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.TableSelectionButtonColumnBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.column.ICustomTableColumnProvider;
+import de.invesdwin.norva.beanpath.spi.element.table.column.ITableColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableRemoveFromButtonColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.TableSelectionButtonColumnBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.custom.ICustomTableColumnProvider;
 import de.invesdwin.norva.beanpath.spi.element.utility.ColumnOrderBeanPathElement;
 
 @NotThreadSafe

@@ -1,15 +1,13 @@
-package de.invesdwin.norva.beanpath.spi.element.table.column;
+package de.invesdwin.norva.beanpath.spi.element.table.column.custom;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.spi.element.APropertyBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.table.ATableBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.ITableColumnPropertyBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.column.internal.ACustomTableColumnModifier;
+import de.invesdwin.norva.beanpath.spi.element.table.column.ITableColumnPropertyBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.table.column.custom.internal.ACustomTableColumnModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.TitleBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 
@@ -17,25 +15,17 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 public abstract class ACustomTableColumn<M, V> extends APropertyBeanPathElement
         implements ITableColumnPropertyBeanPathElement {
 
-    private static final SimplePropertyBeanPathElement DUMMY_SIMPLE_PROPERTY_ELEMENT = new SimplePropertyBeanPathElement(
-            null, null, null);
-
-    private ATableBeanPathElement tableElement;
+    private final ATableBeanPathElement tableElement;
     private ACustomTableColumnModifier<V> modifier;
 
-    public ACustomTableColumn() {
-        super(DUMMY_SIMPLE_PROPERTY_ELEMENT);
+    public ACustomTableColumn(final ATableBeanPathElement tableElement) {
+        super(tableElement.getSimplePropertyElement());
+        this.tableElement = tableElement;
     }
 
     @Override
     public final ATableBeanPathElement getTableElement() {
         return tableElement;
-    }
-
-    @Override
-    public final void setTableElement(final ATableBeanPathElement tableElement) {
-        BeanPathAssertions.checkState(this.tableElement == null);
-        this.tableElement = tableElement;
     }
 
     @SuppressWarnings("unchecked")
@@ -105,6 +95,21 @@ public abstract class ACustomTableColumn<M, V> extends APropertyBeanPathElement
     @Override
     public final String getTitle(final Object target) {
         return getTitle();
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public final boolean equals(final Object obj) {
+        if (obj instanceof ACustomTableColumn) {
+            final ACustomTableColumn cObj = (ACustomTableColumn) obj;
+            return java.util.Objects.equals(getColumnId(), cObj.getColumnId());
+        }
+        return false;
+    }
+
+    @Override
+    public final int hashCode() {
+        return java.util.Objects.hash(ACustomTableColumn.class, getColumnId());
     }
 
     // **************************** Overridable
