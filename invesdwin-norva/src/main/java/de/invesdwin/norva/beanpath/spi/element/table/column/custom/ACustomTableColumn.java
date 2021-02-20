@@ -91,13 +91,13 @@ public abstract class ACustomTableColumn<M, V> extends APropertyBeanPathElement
     }
 
     @Override
-    public final String getTitle() {
-        return getVisibleName();
+    public String getTitle() {
+        return BeanPathObjects.toVisibleName(getColumnId());
     }
 
     @Override
     public final String getVisibleName() {
-        return BeanPathObjects.toVisibleName(getColumnId());
+        return getTitle();
     }
 
     @Override
