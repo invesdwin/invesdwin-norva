@@ -432,25 +432,20 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     }
 
     private boolean isBeanPathEndpoint(final SimplePropertyBeanPathElement propertyElement) {
-        final boolean isIterableOrJavaType = propertyElement.getAccessor().getRawType().isArray()
-                || hasChoice(propertyElement) || propertyElement.getAccessor().getRawType().isJavaType();
+        final IBeanPathType rawType = propertyElement.getAccessor().getRawType();
+        final boolean isIterableOrJavaType = rawType.isArray() || hasChoice(propertyElement) || rawType.isJavaType();
         if (isIterableOrJavaType) {
             return true;
         }
         if (!ignoreBeanPathEndPointAnnotation) {
-            final boolean hasBeanPathEndPointAnnotation = propertyElement.getAccessor()
-                    .getRawType()
-                    .getAnnotation(BeanPathEndPoint.class) != null
+            final boolean hasBeanPathEndPointAnnotation = rawType.getAnnotation(BeanPathEndPoint.class) != null
                     || propertyElement.getAccessor().getAnnotation(BeanPathEndPoint.class) != null;
             if (hasBeanPathEndPointAnnotation) {
                 return true;
             }
         }
-        return propertyElement.getAccessor().getRawType().isVoid()
-                || propertyElement.getAccessor().getRawType().isEnum()
-                || propertyElement.getAccessor().getRawType().isPrimitive()
-                || propertyElement.getAccessor().getRawType().isNumber()
-                || propertyElement.getAccessor().getRawType().isDate();
+        return rawType.isVoid() || rawType.isEnum() || rawType.isPrimitive() || rawType.isNumber() || rawType.isDate()
+                || rawType.isString();
     }
 
     protected abstract C newSubContainer(ContainerOpenBeanPathElement containerOpenElement);

@@ -40,6 +40,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
     public static final Class<?>[] TYPES_DECIMAL_NUMBER = { float.class, Float.class, double.class, Double.class,
             BigDecimal.class, IDecimal.class };
     public static final Class<?>[] TYPES_DATE = { Date.class, Calendar.class, IDate.class };
+    public static final Class<?>[] TYPES_STRING = { CharSequence.class };
 
     private BeanPathReflections() {
     }
@@ -79,6 +80,15 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
 
     public static boolean isDate(final Class<?> type) {
         for (final Class<?> dateType : TYPES_DATE) {
+            if (dateType.isAssignableFrom(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isString(final Class<?> type) {
+        for (final Class<?> dateType : TYPES_STRING) {
             if (dateType.isAssignableFrom(type)) {
                 return true;
             }

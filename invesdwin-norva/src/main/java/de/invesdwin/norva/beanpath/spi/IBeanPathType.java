@@ -34,6 +34,8 @@ public interface IBeanPathType {
 
     boolean isJavaType();
 
+    boolean isString();
+
     <T extends Annotation> T getAnnotation(Class<T> annotationType);
 
 }

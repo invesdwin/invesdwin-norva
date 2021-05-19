@@ -116,6 +116,11 @@ public class BeanClassType implements IBeanPathType {
     }
 
     @Override
+    public boolean isString() {
+        return BeanPathReflections.isString(getType());
+    }
+
+    @Override
     public <T extends Annotation> T getAnnotation(final Class<T> annotationType) {
         return BeanPathReflections.getAnnotation(getType(), annotationType);
     }

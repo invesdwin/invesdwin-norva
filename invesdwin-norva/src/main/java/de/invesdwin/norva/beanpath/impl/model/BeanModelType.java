@@ -141,6 +141,19 @@ public class BeanModelType implements IBeanPathType {
     }
 
     @Override
+    public boolean isString() {
+        if (getTypeElement() == null) {
+            return false;
+        }
+        for (final Class<?> type : BeanPathReflections.TYPES_STRING) {
+            if (ElementHelper.isAssignableFrom(type, getTypeElement())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public boolean isIterable() {
         if (getTypeElement() == null) {
             return false;
