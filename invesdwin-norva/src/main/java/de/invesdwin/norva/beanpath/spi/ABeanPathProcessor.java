@@ -444,8 +444,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
                 return true;
             }
         }
-        return rawType.isVoid() || rawType.isEnum() || rawType.isPrimitive() || rawType.isNumber() || rawType.isDate()
-                || rawType.isString();
+        return rawType.isVoid() || rawType.isEnum() || rawType.isPrimitive() || rawType.isNumber() || rawType.isDate();
     }
 
     protected abstract C newSubContainer(ContainerOpenBeanPathElement containerOpenElement);
