@@ -44,7 +44,11 @@ public class BeanModelType implements IBeanPathType {
 
     @Override
     public String getQualifiedName() {
-        return BeanPathObjects.removeGenericsFromQualifiedName(getTypeMirror().toString());
+        if (typeElement != null) {
+            return typeElement.getQualifiedName().toString();
+        } else {
+            return BeanPathObjects.removeGenericsFromQualifiedName(getTypeMirror().toString());
+        }
     }
 
     @Override
