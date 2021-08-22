@@ -1,6 +1,7 @@
 package de.invesdwin.norva.beanpath;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
@@ -32,9 +33,17 @@ public final class BeanPathObjects {
         public byte[] serialize(final Serializable obj) {
             return org.apache.commons.lang3.SerializationUtils.serialize(obj);
         }
+
+        @Override
+        public int serialize(final Serializable obj, final OutputStream out) {
+            final CountingOutputStream cout = new CountingOutputStream(out);
+            org.apache.commons.lang3.SerializationUtils.serialize(obj, cout);
+            return cout.getCount();
+        }
     };
 
-    private BeanPathObjects() {}
+    private BeanPathObjects() {
+    }
 
     public static void setDeepCloneProvider(final IDeepCloneProvider deepCloneProvider) {
         BeanPathAssertions.checkNotNull(deepCloneProvider);
@@ -131,6 +140,10 @@ public final class BeanPathObjects {
 
     public static byte[] serialize(final Serializable obj) {
         return deepCloneProvider.serialize(obj);
+    }
+
+    public static int serialize(final Serializable obj, final OutputStream out) {
+        return deepCloneProvider.serialize(obj, out);
     }
 
 }
