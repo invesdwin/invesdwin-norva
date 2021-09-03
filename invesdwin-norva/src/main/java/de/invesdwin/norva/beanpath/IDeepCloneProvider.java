@@ -14,6 +14,6 @@ public interface IDeepCloneProvider {
 
     byte[] serialize(Serializable obj);
 
-    int serialize(Serializable obj, OutputStream out);
+    int serialize(OutputStream out, Serializable obj);
 
 }

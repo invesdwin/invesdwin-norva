@@ -35,7 +35,7 @@ public final class BeanPathObjects {
         }
 
         @Override
-        public int serialize(final Serializable obj, final OutputStream out) {
+        public int serialize(final OutputStream out, final Serializable obj) {
             final CountingOutputStream cout = new CountingOutputStream(out);
             org.apache.commons.lang3.SerializationUtils.serialize(obj, cout);
             return cout.getCount();
@@ -142,8 +142,8 @@ public final class BeanPathObjects {
         return deepCloneProvider.serialize(obj);
     }
 
-    public static int serialize(final Serializable obj, final OutputStream out) {
-        return deepCloneProvider.serialize(obj, out);
+    public static int serialize(final OutputStream out, final Serializable obj) {
+        return deepCloneProvider.serialize(out, obj);
     }
 
 }
