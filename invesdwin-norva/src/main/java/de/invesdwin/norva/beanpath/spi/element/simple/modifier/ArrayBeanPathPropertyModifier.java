@@ -81,8 +81,7 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
             return null;
         } else {
             try {
-                final Object[] newArray = (Object[]) Array.newInstance(getBeanClassAccessor().getType().getType(),
-                        value.size());
+                final Object[] newArray = (Object[]) Array.newInstance(getBeanClassAccessor().getType().getType(), 0);
                 return value.toArray(newArray);
             } catch (final Exception e) {
                 throw new RuntimeException(e);
