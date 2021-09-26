@@ -7,10 +7,10 @@ import java.io.OutputStream;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
-public class CountingOutputStream extends FilterOutputStream {
+public class IntCountingOutputStream extends FilterOutputStream {
     private int bytesWritten = 0;
 
-    public CountingOutputStream(final OutputStream out) {
+    public IntCountingOutputStream(final OutputStream out) {
         super(out);
     }
 

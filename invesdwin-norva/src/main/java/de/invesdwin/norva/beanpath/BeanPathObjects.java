@@ -36,7 +36,7 @@ public final class BeanPathObjects {
 
         @Override
         public int serialize(final OutputStream out, final Serializable obj) {
-            final CountingOutputStream cout = new CountingOutputStream(out);
+            final IntCountingOutputStream cout = new IntCountingOutputStream(out);
             org.apache.commons.lang3.SerializationUtils.serialize(obj, cout);
             return cout.getCount();
         }
