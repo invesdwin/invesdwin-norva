@@ -8,7 +8,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
 public class IntCountingOutputStream extends FilterOutputStream {
-    private int bytesWritten = 0;
+    private int count = 0;
 
     public IntCountingOutputStream(final OutputStream out) {
         super(out);
@@ -39,7 +39,7 @@ public class IntCountingOutputStream extends FilterOutputStream {
      */
     protected void count(final int written) {
         if (written != -1) {
-            bytesWritten += written;
+            count += written;
         }
     }
 
@@ -49,6 +49,10 @@ public class IntCountingOutputStream extends FilterOutputStream {
      * @return the number of written bytes
      */
     public int getCount() {
-        return bytesWritten;
+        return count;
+    }
+
+    public void setCount(final int count) {
+        this.count = count;
     }
 }
