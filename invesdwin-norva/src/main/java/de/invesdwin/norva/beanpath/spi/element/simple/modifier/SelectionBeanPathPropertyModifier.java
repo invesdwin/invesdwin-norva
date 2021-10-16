@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
@@ -33,6 +34,14 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
         return getValue().contains(value);
     }
 
+    public boolean isSelectedFromRoot(final Object root, final Object value) {
+        return getValueFromRoot(root).contains(value);
+    }
+
+    public boolean isSelectedFromTarget(final Object target, final Object value) {
+        return getValueFromTarget(target).contains(value);
+    }
+
     public boolean isSingleSelection() {
         return singleSelection;
     }
@@ -54,6 +63,26 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
         }
     }
 
+    public boolean toggleSelectionFromRoot(final Object root, final Object value) {
+        if (isSelectedFromRoot(root, value)) {
+            unselectFromRoot(root, value);
+            return false;
+        } else {
+            selectFromRoot(root, value);
+            return true;
+        }
+    }
+
+    public boolean toggleSelectionFromTarget(final Object target, final Object value) {
+        if (isSelectedFromTarget(target, value)) {
+            unselectFromTarget(target, value);
+            return false;
+        } else {
+            selectFromTarget(target, value);
+            return true;
+        }
+    }
+
     public void select(final Object value) {
         final List<Object> selection = (List<Object>) getValue();
         if (singleSelection) {
@@ -67,6 +96,32 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
         setValue(selection);
     }
 
+    public void selectFromTarget(final Object target, final Object value) {
+        final List<Object> selection = (List<Object>) getValueFromTarget(target);
+        if (singleSelection) {
+            selection.clear();
+        } else {
+            selection.remove(null); //null selection not supported
+        }
+        if (!selection.add(value)) {
+            throw new IllegalArgumentException("true expected");
+        }
+        setValueFromTarget(target, selection);
+    }
+
+    public void selectFromRoot(final Object root, final Object value) {
+        final List<Object> selection = (List<Object>) getValueFromRoot(root);
+        if (singleSelection) {
+            selection.clear();
+        } else {
+            selection.remove(null); //null selection not supported
+        }
+        if (!selection.add(value)) {
+            throw new IllegalArgumentException("true expected");
+        }
+        setValueFromRoot(root, selection);
+    }
+
     public void unselect(final Object value) {
         final List<Object> selection = (List<Object>) getValue();
         selection.remove(null); //null selection not supported
@@ -76,13 +131,31 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
         setValue(selection);
     }
 
+    public void unselectFromTarget(final Object target, final Object value) {
+        final List<Object> selection = (List<Object>) getValueFromTarget(target);
+        selection.remove(null); //null selection not supported
+        if (!selection.remove(value)) {
+            throw new IllegalArgumentException("true expected");
+        }
+        setValueFromTarget(target, selection);
+    }
+
+    public void unselectFromRoot(final Object root, final Object value) {
+        final List<Object> selection = (List<Object>) getValueFromRoot(root);
+        selection.remove(null); //null selection not supported
+        if (!selection.remove(value)) {
+            throw new IllegalArgumentException("true expected");
+        }
+        setValueFromRoot(root, selection);
+    }
+
     public IBeanPathActionInvoker getToggleSelectionInvoker() {
         return new IBeanPathActionInvoker() {
 
             @Override
             public Object invokeFromTarget(final Object target, final Object... params) {
-                final Object value = target;
-                toggleSelection(value);
+                BeanPathAssertions.checkArgument(params.length == 1);
+                toggleSelectionFromTarget(target, params[0]);
                 //no page redirect here
                 return null;
             }
