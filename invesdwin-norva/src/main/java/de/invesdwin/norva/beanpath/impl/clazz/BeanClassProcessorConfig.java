@@ -13,6 +13,7 @@ public class BeanClassProcessorConfig extends BeanPathProcessorConfig {
     private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT = new ConcurrentHashMap<>();
     private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT_SHALLOW = new ConcurrentHashMap<>();
     private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT_EAGER = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT_IGNOREBEANPATHENDPOINTANNOTATION = new ConcurrentHashMap<>();
 
     private final Class<?> type;
     private boolean defaultEager;
@@ -96,6 +97,11 @@ public class BeanClassProcessorConfig extends BeanPathProcessorConfig {
 
     public static BeanClassProcessorConfig getDefaultEager(final Class<?> type) {
         return DEFAULT_EAGER.computeIfAbsent(type, (c) -> new BeanClassProcessorConfig(c).withDefaultEager(true));
+    }
+
+    public static BeanClassProcessorConfig getDefaultIgnoreBeanPathEndpointAnnotation(final Class<?> type) {
+        return DEFAULT_IGNOREBEANPATHENDPOINTANNOTATION.computeIfAbsent(type,
+                (c) -> new BeanClassProcessorConfig(c).withIgnoreBeanPathEndPointAnnotation(true));
     }
 
 }
