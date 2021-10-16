@@ -7,6 +7,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.spi.ABeanPathProcessor;
+import de.invesdwin.norva.beanpath.spi.BeanPathProcessorConfig;
 import de.invesdwin.norva.beanpath.spi.element.ContainerOpenBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
@@ -16,8 +17,9 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 public class BeanObjectProcessor extends ABeanPathProcessor<BeanObjectContext, BeanObjectContainer> {
 
     @SafeVarargs
-    public BeanObjectProcessor(final BeanObjectContext context, final IBeanPathVisitor... visitors) {
-        super(context, visitors);
+    public BeanObjectProcessor(final BeanPathProcessorConfig config, final BeanObjectContext context,
+            final IBeanPathVisitor... visitors) {
+        super(config, context, visitors);
     }
 
     @Override

@@ -2,7 +2,6 @@ package de.invesdwin.norva.beanpath.spi.visitor;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.ButtonBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.CheckBoxBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.ComboBoxBeanPathElement;
@@ -25,13 +24,9 @@ import de.invesdwin.norva.beanpath.spi.element.table.column.TableContainerColumn
 import de.invesdwin.norva.beanpath.spi.element.table.column.TableSelectionButtonColumnBeanPathElement;
 
 @NotThreadSafe
-public abstract class ASimpleBeanPathVisitor extends ABeanPathVisitor {
+public abstract class ASimpleBeanPathVisitor implements IBeanPathVisitor {
 
     private boolean ignoreNextContainerClose;
-
-    public ASimpleBeanPathVisitor(final ABeanPathContext context) {
-        super(context);
-    }
 
     @Override
     public void visitRoot(final RootBeanPathElement e) {

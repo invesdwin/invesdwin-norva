@@ -3,11 +3,7 @@ package de.invesdwin.norva.beanpath.spi.visitor;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathStrings;
-import de.invesdwin.norva.beanpath.impl.clazz.BeanClassContainer;
-import de.invesdwin.norva.beanpath.impl.clazz.BeanClassContext;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassProcessor;
-import de.invesdwin.norva.beanpath.impl.clazz.BeanClassType;
-import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IPropertyBeanPathElement;
@@ -18,10 +14,6 @@ public class PrintVisitor extends ASimpleBeanPathVisitor {
 
     private int indentCount = 1;
     private boolean printInvalid = false;
-
-    public PrintVisitor(final ABeanPathContext context) {
-        super(context);
-    }
 
     public PrintVisitor withPrintInvalid() {
         return withPrintInvalid(true);
@@ -91,8 +83,7 @@ public class PrintVisitor extends ASimpleBeanPathVisitor {
     }
 
     public static void print(final Class<?> clazz) {
-        final BeanClassContext context = new BeanClassContext(new BeanClassContainer(new BeanClassType(clazz)));
-        new BeanClassProcessor(context, new PrintVisitor(context)).process();
+        BeanClassProcessor.process(clazz, new PrintVisitor());
     }
 
 }

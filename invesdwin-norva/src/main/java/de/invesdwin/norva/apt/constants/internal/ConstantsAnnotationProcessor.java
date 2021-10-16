@@ -15,6 +15,7 @@ import de.invesdwin.norva.beanpath.impl.model.BeanModelContainer;
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
 import de.invesdwin.norva.beanpath.impl.model.BeanModelProcessor;
 import de.invesdwin.norva.beanpath.impl.model.BeanModelType;
+import de.invesdwin.norva.beanpath.spi.BeanPathProcessorConfig;
 
 @SupportedAnnotationTypes({ "*" })
 @NotThreadSafe
@@ -36,7 +37,8 @@ public class ConstantsAnnotationProcessor extends AAnnotationProcessor {
                         final BeanModelContainer rootContainer = new BeanModelContainer(
                                 new BeanModelType(processingEnv, typeElement.asType(), typeElement));
                         final BeanModelContext context = new BeanModelContext(rootContainer, processingEnv);
-                        new BeanModelProcessor(context, new ConstantsGeneratorVisitor(context, element)).process();
+                        new BeanModelProcessor(BeanPathProcessorConfig.DEFAULT, context,
+                                new ConstantsGeneratorVisitor(context, element)).process();
                     }
                 }
             }

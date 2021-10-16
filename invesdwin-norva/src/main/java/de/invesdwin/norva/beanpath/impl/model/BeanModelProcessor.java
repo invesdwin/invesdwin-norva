@@ -6,6 +6,7 @@ import javax.lang.model.element.ElementKind;
 
 import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.spi.ABeanPathProcessor;
+import de.invesdwin.norva.beanpath.spi.BeanPathProcessorConfig;
 import de.invesdwin.norva.beanpath.spi.element.ContainerOpenBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElement;
@@ -15,8 +16,9 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 public class BeanModelProcessor extends ABeanPathProcessor<BeanModelContext, BeanModelContainer> {
 
     @SafeVarargs
-    public BeanModelProcessor(final BeanModelContext context, final IBeanPathVisitor... visitors) {
-        super(context, visitors);
+    public BeanModelProcessor(final BeanPathProcessorConfig config, final BeanModelContext context,
+            final IBeanPathVisitor... visitors) {
+        super(config, context, visitors);
     }
 
     @Override

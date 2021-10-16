@@ -52,37 +52,18 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private static final String[] ELEMENT_NAME_BLACKLIST = { "getClass", "hashCode", "clone", "equals", "toString",
             "compareTo", "wait", "notify", "notifyAll", "readResolve", "afterPropertiesSet" };
 
+    private final BeanPathProcessorConfig config;
     private final X context;
     private final IBeanPathVisitor[] visitors;
     private final Set<String> duplicateBeanPathsFilter = new HashSet<String>();
     private final Set<String> duplicateInvalidBeanPathsFilter = new HashSet<String>();
 
-    private boolean shallowOnly;
-    private boolean ignoreBeanPathEndPointAnnotation;
-
     @SafeVarargs
-    public ABeanPathProcessor(final X context, final IBeanPathVisitor... visitors) {
+    public ABeanPathProcessor(final BeanPathProcessorConfig config, final X context,
+            final IBeanPathVisitor... visitors) {
+        this.config = config;
         this.context = context;
         this.visitors = visitors;
-    }
-
-    public ABeanPathProcessor<X, C> withShallowOnly() {
-        this.shallowOnly = true;
-        return this;
-    }
-
-    public boolean isShallowOnly() {
-        return shallowOnly;
-    }
-
-    public boolean isIgnoreBeanPathEndPointAnnotation() {
-        return ignoreBeanPathEndPointAnnotation;
-    }
-
-    public ABeanPathProcessor<X, C> withIgnoreBeanPathEndPointAnnotation(
-            final boolean ignoreBeanPathEndPointAnnotation) {
-        this.ignoreBeanPathEndPointAnnotation = ignoreBeanPathEndPointAnnotation;
-        return this;
     }
 
     public final X getContext() {
@@ -90,7 +71,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     }
 
     @SuppressWarnings("unchecked")
-    public final void process() {
+    public void process() {
         final boolean scanned = scanContainer(new RootBeanPathElement(context), (C) context.getRootContainer());
         if (scanned) {
             // hide any leftover utilities
@@ -226,7 +207,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private void processContainerOpenElement(final ContainerOpenBeanPathElement containerOpenElement) {
         IBeanPathContainer parent = containerOpenElement.getContainer();
         while (parent != null) {
-            if (!isShallowOnly() && parent.getType()
+            if (!config.isShallowOnly() && parent.getType()
                     .getQualifiedName()
                     .equals(containerOpenElement.getAccessor().getType().getQualifiedName())) {
                 //skip recursive loops
@@ -236,7 +217,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
             }
         }
         final boolean containerOpen;
-        if (!isShallowOnly()) {
+        if (!config.isShallowOnly()) {
             final C subContainer = newSubContainer(containerOpenElement);
             containerOpen = scanContainer(containerOpenElement, subContainer);
         } else {
@@ -437,7 +418,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         if (isIterableOrJavaType) {
             return true;
         }
-        if (!ignoreBeanPathEndPointAnnotation) {
+        if (!config.isIgnoreBeanPathEndPointAnnotation()) {
             final boolean hasBeanPathEndPointAnnotation = rawType.getAnnotation(BeanPathEndPoint.class) != null
                     || propertyElement.getAccessor().getAnnotation(BeanPathEndPoint.class) != null;
             if (hasBeanPathEndPointAnnotation) {

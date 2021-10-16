@@ -16,7 +16,6 @@ import javax.tools.StandardLocation;
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
-import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.IActionBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IPropertyBeanPathElement;
@@ -27,6 +26,7 @@ import de.invesdwin.norva.beanpath.spi.visitor.SimpleBeanPathVisitorSupport;
 @NotThreadSafe
 public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
+    private final BeanModelContext context;
     private final Element originatingElement;
     private final List<IBeanPathElement> constants = new ArrayList<>();
     private final List<IBeanPathElement> getters = new ArrayList<>();
@@ -35,8 +35,8 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
     private final List<IBeanPathElement> actions = new ArrayList<>();
     private final List<IBeanPathElement> methods = new ArrayList<>();
 
-    public ConstantsGeneratorVisitor(final ABeanPathContext context, final Element originatingElement) {
-        super(context);
+    public ConstantsGeneratorVisitor(final BeanModelContext context, final Element originatingElement) {
+        this.context = context;
         this.originatingElement = originatingElement;
     }
 
@@ -113,13 +113,12 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
     @Override
     public void finish() {
-        final Collection<IBeanPathElement> elements = getContext().getElementRegistry().getElements();
+        final Collection<IBeanPathElement> elements = context.getElementRegistry().getElements();
         if (elements.isEmpty()) {
             return;
         }
 
-        final BeanModelContext modelContext = (BeanModelContext) getContext();
-        final TypeElement rootTypeElement = modelContext.getRootContainer().getType().getTypeElement();
+        final TypeElement rootTypeElement = context.getRootContainer().getType().getTypeElement();
         final String originatingClassName = String.valueOf(rootTypeElement.getSimpleName());
         final String targetClassName = originatingClassName + "Constants";
         final String packageName = String.valueOf(rootTypeElement.getQualifiedName())
@@ -127,7 +126,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         final String content = generateContent(elements, targetClassName, packageName);
         final FileObject fileObject;
         try {
-            fileObject = modelContext.getEnv()
+            fileObject = context.getEnv()
                     .getFiler()
                     .createResource(StandardLocation.SOURCE_OUTPUT, packageName, targetClassName + ".java",
                             originatingElement);

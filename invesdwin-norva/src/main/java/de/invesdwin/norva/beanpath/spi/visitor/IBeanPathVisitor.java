@@ -1,6 +1,5 @@
 package de.invesdwin.norva.beanpath.spi.visitor;
 
-import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.ButtonBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.CheckBoxBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.ComboBoxBeanPathElement;
@@ -15,8 +14,6 @@ import de.invesdwin.norva.beanpath.spi.element.simple.SimplePropertyBeanPathElem
 import de.invesdwin.norva.beanpath.spi.element.table.TableBeanPathElement;
 
 public interface IBeanPathVisitor {
-
-    ABeanPathContext getContext();
 
     void visitRoot(RootBeanPathElement e);
 
