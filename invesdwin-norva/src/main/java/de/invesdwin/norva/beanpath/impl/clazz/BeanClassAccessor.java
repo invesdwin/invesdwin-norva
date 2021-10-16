@@ -105,13 +105,13 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
 
     @Override
     public Object getValueFromRoot(final Object root) {
-        final Object targetObject = container.getObjectFromRoot(root);
+        final Object targetObject = container.getTargetFromRoot(root);
         return getValueFromTarget(targetObject);
     }
 
     @Override
     public void setValueFromRoot(final Object root, final Object value) {
-        final Object targetObject = container.getObjectFromRoot(root);
+        final Object targetObject = container.getTargetFromRoot(root);
         setValueFromTarget(targetObject, value);
     }
 
@@ -135,7 +135,7 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
 
     @Override
     public Object invokeFromRoot(final Object root, final Object... params) {
-        final Object targetObject = container.getObjectFromRoot(root);
+        final Object targetObject = container.getTargetFromRoot(root);
         return invokeFromTarget(targetObject, params);
     }
 

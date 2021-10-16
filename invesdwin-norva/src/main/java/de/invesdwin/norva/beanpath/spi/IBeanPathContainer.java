@@ -13,4 +13,6 @@ public interface IBeanPathContainer extends IBeanPathFragment {
     @Override
     String toString();
 
+    <T> T unwrap(Class<T> type);
+
 }

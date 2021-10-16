@@ -55,17 +55,22 @@ public class TableTextColumnBeanPathElement extends APropertyBeanPathElement
         return false;
     }
 
-    @Override
-    public boolean isVisible(final Object target) {
-        return getTableElement().getColumnsFromTarget(target).contains(this);
-    }
-
     /**
      * A column is visible if it is in the filtered columnOrder.
      */
     @Override
     public boolean isVisible() {
         return getTableElement().getColumns().contains(this);
+    }
+
+    @Override
+    public boolean isVisibleFromRoot(final Object root) {
+        return getTableElement().getColumnsFromRoot(root).contains(this);
+    }
+
+    @Override
+    public boolean isVisibleFromTarget(final Object root, final Object target) {
+        return getTableElement().getColumnsFromRoot(root).contains(this);
     }
 
     @Override

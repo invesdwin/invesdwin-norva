@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import javax.annotation.concurrent.Immutable;
 
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassAccessor;
+import de.invesdwin.norva.beanpath.impl.clazz.BeanClassContainer;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassType;
 import de.invesdwin.norva.beanpath.spi.ABeanPathAccessor;
 
@@ -20,16 +21,16 @@ public class BeanObjectAccessor extends ABeanPathAccessor implements IBeanObject
     public BeanObjectAccessor(final BeanObjectContext context, final BeanObjectContainer container, final Field field) {
         this.context = context;
         this.container = container;
-        this.beanClassAccessor = new BeanClassAccessor(context.getBeanClassContext(), container.getBeanClassContainer(),
-                field);
+        this.beanClassAccessor = new BeanClassAccessor(context.getBeanClassContext(),
+                container.unwrap(BeanClassContainer.class), field);
     }
 
     public BeanObjectAccessor(final BeanObjectContext context, final BeanObjectContainer container,
             final Method method) {
         this.context = context;
         this.container = container;
-        this.beanClassAccessor = new BeanClassAccessor(context.getBeanClassContext(), container.getBeanClassContainer(),
-                method);
+        this.beanClassAccessor = new BeanClassAccessor(context.getBeanClassContext(),
+                container.unwrap(BeanClassContainer.class), method);
     }
 
     @Override

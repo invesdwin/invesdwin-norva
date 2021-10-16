@@ -64,4 +64,13 @@ public class BeanModelContainer extends ABeanPathContainer {
         return accessor;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T unwrap(final Class<T> type) {
+        if (type.isAssignableFrom(getClass())) {
+            return (T) this;
+        }
+        return null;
+    }
+
 }

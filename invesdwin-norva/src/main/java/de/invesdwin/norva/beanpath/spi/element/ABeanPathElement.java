@@ -17,8 +17,8 @@ import de.invesdwin.norva.beanpath.annotation.Forced;
 import de.invesdwin.norva.beanpath.annotation.Hidden;
 import de.invesdwin.norva.beanpath.annotation.Title;
 import de.invesdwin.norva.beanpath.annotation.Tooltip;
+import de.invesdwin.norva.beanpath.impl.clazz.BeanClassContainer;
 import de.invesdwin.norva.beanpath.impl.model.BeanModelContext;
-import de.invesdwin.norva.beanpath.impl.object.BeanObjectAccessor;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectContainer;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
@@ -275,11 +275,25 @@ public abstract class ABeanPathElement implements IBeanPathElement {
 
     @Override
     public String getTitle() {
-        if (getAccessor() instanceof BeanObjectAccessor) {
-            final BeanObjectAccessor objAccessor = (BeanObjectAccessor) getAccessor();
-            return getTitle(objAccessor.getContainer().getObject());
+        final BeanObjectContainer container = getContainer().unwrap(BeanObjectContainer.class);
+        if (container != null) {
+            return getTitleFromTarget(container.getObject());
         } else {
-            return getTitle(null);
+            return getTitleFromTarget(null);
+        }
+    }
+
+    @Override
+    public String getTitleFromRoot(final Object root) {
+        if (root == null) {
+            return getTitleFromTarget(null);
+        }
+        final BeanClassContainer container = getContainer().unwrap(BeanClassContainer.class);
+        if (container != null) {
+            final Object target = container.getTargetFromRoot(root);
+            return getTitleFromTarget(target);
+        } else {
+            return getTitleFromTarget(null);
         }
     }
 
@@ -287,7 +301,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
      * Passing null here results in static title.
      */
     @Override
-    public String getTitle(final Object target) {
+    public String getTitleFromTarget(final Object target) {
         //1. title property on property
         if (getTitleElement() != null && getTitleElement().isInvokerAvailable() && target != null) {
             final Object returnValue = getTitleElement().getInvoker().invokeFromTarget(target);
@@ -333,37 +347,68 @@ public abstract class ABeanPathElement implements IBeanPathElement {
     }
 
     @Override
-    public boolean isVisible(final Object target) {
-        if (target == null) {
+    public boolean isVisible() {
+        final BeanObjectContainer container = getContainer().unwrap(BeanObjectContainer.class);
+        if (container != null) {
+            return isVisibleFromRoot(container.getRootObject());
+        } else {
+            return isVisibleFromTarget(null, null);
+        }
+    }
+
+    @Override
+    public boolean isVisibleFromRoot(final Object root) {
+        final BeanClassContainer beanClassContainer = getContainer().unwrap(BeanClassContainer.class);
+        final Object target = beanClassContainer.getTargetFromRoot(root);
+        return isVisibleFromTarget(root, target);
+    }
+
+    @Override
+    public boolean isVisibleFromTarget(final Object root, final Object target) {
+        if (root == null || target == null) {
             //hiddenElement overrides this method properly, otherwise we cannot invoke hideElement without a target
             return true;
         }
-        //since we only invoke methods here and are not interested in annotation, simply check BeanObjectContainer before the loop
-        if (getContainer() instanceof BeanObjectContainer) {
-            IBeanPathElement parent = this;
-            Object parentTarget = target;
-            while (parent != null) {
-                final HideBeanPathElement hideAction = parent.getHideElement();
-                if (hideAction != null) {
-                    final Object hideResult = hideAction.getInvoker().invokeFromTarget(parentTarget);
-                    if (hideResult != null) {
-                        if (BeanPathReflections.isBoolean(hideResult.getClass())) {
-                            return !(Boolean) hideResult;
-                        } else {
-                            return false;
-                        }
+        IBeanPathElement parent = this;
+        Object parentTarget = target;
+        while (parent != null) {
+            final HideBeanPathElement hideAction = parent.getHideElement();
+            if (hideAction != null) {
+                final Object hideResult = hideAction.getInvoker().invokeFromTarget(parentTarget);
+                if (hideResult != null) {
+                    if (BeanPathReflections.isBoolean(hideResult.getClass())) {
+                        return !(Boolean) hideResult;
+                    } else {
+                        return false;
                     }
                 }
-                parent = parent.getParentElement();
-                parentTarget = getParentTarget(parent);
             }
+            parent = parent.getParentElement();
+            parentTarget = getParentTarget(parent, root);
         }
         return true;
     }
 
     @Override
-    public boolean isEnabled(final Object target) {
-        if (target == null) {
+    public boolean isEnabled() {
+        final BeanObjectContainer container = getContainer().unwrap(BeanObjectContainer.class);
+        if (container != null) {
+            return isEnabledFromRoot(container.getRootObject());
+        } else {
+            return isEnabledFromTarget(null, null);
+        }
+    }
+
+    @Override
+    public boolean isEnabledFromRoot(final Object root) {
+        final BeanClassContainer beanClassContainer = getContainer().unwrap(BeanClassContainer.class);
+        final Object target = beanClassContainer.getTargetFromRoot(root);
+        return isEnabledFromTarget(root, target);
+    }
+
+    @Override
+    public boolean isEnabledFromTarget(final Object root, final Object target) {
+        if (root == null || target == null) {
             //null is always disabled
             return false;
         }
@@ -371,7 +416,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         if (isStaticallyDisabled()) {
             return false;
         }
-        if (!isVisible(target)) {
+        if (!isVisibleFromTarget(root, target)) {
             return false;
         }
         IBeanPathElement parent = this;
@@ -395,15 +440,15 @@ public abstract class ABeanPathElement implements IBeanPathElement {
             }
             parent = parent.getParentElement();
             //check bean object container here so that annotations in hierarchy get processed properly
-            parentTarget = getParentTarget(parent);
+            parentTarget = getParentTarget(parent, root);
         }
         return true;
     }
 
-    private Object getParentTarget(final IBeanPathElement parent) {
-        if (parent != null && getContainer() instanceof BeanObjectContainer) {
-            final BeanObjectContainer parentContainer = (BeanObjectContainer) parent.getContainer();
-            return parentContainer.getObject();
+    private Object getParentTarget(final IBeanPathElement parent, final Object root) {
+        if (parent != null) {
+            final BeanClassContainer parentContainer = parent.getContainer().unwrap(BeanClassContainer.class);
+            return parentContainer.getTargetFromRoot(root);
         } else {
             return null;
         }
@@ -414,7 +459,24 @@ public abstract class ABeanPathElement implements IBeanPathElement {
     }
 
     @Override
-    public String getTooltip(final Object target) {
+    public String getTooltip() {
+        final BeanObjectContainer container = getContainer().unwrap(BeanObjectContainer.class);
+        if (container != null) {
+            return getTooltipFromRoot(container.getRootObject());
+        } else {
+            return getTooltipFromTarget(null, null);
+        }
+    }
+
+    @Override
+    public String getTooltipFromRoot(final Object root) {
+        final BeanClassContainer beanClassContainer = getContainer().unwrap(BeanClassContainer.class);
+        final Object target = beanClassContainer.getTargetFromRoot(root);
+        return getTooltipFromTarget(root, target);
+    }
+
+    @Override
+    public String getTooltipFromTarget(final Object root, final Object target) {
         try {
             IBeanPathElement parent = this;
             Object parentTarget = target;
@@ -424,7 +486,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
                     return tooltip;
                 }
                 parent = parent.getParentElement();
-                parentTarget = getParentTarget(parent);
+                parentTarget = getParentTarget(parent, root);
             }
             //5. check tooltip property
             if (getTooltipElement() != null && getTooltipElement().isInvokerAvailable()) {

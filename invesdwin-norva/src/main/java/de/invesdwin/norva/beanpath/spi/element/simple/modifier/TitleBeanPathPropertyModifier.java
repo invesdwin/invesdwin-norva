@@ -2,9 +2,7 @@ package de.invesdwin.norva.beanpath.spi.element.simple.modifier;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import de.invesdwin.norva.beanpath.impl.clazz.BeanClassContainer;
 import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
-import de.invesdwin.norva.beanpath.impl.object.BeanObjectContainer;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
@@ -54,8 +52,7 @@ public class TitleBeanPathPropertyModifier implements IBeanPathPropertyModifier<
 
     @Override
     public String getValue() {
-        final BeanObjectContainer container = (BeanObjectContainer) element.getContainer();
-        return getValueFromTarget(container.getObject());
+        return element.getTitle();
     }
 
     @Override
@@ -65,8 +62,7 @@ public class TitleBeanPathPropertyModifier implements IBeanPathPropertyModifier<
 
     @Override
     public String getValueFromRoot(final Object root) {
-        final BeanClassContainer container = (BeanClassContainer) element.getContainer();
-        return getValueFromTarget(container.getObjectFromRoot(root));
+        return element.getTitleFromRoot(root);
     }
 
     @Override
@@ -76,7 +72,7 @@ public class TitleBeanPathPropertyModifier implements IBeanPathPropertyModifier<
 
     @Override
     public String getValueFromTarget(final Object target) {
-        return element.getTitle(target);
+        return element.getTitleFromTarget(target);
     }
 
 }

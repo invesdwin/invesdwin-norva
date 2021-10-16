@@ -21,8 +21,8 @@ public class BeanObjectContainer extends ABeanPathContainer {
     }
 
     public BeanObjectContainer(final IRootObjectReference rootObjectReference) {
-        this.beanClassContainer = new BeanClassContainer(new BeanClassType(rootObjectReference.getRootObject()
-                .getClass()));
+        this.beanClassContainer = new BeanClassContainer(
+                new BeanClassType(rootObjectReference.getRootObject().getClass()));
         this.rootObjectReference = rootObjectReference;
         this.root = this;
         this.parent = null;
@@ -32,19 +32,15 @@ public class BeanObjectContainer extends ABeanPathContainer {
     public BeanObjectContainer(final ContainerOpenBeanPathElement containerOpenElement) {
         this.accessor = (BeanObjectAccessor) containerOpenElement.getAccessor();
         final BeanObjectContainer container = (BeanObjectContainer) containerOpenElement.getContainer();
-        this.beanClassContainer = new BeanClassContainer(container.getBeanClassContainer(),
+        this.beanClassContainer = new BeanClassContainer(container.unwrap(BeanClassContainer.class),
                 accessor.getBeanClassAccessor());
         this.parent = container;
         this.root = parent.getRoot();
         this.rootObjectReference = null;
     }
 
-    public BeanClassContainer getBeanClassContainer() {
-        return beanClassContainer;
-    }
-
     public Object getObject() {
-        return beanClassContainer.getObjectFromRoot(getRootObject());
+        return beanClassContainer.getTargetFromRoot(getRootObject());
     }
 
     public Object getRootObject() {
@@ -83,6 +79,18 @@ public class BeanObjectContainer extends ABeanPathContainer {
     @Override
     public BeanObjectAccessor getAccessor() {
         return accessor;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T unwrap(final Class<T> type) {
+        if (type.isAssignableFrom(getClass())) {
+            return (T) this;
+        }
+        if (type.isAssignableFrom(beanClassContainer.getClass())) {
+            return (T) beanClassContainer;
+        }
+        return null;
     }
 
 }

@@ -71,17 +71,22 @@ public abstract class ACustomTableColumn<M, V> extends APropertyBeanPathElement
         return false;
     }
 
-    @Override
-    public final boolean isVisible(final Object target) {
-        return getTableElement().getColumnsFromTarget(target).contains(this);
-    }
-
     /**
      * A column is visible if it is in the filtered columnOrder.
      */
     @Override
     public final boolean isVisible() {
         return getTableElement().getColumns().contains(this);
+    }
+
+    @Override
+    public final boolean isVisibleFromRoot(final Object root) {
+        return getTableElement().getColumnsFromRoot(root).contains(this);
+    }
+
+    @Override
+    public boolean isVisibleFromTarget(final Object root, final Object target) {
+        return getTableElement().getColumnsFromRoot(root).contains(this);
     }
 
     @Override
@@ -100,7 +105,12 @@ public abstract class ACustomTableColumn<M, V> extends APropertyBeanPathElement
     }
 
     @Override
-    public final String getTitle(final Object target) {
+    public String getTitleFromRoot(final Object root) {
+        return getTitle();
+    }
+
+    @Override
+    public final String getTitleFromTarget(final Object target) {
         return getTitle();
     }
 

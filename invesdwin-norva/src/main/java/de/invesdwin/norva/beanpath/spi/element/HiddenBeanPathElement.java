@@ -54,12 +54,32 @@ public class HiddenBeanPathElement extends ABeanPathElement {
     }
 
     @Override
-    public boolean isVisible(final Object target) {
+    public boolean isVisible() {
         return false;
     }
 
     @Override
-    public boolean isEnabled(final Object target) {
+    public boolean isVisibleFromRoot(final Object root) {
+        return false;
+    }
+
+    @Override
+    public boolean isVisibleFromTarget(final Object root, final Object target) {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabledFromRoot(final Object root) {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabledFromTarget(final Object root, final Object target) {
         return false;
     }
 

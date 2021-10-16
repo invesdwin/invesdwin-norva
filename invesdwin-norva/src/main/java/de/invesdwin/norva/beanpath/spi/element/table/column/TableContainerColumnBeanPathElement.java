@@ -32,13 +32,18 @@ public class TableContainerColumnBeanPathElement extends APropertyBeanPathElemen
     }
 
     @Override
-    public boolean isVisible(final Object target) {
-        return getTableElement().getColumnsFromTarget(target).contains(this);
+    public boolean isVisible() {
+        return getTableElement().getColumns().contains(this);
     }
 
     @Override
-    public boolean isVisible() {
-        return getTableElement().getColumns().contains(this);
+    public boolean isVisibleFromRoot(final Object root) {
+        return getTableElement().getColumnsFromRoot(root).contains(this);
+    }
+
+    @Override
+    public boolean isVisibleFromTarget(final Object root, final Object target) {
+        return getTableElement().getColumnsFromRoot(root).contains(this);
     }
 
     @Override

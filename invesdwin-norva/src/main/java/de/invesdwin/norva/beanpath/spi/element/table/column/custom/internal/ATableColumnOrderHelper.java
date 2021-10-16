@@ -11,13 +11,13 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.annotation.ColumnOrder;
+import de.invesdwin.norva.beanpath.impl.clazz.BeanClassContainer;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectContainer;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
 import de.invesdwin.norva.beanpath.spi.element.AChoiceBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.ATableBeanPathElement;
-import de.invesdwin.norva.beanpath.spi.element.table.TableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.column.ITableColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.column.TableRemoveFromButtonColumnBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.column.TableSelectionButtonColumnBeanPathElement;
@@ -31,56 +31,57 @@ public abstract class ATableColumnOrderHelper<E> {
     private final ColumnOrderBeanPathElement columnOrderElement;
     private final Class<E> columnType;
     private List<E> unchangeableOrderedColumns;
-    private final ICustomTableColumnProvider customTableColumnProvider;
+    private boolean customizeOrderedColumns = true;
 
     public ATableColumnOrderHelper(final AChoiceBeanPathElement element,
             final ColumnOrderBeanPathElement columnOrderElement, final Class<E> columnType) {
         this.element = element;
         this.columnOrderElement = columnOrderElement;
         this.columnType = columnType;
-        this.customTableColumnProvider = getCustomTableColumnProvider();
-    }
-
-    private ICustomTableColumnProvider getCustomTableColumnProvider() {
-        if (element instanceof TableBeanPathElement) {
-            final IBeanPathContainer container = element.getContainer();
-            if (container instanceof BeanObjectContainer) {
-                final BeanObjectContainer cContainer = (BeanObjectContainer) container;
-                final Object object = cContainer.getObject();
-                if (object instanceof ICustomTableColumnProvider) {
-                    final ICustomTableColumnProvider cObject = (ICustomTableColumnProvider) object;
-                    return cObject;
-                }
-            }
-        }
-        return null;
     }
 
     public List<E> getOrderedColumns() {
         final List<E> orderedColumns = getOrderedColumnsInternal(() -> columnOrderElement.getColumnOrder());
-        return processOrderedColumns(orderedColumns);
+        if (!customizeOrderedColumns) {
+            return orderedColumns;
+        }
+        final IBeanPathContainer container = element.getContainer();
+        final BeanObjectContainer cContainer = (BeanObjectContainer) container;
+        final Object target = cContainer.getObject();
+        return customizeOrderedColumns(target, orderedColumns);
     }
 
     public List<E> getOrderedColumnsFromTarget(final Object target) {
         final List<E> orderedColumns = getOrderedColumnsInternal(
                 () -> columnOrderElement.getColumnOrderFromTarget(target));
-        return processOrderedColumns(orderedColumns);
+        if (!customizeOrderedColumns) {
+            return orderedColumns;
+        }
+        return customizeOrderedColumns(target, orderedColumns);
     }
 
     public List<E> getOrderedColumnsFromRoot(final Object root) {
         final List<E> orderedColumns = getOrderedColumnsInternal(() -> columnOrderElement.getColumnOrderFromRoot(root));
-        return processOrderedColumns(orderedColumns);
+        final BeanClassContainer beanClassContainer = element.getContainer().unwrap(BeanClassContainer.class);
+        final Object target = beanClassContainer.getTargetFromRoot(root);
+        if (!customizeOrderedColumns) {
+            return orderedColumns;
+        }
+        return customizeOrderedColumns(target, orderedColumns);
     }
 
     @SuppressWarnings("unchecked")
-    private List<E> processOrderedColumns(final List<E> orderedColumns) {
-        if (customTableColumnProvider != null) {
+    private List<E> customizeOrderedColumns(final Object target, final List<E> orderedColumns) {
+        if (target instanceof ICustomTableColumnProvider) {
+            final ICustomTableColumnProvider customTableColumnProvider = (ICustomTableColumnProvider) target;
             final ATableBeanPathElement cElement = (ATableBeanPathElement) element;
             final List<ITableColumnBeanPathElement> cOrderedColumns = (List<ITableColumnBeanPathElement>) Collections
                     .unmodifiableList(orderedColumns);
             return (List<E>) customTableColumnProvider.customize(cElement, cOrderedColumns);
+        } else {
+            customizeOrderedColumns = false;
+            return orderedColumns;
         }
-        return orderedColumns;
     }
 
     @SuppressWarnings("unchecked")

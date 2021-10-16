@@ -52,17 +52,29 @@ public interface IBeanPathElement extends IBeanPathFragment {
     /**
      * True if the container is not null and no disableElement or Disabled annotation disables this on the path.
      */
-    boolean isEnabled(Object target);
+    boolean isEnabled();
+
+    boolean isEnabledFromRoot(Object root);
+
+    boolean isEnabledFromTarget(Object root, Object target);
 
     /**
      * True if this is not a hiddenElement (hidden annotation) and no hideElement hides this on the path.
      */
-    boolean isVisible(Object target);
+    boolean isVisible();
+
+    boolean isVisibleFromRoot(Object root);
+
+    boolean isVisibleFromTarget(Object root, Object target);
 
     /**
      * gets either the hideElement text, disableElement text or the tooltip annotation value.
      */
-    String getTooltip(Object target);
+    String getTooltip();
+
+    String getTooltipFromRoot(Object root);
+
+    String getTooltipFromTarget(Object root, Object target);
 
     String getTitle();
 
@@ -70,7 +82,9 @@ public interface IBeanPathElement extends IBeanPathFragment {
      * get the title, first the property title element, then the property title annotation, then title action element,
      * then type title annotation is used.
      */
-    String getTitle(Object target);
+    String getTitleFromTarget(Object target);
+
+    String getTitleFromRoot(Object root);
 
     String getVisibleName();
 

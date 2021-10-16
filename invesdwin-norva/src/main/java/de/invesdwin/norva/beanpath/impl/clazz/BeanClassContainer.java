@@ -43,7 +43,7 @@ public class BeanClassContainer extends ABeanPathContainer {
         this.typePath = BeanPathUtil.newTypePath(parent, accessor);
     }
 
-    public Object getObjectFromRoot(final Object rootObject) {
+    public Object getTargetFromRoot(final Object rootObject) {
         if (accessor == null) {
             //this is the root object
             return rootObject;
@@ -81,6 +81,15 @@ public class BeanClassContainer extends ABeanPathContainer {
     @Override
     public BeanClassAccessor getAccessor() {
         return accessor;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T unwrap(final Class<T> type) {
+        if (type.isAssignableFrom(getClass())) {
+            return (T) this;
+        }
+        return null;
     }
 
 }
