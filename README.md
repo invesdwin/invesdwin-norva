@@ -111,11 +111,9 @@ The bean processors allow you to run through properties and actions of beans fro
 Here a sample to process a java class:
 
 ```java
-    //create processing context
-    final BeanClassContext context = new BeanClassContext(
-            new BeanClassContainer(new BeanClassType(SomeClass.class)));
     //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
-    new BeanClassProcessor(context, new PrintVisitor(context)).process();
+    // BeanClassContext is the most efficient since it caches reflection results and elements, so always prefer that over BeanObjectContext
+    final BeanClassContext context = BeanClassProcessor.process(SomeClass.class, new PrintVisitor());
     //lookup element
     final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
             .getElement("some.bean.path.propertyElement");
@@ -125,6 +123,18 @@ Here a sample to process a java class:
     final Method method = accessor.getPublicGetterMethod();
     final BeanClassType type = (BeanClassType) beanPathElement.getAccessor().getRawType();
     final Class<?> methodReturnType = type.getType();
+    //modify values (using a supplied root object)
+    SomeClass rootObject = new SomeClass();
+    if (beanPathElement instanceof AChoiceBeanPathElement) {
+        //collection property
+        final AChoiceBeanPathElement choiceBeanPathElement = (AChoiceBeanPathElement) beanPathElement;
+        final List<?> values = choiceBeanPathElement.getChoiceModifier().getValue();
+        choiceBeanPathElement.getChoiceModifier().setValueFromRoot(rootObject, Arrays.asList(new SomeValue()));
+    } else {
+        //simple property
+        final Object value = beanPathElement.getModifier().getValue();
+        beanPathElement.getModifier().setValueFromRoot(rootObject, new SomeValue());
+    }
 ```
     
 The same sample processing a java object:
@@ -134,7 +144,7 @@ The same sample processing a java object:
     final BeanObjectContext context = new BeanObjectContext(
             new BeanObjectContainer(new BeanObjectType(new SomeObject())));
     //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
-    new BeanObjectProcessor(context, new PrintVisitor(context)).process();
+    new BeanObjectProcessor(context, new PrintVisitor()).process();
     //lookup element
     final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
             .getElement("some.bean.path.propertyElement");
@@ -175,7 +185,7 @@ And again the same sample processing a javax.model.Element:
 	                            new BeanModelType(processingEnv, typeElement.asType(), typeElement));
 	                    final BeanModelContext context = new BeanModelContext(rootContainer, processingEnv);
 	                    //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
-	                    new BeanModelProcessor(context, new PrintVisitor(context)).process();
+	                    new BeanModelProcessor(context, new PrintVisitor()).process();
 	                    //lookup element
 	                    final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
 	                            .getElement("some.bean.path.propertyElement");
