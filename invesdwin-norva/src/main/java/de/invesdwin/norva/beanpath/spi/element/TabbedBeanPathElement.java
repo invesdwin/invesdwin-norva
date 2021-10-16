@@ -71,6 +71,18 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
      * These columns are ordered and filtered according to @ColumnOrder or a columnOrder() method.
      */
     public List<TabbedColumnBeanPathElement> getColumns() {
+        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumns());
+    }
+
+    public List<TabbedColumnBeanPathElement> getColumnsFromRoot(final Object root) {
+        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromRoot(root));
+    }
+
+    public List<TabbedColumnBeanPathElement> getColumnsFromTarget(final Object target) {
+        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromTarget(target));
+    }
+
+    private ATableColumnOrderHelper<TabbedColumnBeanPathElement> getColumnsHelper() {
         if (columns == null) {
             columns = new ATableColumnOrderHelper<TabbedColumnBeanPathElement>(this, getColumnOrderElement(),
                     TabbedColumnBeanPathElement.class) {
@@ -98,7 +110,7 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
                 }
             };
         }
-        return Collections.unmodifiableList(columns.getOrderedColumns());
+        return columns;
     }
 
     @Override

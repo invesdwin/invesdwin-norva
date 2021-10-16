@@ -71,10 +71,9 @@ public abstract class ACustomTableColumn<M, V> extends APropertyBeanPathElement
         return false;
     }
 
-    @Deprecated
     @Override
     public final boolean isVisible(final Object target) {
-        return isVisible();
+        return getTableElement().getColumnsFromTarget(target).contains(this);
     }
 
     /**

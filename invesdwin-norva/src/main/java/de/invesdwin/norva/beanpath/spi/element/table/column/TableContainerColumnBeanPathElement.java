@@ -31,10 +31,9 @@ public class TableContainerColumnBeanPathElement extends APropertyBeanPathElemen
         return tableElement;
     }
 
-    @Deprecated
     @Override
     public boolean isVisible(final Object target) {
-        return isVisible();
+        return getTableElement().getColumnsFromTarget(target).contains(this);
     }
 
     @Override

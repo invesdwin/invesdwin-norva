@@ -18,7 +18,7 @@ import de.invesdwin.norva.beanpath.spi.element.table.column.custom.internal.ATab
 @NotThreadSafe
 public abstract class ATableBeanPathElement extends AChoiceBeanPathElement {
 
-    private ATableColumnOrderHelper<ITableColumnBeanPathElement> columns;
+    private ATableColumnOrderHelper<ITableColumnBeanPathElement> columnsHelper;
 
     public ATableBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement) {
         super(simplePropertyElement);
@@ -37,12 +37,24 @@ public abstract class ATableBeanPathElement extends AChoiceBeanPathElement {
 
     public abstract List<ITableColumnBeanPathElement> getRawColumns();
 
+    public List<ITableColumnBeanPathElement> getColumns() {
+        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumns());
+    }
+
     /**
      * These columns are ordered and filtered according to @ColumnOrder or a columnOrder() method.
      */
-    public List<ITableColumnBeanPathElement> getColumns() {
-        if (columns == null) {
-            columns = new ATableColumnOrderHelper<ITableColumnBeanPathElement>(this, getColumnOrderElement(),
+    public List<ITableColumnBeanPathElement> getColumnsFromTarget(final Object target) {
+        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromTarget(target));
+    }
+
+    public List<ITableColumnBeanPathElement> getColumnsFromRoot(final Object root) {
+        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromRoot(root));
+    }
+
+    private ATableColumnOrderHelper<ITableColumnBeanPathElement> getColumnsHelper() {
+        if (columnsHelper == null) {
+            columnsHelper = new ATableColumnOrderHelper<ITableColumnBeanPathElement>(this, getColumnOrderElement(),
                     ITableColumnBeanPathElement.class) {
                 @Override
                 protected Collection<? extends ITableColumnBeanPathElement> getRawColumns() {
@@ -66,7 +78,7 @@ public abstract class ATableBeanPathElement extends AChoiceBeanPathElement {
                 }
             };
         }
-        return Collections.unmodifiableList(columns.getOrderedColumns());
+        return columnsHelper;
     }
 
 }

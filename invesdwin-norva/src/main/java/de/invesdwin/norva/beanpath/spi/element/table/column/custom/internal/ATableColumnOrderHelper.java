@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -55,9 +56,24 @@ public abstract class ATableColumnOrderHelper<E> {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     public List<E> getOrderedColumns() {
-        final List<E> orderedColumns = getOrderedColumnsInternal();
+        final List<E> orderedColumns = getOrderedColumnsInternal(() -> columnOrderElement.getColumnOrder());
+        return processOrderedColumns(orderedColumns);
+    }
+
+    public List<E> getOrderedColumnsFromTarget(final Object target) {
+        final List<E> orderedColumns = getOrderedColumnsInternal(
+                () -> columnOrderElement.getColumnOrderFromTarget(target));
+        return processOrderedColumns(orderedColumns);
+    }
+
+    public List<E> getOrderedColumnsFromRoot(final Object root) {
+        final List<E> orderedColumns = getOrderedColumnsInternal(() -> columnOrderElement.getColumnOrderFromRoot(root));
+        return processOrderedColumns(orderedColumns);
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<E> processOrderedColumns(final List<E> orderedColumns) {
         if (customTableColumnProvider != null) {
             final ATableBeanPathElement cElement = (ATableBeanPathElement) element;
             final List<ITableColumnBeanPathElement> cOrderedColumns = (List<ITableColumnBeanPathElement>) Collections
@@ -67,7 +83,8 @@ public abstract class ATableColumnOrderHelper<E> {
         return orderedColumns;
     }
 
-    private List<E> getOrderedColumnsInternal() {
+    @SuppressWarnings("unchecked")
+    private List<E> getOrderedColumnsInternal(final Supplier<List<String>> columnOrderAccessor) {
         if (unchangeableOrderedColumns != null) {
             return unchangeableOrderedColumns;
         }
@@ -78,7 +95,7 @@ public abstract class ATableColumnOrderHelper<E> {
         } else {
             final List<String> beanPathFragments;
             if (columnOrderElement != null) {
-                beanPathFragments = columnOrderElement.getColumnOrder();
+                beanPathFragments = columnOrderAccessor.get();
             } else if (annotation != null) {
                 beanPathFragments = Arrays.asList(annotation.value());
             } else {

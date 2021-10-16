@@ -78,7 +78,7 @@ public class TabbedColumnsAsChoiceBeanPathPropertyModifier implements IBeanPathP
     @Override
     public List<?> getValueFromRoot(final Object root) {
         final List<Object> list = new ArrayList<Object>();
-        for (final TabbedColumnBeanPathElement column : element.getColumns()) {
+        for (final TabbedColumnBeanPathElement column : element.getColumnsFromRoot(root)) {
             list.add(column.getModifier().getValueFromRoot(root));
         }
         return list;
@@ -92,7 +92,7 @@ public class TabbedColumnsAsChoiceBeanPathPropertyModifier implements IBeanPathP
     @Override
     public List<?> getValueFromTarget(final Object target) {
         final List<Object> list = new ArrayList<Object>();
-        for (final TabbedColumnBeanPathElement column : element.getColumns()) {
+        for (final TabbedColumnBeanPathElement column : element.getColumnsFromTarget(target)) {
             list.add(column.getModifier().getValueFromTarget(target));
         }
         return list;

@@ -55,10 +55,9 @@ public class TableTextColumnBeanPathElement extends APropertyBeanPathElement
         return false;
     }
 
-    @Deprecated
     @Override
     public boolean isVisible(final Object target) {
-        return isVisible();
+        return getTableElement().getColumnsFromTarget(target).contains(this);
     }
 
     /**

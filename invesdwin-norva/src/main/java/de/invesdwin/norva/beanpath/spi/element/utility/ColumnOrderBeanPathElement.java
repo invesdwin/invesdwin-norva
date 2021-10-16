@@ -98,4 +98,20 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
         return columnOrder;
     }
 
+    public List<String> getColumnOrderFromRoot(final Object root) {
+        final List<String> columnOrder = new ArrayList<String>();
+        for (final Object column : getColumnOrderModifier().getValueFromRoot(root)) {
+            columnOrder.add(BeanPathStrings.asString(column));
+        }
+        return columnOrder;
+    }
+
+    public List<String> getColumnOrderFromTarget(final Object target) {
+        final List<String> columnOrder = new ArrayList<String>();
+        for (final Object column : getColumnOrderModifier().getValueFromTarget(target)) {
+            columnOrder.add(BeanPathStrings.asString(column));
+        }
+        return columnOrder;
+    }
+
 }
