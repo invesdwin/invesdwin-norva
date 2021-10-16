@@ -112,7 +112,7 @@ Here a sample to process a java class:
 
 ```java
     //print out bean path info via PrintVisitor; or implement your own ASimpleBeanPathVisitor or ABeanPathVisitor
-    // BeanClassContext is the most efficient since it caches reflection results and elements, so always prefer that over BeanObjectContext
+    //BeanClassContext is the most efficient since it caches reflection results and elements, so always prefer that over BeanObjectContext
     final BeanClassContext context = BeanClassProcessor.process(SomeClass.class, new PrintVisitor());
     //lookup element
     final APropertyBeanPathElement beanPathElement = context.getElementRegistry()
