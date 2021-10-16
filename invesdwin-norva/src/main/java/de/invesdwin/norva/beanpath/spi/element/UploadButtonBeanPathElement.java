@@ -8,6 +8,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassType;
 import de.invesdwin.norva.beanpath.spi.element.simple.SimpleActionBeanPathElement;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.ActionInvokerBeanClassAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.ActionInvokerBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.ChoiceBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.utility.ValidateBeanPathElement;
@@ -65,8 +66,50 @@ public class UploadButtonBeanPathElement extends AActionBeanPathElement implemen
         }
     }
 
+    public void setUploadedFilesFromTarget(final Object target, final List<File> files) {
+        if (!isMultiUpload()) {
+            if (files.size() > 0) {
+                BeanPathAssertions.checkState(files.size() == 1, "MultiUpload is not supported!");
+                setUploadedFileFromTarget(target, files.get(0));
+            } else {
+                setUploadedFileFromTarget(target, null);
+            }
+        } else {
+            if (choiceModifier == null) {
+                choiceModifier = new ChoiceBeanPathPropertyModifier(new ActionInvokerBeanObjectAccessor(getInvoker()),
+                        null, false);
+            }
+            choiceModifier.setValueFromTarget(target, files);
+        }
+    }
+
+    public void setUploadedFilesFromRoot(final Object root, final List<File> files) {
+        if (!isMultiUpload()) {
+            if (files.size() > 0) {
+                BeanPathAssertions.checkState(files.size() == 1, "MultiUpload is not supported!");
+                setUploadedFileFromRoot(root, files.get(0));
+            } else {
+                setUploadedFileFromRoot(root, null);
+            }
+        } else {
+            if (choiceModifier == null) {
+                choiceModifier = new ChoiceBeanPathPropertyModifier(new ActionInvokerBeanClassAccessor(getInvoker()),
+                        null, false);
+            }
+            choiceModifier.setValueFromRoot(root, files);
+        }
+    }
+
     public void setUploadedFile(final File file) {
         getInvoker().invoke(file);
+    }
+
+    public void setUploadedFileFromTarget(final Object target, final File file) {
+        getInvoker().invokeFromTarget(target, file);
+    }
+
+    public void setUploadedFileFromRoot(final Object root, final File file) {
+        getInvoker().invokeFromRoot(root, file);
     }
 
 }
