@@ -1,6 +1,7 @@
 package de.invesdwin.norva.beanpath.impl.clazz;
 
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Method;
@@ -134,17 +135,78 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
     }
 
     @Override
-    public Object invokeFromRoot(final Object root, final Object... params) {
-        final Object targetObject = container.getTargetFromRoot(root);
-        return invokeFromTarget(targetObject, params);
+    public Object invokeFromRoot(final Object... params) {
+        final Object targetObject = container.getTargetFromRoot(params[0]);
+        params[0] = targetObject;
+        return invokeFromTarget(params);
     }
 
     @Override
-    public Object invokeFromTarget(final Object target, final Object... params) {
+    public Object invokeFromRoot(final Object root) {
+        final Object targetObject = container.getTargetFromRoot(root);
+        return invokeFromTarget(targetObject);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1) {
+        final Object targetObject = container.getTargetFromRoot(root);
+        return invokeFromTarget(targetObject, param1);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2) {
+        final Object targetObject = container.getTargetFromRoot(root);
+        return invokeFromTarget(targetObject, param1, param2);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2, final Object param3) {
+        final Object targetObject = container.getTargetFromRoot(root);
+        return invokeFromTarget(targetObject, param1, param2, param3);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object... params) {
+        if (params == null || params.length == 0 || params[0] == null) {
+            return null;
+        } else {
+            return internal.invokeFromTarget(params);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target) {
         if (target == null) {
             return null;
         } else {
-            return internal.invokeFromTarget(target, params);
+            return internal.invokeFromTarget(target);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1) {
+        if (target == null) {
+            return null;
+        } else {
+            return internal.invokeFromTarget(target, param1);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2) {
+        if (target == null) {
+            return null;
+        } else {
+            return internal.invokeFromTarget(target, param1, param2);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2, final Object param3) {
+        if (target == null) {
+            return null;
+        } else {
+            return internal.invokeFromTarget(target, param1, param2, param3);
         }
     }
 
@@ -181,6 +243,11 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
     @Override
     public Method getPublicActionMethod() {
         return internal.getPublicActionMethod();
+    }
+
+    @Override
+    public MethodHandle getPublicActionMethodHandle() {
+        return internal.getPublicActionMethodHandle();
     }
 
     @Override
@@ -234,13 +301,33 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
     }
 
     @Override
+    public MethodHandle getPublicGetterMethodHandle() {
+        return internal.getPublicGetterMethodHandle();
+    }
+
+    @Override
     public Method getPublicSetterMethod() {
         return internal.getPublicSetterMethod();
     }
 
     @Override
+    public MethodHandle getPublicSetterMethodHandle() {
+        return internal.getPublicSetterMethodHandle();
+    }
+
+    @Override
     public Field getPublicField() {
         return internal.getPublicField();
+    }
+
+    @Override
+    public MethodHandle getPublicFieldGetterHandle() {
+        return internal.getPublicFieldGetterHandle();
+    }
+
+    @Override
+    public MethodHandle getPublicFieldSetterHandle() {
+        return internal.getPublicFieldSetterHandle();
     }
 
     @Override

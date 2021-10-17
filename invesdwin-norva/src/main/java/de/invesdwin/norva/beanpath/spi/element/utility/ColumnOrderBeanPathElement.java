@@ -71,7 +71,7 @@ public class ColumnOrderBeanPathElement extends AActionBeanPathElement implement
         if (columnOrderModifier == null) {
             if (getAccessor().getBeanPathFragment().equals(COLUMN_ORDER_BEAN_PATH_FRAGMENT)) {
                 columnOrderModifier = new de.invesdwin.norva.beanpath.spi.element.simple.modifier.ChoiceBeanPathPropertyModifier(
-                        new de.invesdwin.norva.beanpath.spi.element.simple.modifier.ActionInvokerBeanObjectAccessor(
+                        new de.invesdwin.norva.beanpath.spi.element.simple.accessor.ActionInvokerBeanObjectAccessor(
                                 getInvoker()),
                         null, false);
             } else if (getAccessor().getBeanPathFragment().endsWith(COLUMN_ORDER_SUFFIX)) {

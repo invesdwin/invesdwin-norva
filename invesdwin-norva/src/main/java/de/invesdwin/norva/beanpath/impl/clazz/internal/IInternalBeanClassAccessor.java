@@ -1,6 +1,7 @@
 package de.invesdwin.norva.beanpath.impl.clazz.internal;
 
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -12,13 +13,23 @@ public interface IInternalBeanClassAccessor {
 
     Method getPublicActionMethod();
 
+    MethodHandle getPublicActionMethodHandle();
+
     Method getPublicGetterMethod();
 
+    MethodHandle getPublicGetterMethodHandle();
+
     Method getPublicSetterMethod();
+
+    MethodHandle getPublicSetterMethodHandle();
 
     Field getRawField();
 
     Field getPublicField();
+
+    MethodHandle getPublicFieldGetterHandle();
+
+    MethodHandle getPublicFieldSetterHandle();
 
     String getBeanPathFragment();
 
@@ -32,7 +43,15 @@ public interface IInternalBeanClassAccessor {
 
     void setValueFromTarget(Object target, Object value);
 
-    Object invokeFromTarget(Object target, Object... params);
+    Object invokeFromTarget(Object... params);
+
+    Object invokeFromTarget(Object target);
+
+    Object invokeFromTarget(Object target, Object param1);
+
+    Object invokeFromTarget(Object target, Object param1, Object param2);
+
+    Object invokeFromTarget(Object target, Object param1, Object param2, Object param3);
 
     String getRawName();
 

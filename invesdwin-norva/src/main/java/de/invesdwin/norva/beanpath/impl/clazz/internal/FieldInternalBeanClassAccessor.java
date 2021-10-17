@@ -2,6 +2,9 @@ package de.invesdwin.norva.beanpath.impl.clazz.internal;
 
 import java.beans.Introspector;
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -15,7 +18,9 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
 
     private final Field rawField;
     private final BeanClassType rawType;
-    private Field publicField;
+    private final Field publicField;
+    private final MethodHandle publicFieldSetterHandle;
+    private final MethodHandle publicFieldGetterHandle;
 
     public FieldInternalBeanClassAccessor(final Field field) {
         this.rawField = field;
@@ -23,8 +28,17 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
         if (BeanPathReflections.isPublic(field)) {
             this.publicField = field;
             BeanPathReflections.makeAccessible(publicField);
+            try {
+                final Lookup lookup = MethodHandles.lookup();
+                publicFieldGetterHandle = lookup.unreflectGetter(publicField);
+                publicFieldSetterHandle = lookup.unreflectSetter(publicField);
+            } catch (final IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             this.publicField = null;
+            this.publicFieldSetterHandle = null;
+            this.publicFieldGetterHandle = null;
         }
     }
 
@@ -54,12 +68,27 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
     }
 
     @Override
+    public MethodHandle getPublicActionMethodHandle() {
+        return null;
+    }
+
+    @Override
     public Method getPublicGetterMethod() {
         return null;
     }
 
     @Override
+    public MethodHandle getPublicGetterMethodHandle() {
+        return null;
+    }
+
+    @Override
     public Method getPublicSetterMethod() {
+        return null;
+    }
+
+    @Override
+    public MethodHandle getPublicSetterMethodHandle() {
         return null;
     }
 
@@ -79,14 +108,28 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
     }
 
     @Override
+    public MethodHandle getPublicFieldGetterHandle() {
+        return publicFieldSetterHandle;
+    }
+
+    @Override
+    public MethodHandle getPublicFieldSetterHandle() {
+        return publicFieldGetterHandle;
+    }
+
+    @Override
     public BeanClassType getRawType() {
         return rawType;
     }
 
     @Override
     public Object getValueFromTarget(final Object target) {
-        if (getPublicField() != null) {
-            return BeanPathReflections.getField(getPublicField(), target);
+        if (publicFieldGetterHandle != null) {
+            try {
+                return publicFieldGetterHandle.invoke(target);
+            } catch (final Throwable e) {
+                throw new RuntimeException(e);
+            }
         } else {
             throw InternalBeanClassAccessorExceptions.newNoPublicGetterOrField(this, target);
         }
@@ -94,16 +137,44 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
 
     @Override
     public void setValueFromTarget(final Object target, final Object value) {
-        if (getPublicField() != null) {
-            BeanPathReflections.setField(getPublicField(), target, value);
+        if (publicFieldSetterHandle != null) {
+            try {
+                publicFieldSetterHandle.invoke(target, value);
+            } catch (final Throwable e) {
+                throw new RuntimeException(e);
+            }
         } else {
             throw InternalBeanClassAccessorExceptions.newNoPublicSetterOrField(this, target);
         }
     }
 
     @Override
-    public Object invokeFromTarget(final Object target, final Object... params) {
-        throw new UnsupportedOperationException("It is not possible to invoke a field!");
+    public Object invokeFromTarget(final Object... params) {
+        throw newInvokeNotSupportedException();
+    }
+
+    private UnsupportedOperationException newInvokeNotSupportedException() {
+        return new UnsupportedOperationException("It is not possible to invoke a field!");
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target) {
+        throw newInvokeNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1) {
+        throw newInvokeNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2) {
+        throw newInvokeNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2, final Object param3) {
+        throw newInvokeNotSupportedException();
     }
 
     @Override

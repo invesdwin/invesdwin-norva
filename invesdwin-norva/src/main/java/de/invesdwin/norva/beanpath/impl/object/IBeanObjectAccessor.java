@@ -20,6 +20,14 @@ public interface IBeanObjectAccessor extends IBeanPathAccessor {
 
     Object invoke(Object... params);
 
+    Object invoke();
+
+    Object invoke(Object param1);
+
+    Object invoke(Object param1, Object param2);
+
+    Object invoke(Object param1, Object param2, Object param3);
+
     @Override
     BeanClassType getRawType();
 

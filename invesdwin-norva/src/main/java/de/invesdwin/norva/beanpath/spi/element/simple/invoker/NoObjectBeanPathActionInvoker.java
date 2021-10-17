@@ -35,19 +35,79 @@ public class NoObjectBeanPathActionInvoker implements IBeanPathActionInvoker {
         throw newUnsupportedOperationException();
     }
 
+    @Override
+    public Object invoke() {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
+    public Object invoke(final Object param1) {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
+    public Object invoke(final Object param1, final Object param2) {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
+    public Object invoke(final Object param1, final Object param2, final Object param3) {
+        throw newUnsupportedOperationException();
+    }
+
     private UnsupportedOperationException newUnsupportedOperationException() {
         return new UnsupportedOperationException(
                 "There is no default uniquely defined object for this property: " + getAccessor());
     }
 
     @Override
-    public Object invokeFromRoot(final Object root, final Object... params) {
+    public Object invokeFromRoot(final Object... params) {
         throw newUnsupportedOperationException();
     }
 
     @Override
-    public Object invokeFromTarget(final Object target, final Object... params) {
-        return delegate.invokeFromTarget(target, params);
+    public Object invokeFromRoot(final Object root) {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1) {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2) {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2, final Object param3) {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object... params) {
+        return delegate.invokeFromTarget(params);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target) {
+        return delegate.invokeFromTarget(target);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1) {
+        return delegate.invokeFromTarget(target, param1);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2) {
+        return delegate.invokeFromTarget(target, param1, param2);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2, final Object param3) {
+        return delegate.invokeFromTarget(target, param1, param2, param3);
     }
 
 }

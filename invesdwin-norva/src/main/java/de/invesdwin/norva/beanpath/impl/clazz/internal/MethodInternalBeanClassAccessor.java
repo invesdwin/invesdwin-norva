@@ -1,6 +1,9 @@
 package de.invesdwin.norva.beanpath.impl.clazz.internal;
 
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.UndeclaredThrowableException;
@@ -18,8 +21,11 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     private final Method rawMethod;
     private final BeanClassType rawType;
     private final Method publicActionMethod;
+    private final MethodHandle publicActionMethodHandle;
     private final Method publicGetterMethod;
+    private final MethodHandle publicGetterMethodHandle;
     private final Method publicSetterMethod;
+    private final MethodHandle publicSetterMethodHandle;
     private final FieldInternalBeanClassAccessor fieldDelegate;
 
     public MethodInternalBeanClassAccessor(final BeanClassContainer container, final Method method) {
@@ -30,14 +36,28 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
         this.publicSetterMethod = determinePublicSetterMethod(container);
         this.fieldDelegate = determineFieldDelegate(container);
         //make accessible since overriden anonymous classes might prevent accessibility otherwise
-        if (publicActionMethod != null) {
-            BeanPathReflections.makeAccessible(publicActionMethod);
-        }
-        if (publicGetterMethod != null) {
-            BeanPathReflections.makeAccessible(publicGetterMethod);
-        }
-        if (publicSetterMethod != null) {
-            BeanPathReflections.makeAccessible(publicSetterMethod);
+        final Lookup lookup = MethodHandles.lookup();
+        try {
+            if (publicActionMethod != null) {
+                BeanPathReflections.makeAccessible(publicActionMethod);
+                publicActionMethodHandle = lookup.unreflect(publicActionMethod);
+            } else {
+                publicActionMethodHandle = null;
+            }
+            if (publicGetterMethod != null) {
+                BeanPathReflections.makeAccessible(publicGetterMethod);
+                publicGetterMethodHandle = lookup.unreflect(publicGetterMethod);
+            } else {
+                publicGetterMethodHandle = null;
+            }
+            if (publicSetterMethod != null) {
+                BeanPathReflections.makeAccessible(publicSetterMethod);
+                publicSetterMethodHandle = lookup.unreflect(publicSetterMethod);
+            } else {
+                publicSetterMethodHandle = null;
+            }
+        } catch (final IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -132,13 +152,28 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     }
 
     @Override
+    public MethodHandle getPublicActionMethodHandle() {
+        return publicActionMethodHandle;
+    }
+
+    @Override
     public Method getPublicGetterMethod() {
         return publicGetterMethod;
     }
 
     @Override
+    public MethodHandle getPublicGetterMethodHandle() {
+        return publicGetterMethodHandle;
+    }
+
+    @Override
     public Method getPublicSetterMethod() {
         return publicSetterMethod;
+    }
+
+    @Override
+    public MethodHandle getPublicSetterMethodHandle() {
+        return publicSetterMethodHandle;
     }
 
     @Override
@@ -154,6 +189,24 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     public Field getPublicField() {
         if (fieldDelegate != null) {
             return fieldDelegate.getPublicField();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public MethodHandle getPublicFieldGetterHandle() {
+        if (fieldDelegate != null) {
+            return fieldDelegate.getPublicFieldGetterHandle();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public MethodHandle getPublicFieldSetterHandle() {
+        if (fieldDelegate != null) {
+            return fieldDelegate.getPublicFieldSetterHandle();
         } else {
             return null;
         }
@@ -197,8 +250,12 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public Object getValueFromTarget(final Object target) {
-        if (publicGetterMethod != null) {
-            return BeanPathReflections.invokeMethod(getPublicGetterMethod(), target);
+        if (publicGetterMethodHandle != null) {
+            try {
+                return publicGetterMethodHandle.invoke(target);
+            } catch (final Throwable e) {
+                throw new RuntimeException(e);
+            }
         } else if (fieldDelegate != null) {
             return fieldDelegate.getValueFromTarget(target);
         } else {
@@ -208,8 +265,12 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public void setValueFromTarget(final Object target, final Object value) {
-        if (publicSetterMethod != null) {
-            BeanPathReflections.invokeMethod(getPublicSetterMethod(), target, value);
+        if (publicSetterMethodHandle != null) {
+            try {
+                publicSetterMethodHandle.invoke(target, value);
+            } catch (final Throwable e) {
+                throw new RuntimeException(e);
+            }
         } else if (fieldDelegate != null) {
             fieldDelegate.setValueFromTarget(target, value);
         } else {
@@ -218,10 +279,82 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     }
 
     @Override
-    public Object invokeFromTarget(final Object target, final Object... params) {
+    public Object invokeFromTarget(final Object... params) {
         try {
-            if (publicActionMethod != null) {
-                return BeanPathReflections.invokeMethod(getPublicActionMethod(), target, params);
+            if (publicActionMethodHandle != null) {
+                return publicActionMethodHandle.invoke(params);
+            } else {
+                throw new UnsupportedOperationException("No public action method exists");
+            }
+        } catch (final UndeclaredThrowableException e) {
+            throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
+                    newInvokeFromTargetExceptionMessage(params[0]));
+        } catch (final Exception e) {
+            throw new UndeclaredThrowableException(e, newInvokeFromTargetExceptionMessage(params[0]));
+        } catch (final Throwable t) {
+            throw new RuntimeException(newInvokeFromTargetExceptionMessage(params[0]), t);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target) {
+        try {
+            if (publicActionMethodHandle != null) {
+                return publicActionMethodHandle.invoke(target);
+            } else {
+                throw new UnsupportedOperationException("No public action method exists");
+            }
+        } catch (final UndeclaredThrowableException e) {
+            throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
+                    newInvokeFromTargetExceptionMessage(target));
+        } catch (final Exception e) {
+            throw new UndeclaredThrowableException(e, newInvokeFromTargetExceptionMessage(target));
+        } catch (final Throwable t) {
+            throw new RuntimeException(newInvokeFromTargetExceptionMessage(target), t);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1) {
+        try {
+            if (publicActionMethodHandle != null) {
+                return publicActionMethodHandle.invoke(target, param1);
+            } else {
+                throw new UnsupportedOperationException("No public action method exists");
+            }
+        } catch (final UndeclaredThrowableException e) {
+            throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
+                    newInvokeFromTargetExceptionMessage(target));
+        } catch (final Exception e) {
+            throw new UndeclaredThrowableException(e, newInvokeFromTargetExceptionMessage(target));
+        } catch (final Throwable t) {
+            throw new RuntimeException(newInvokeFromTargetExceptionMessage(target), t);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2) {
+        try {
+            if (publicActionMethodHandle != null) {
+                return publicActionMethodHandle.invoke(target, param1, param2);
+            } else {
+                throw new UnsupportedOperationException("No public action method exists");
+            }
+        } catch (final UndeclaredThrowableException e) {
+            throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
+                    newInvokeFromTargetExceptionMessage(target));
+        } catch (final Exception e) {
+            throw new UndeclaredThrowableException(e, newInvokeFromTargetExceptionMessage(target));
+        } catch (final Throwable t) {
+            throw new RuntimeException(newInvokeFromTargetExceptionMessage(target), t);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2, final Object param3) {
+        try {
+            if (publicActionMethodHandle != null) {
+                return publicActionMethodHandle.invoke(target, param1, param2, param3);
             } else {
                 throw new UnsupportedOperationException("No public action method exists");
             }

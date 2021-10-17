@@ -132,6 +132,26 @@ public class DelegateBeanObjectAccessor implements IBeanObjectAccessor {
     }
 
     @Override
+    public Object invoke() {
+        return delegate.invoke();
+    }
+
+    @Override
+    public Object invoke(final Object param1) {
+        return delegate.invoke(param1);
+    }
+
+    @Override
+    public Object invoke(final Object param1, final Object param2) {
+        return delegate.invoke(param1, param2);
+    }
+
+    @Override
+    public Object invoke(final Object param1, final Object param2, final Object param3) {
+        return delegate.invoke(param1, param2, param3);
+    }
+
+    @Override
     public boolean isNullable() {
         return delegate.isNullable();
     }

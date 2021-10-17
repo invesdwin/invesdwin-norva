@@ -2,7 +2,6 @@ package de.invesdwin.norva.beanpath.spi.element.simple.invoker;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.IBeanObjectAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
@@ -34,25 +33,90 @@ public class PropertyGetterInvoker implements IBeanPathActionInvoker {
 
     @Override
     public Object invoke(final Object... params) {
-        assertNoParams(params);
+        assertNoParamsVarArgs(params);
         return modifier.getValue();
     }
 
     @Override
-    public Object invokeFromRoot(final Object root, final Object... params) {
-        assertNoParams(params);
+    public Object invoke() {
+        return modifier.getValue();
+    }
+
+    @Override
+    public Object invoke(final Object param1) {
+        throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invoke(final Object param1, final Object param2) {
+        throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invoke(final Object param1, final Object param2, final Object param3) {
+        throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object... params) {
+        assertNoParamsVarArgs(params);
+        return modifier.getValueFromRoot(params[0]);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root) {
         return modifier.getValueFromRoot(root);
     }
 
     @Override
-    public Object invokeFromTarget(final Object target, final Object... params) {
-        assertNoParams(params);
+    public Object invokeFromRoot(final Object root, final Object param1) {
+        throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2) {
+        throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2, final Object param3) {
+        throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object... params) {
+        assertNoParamsVarArgs(params);
+        return modifier.getValueFromTarget(params[0]);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target) {
         return modifier.getValueFromTarget(target);
     }
 
-    private void assertNoParams(final Object... params) {
-        BeanPathAssertions.checkState(params.length == 0, "Parameters are not supported in %s",
-                getClass().getSimpleName());
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1) {
+        throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2) {
+        throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2, final Object param3) {
+        throw newParametersNotSupportedException();
+    }
+
+    private void assertNoParamsVarArgs(final Object... params) {
+        if (params.length != 1) {
+            throw newParametersNotSupportedException();
+        }
+    }
+
+    private UnsupportedOperationException newParametersNotSupportedException() {
+        return new UnsupportedOperationException("Parameters are not supported in " + getClass().getSimpleName());
     }
 
 }

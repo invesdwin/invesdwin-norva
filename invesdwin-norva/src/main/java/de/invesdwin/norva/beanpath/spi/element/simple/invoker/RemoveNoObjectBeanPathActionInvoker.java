@@ -13,9 +13,9 @@ public class RemoveNoObjectBeanPathActionInvoker extends NoObjectBeanPathActionI
     }
 
     @Override
-    public Object invokeFromTarget(final Object target, final Object... params) {
-        BeanPathAssertions.checkArgument(params.length == 1);
-        return super.invokeFromTarget(target, params);
+    public Object invokeFromTarget(final Object... params) {
+        BeanPathAssertions.checkArgument(params.length == 2);
+        return super.invokeFromTarget(params);
     }
 
 }

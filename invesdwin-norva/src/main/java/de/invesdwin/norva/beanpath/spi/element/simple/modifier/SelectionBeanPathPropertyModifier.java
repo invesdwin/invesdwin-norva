@@ -153,20 +153,83 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
         return new IBeanPathActionInvoker() {
 
             @Override
-            public Object invokeFromTarget(final Object target, final Object... params) {
-                BeanPathAssertions.checkArgument(params.length == 1);
-                toggleSelectionFromTarget(target, params[0]);
+            public Object invokeFromTarget(final Object... params) {
+                BeanPathAssertions.checkArgument(params.length == 2);
+                toggleSelectionFromTarget(params[0], params[1]);
                 //no page redirect here
                 return null;
             }
 
             @Override
-            public Object invokeFromRoot(final Object root, final Object... params) {
+            public Object invokeFromTarget(final Object target) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invokeFromTarget(final Object target, final Object param1) {
+                toggleSelectionFromTarget(target, param1);
+                return null;
+            }
+
+            @Override
+            public Object invokeFromTarget(final Object target, final Object param1, final Object param2) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invokeFromTarget(final Object target, final Object param1, final Object param2,
+                    final Object param3) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invokeFromRoot(final Object... params) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invokeFromRoot(final Object root) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invokeFromRoot(final Object root, final Object param1) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invokeFromRoot(final Object root, final Object param1, final Object param2) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invokeFromRoot(final Object root, final Object param1, final Object param2,
+                    final Object param3) {
                 throw new UnsupportedOperationException();
             }
 
             @Override
             public Object invoke(final Object... params) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invoke() {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invoke(final Object param1) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invoke(final Object param1, final Object param2) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invoke(final Object param1, final Object param2, final Object param3) {
                 throw new UnsupportedOperationException();
             }
 

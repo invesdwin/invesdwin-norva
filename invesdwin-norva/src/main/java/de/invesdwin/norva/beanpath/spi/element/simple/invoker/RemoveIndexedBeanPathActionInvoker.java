@@ -16,9 +16,9 @@ public class RemoveIndexedBeanPathActionInvoker extends IndexedBeanPathActionInv
     }
 
     @Override
-    public Object invokeFromTarget(final Object target, final Object... params) {
-        BeanPathAssertions.checkArgument(params.length == 0);
-        return super.invokeFromTarget(getBeanObjectAccessor().getContainer().getObject(), target);
+    public Object invokeFromTarget(final Object... params) {
+        BeanPathAssertions.checkArgument(params.length == 1);
+        return super.invokeFromTarget(getBeanObjectAccessor().getContainer().getObject(), params[0]);
     }
 
 }

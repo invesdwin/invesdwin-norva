@@ -1,4 +1,4 @@
-package de.invesdwin.norva.beanpath.spi.element.simple.modifier;
+package de.invesdwin.norva.beanpath.spi.element.simple.accessor;
 
 import javax.annotation.concurrent.NotThreadSafe;
 

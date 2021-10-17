@@ -56,13 +56,73 @@ public class BeanPathActionInvoker implements IBeanPathActionInvoker {
     }
 
     @Override
-    public Object invokeFromRoot(final Object root, final Object... params) {
-        return getBeanClassAccessor().invokeFromRoot(root, params);
+    public Object invoke() {
+        return getBeanObjectAccessor().invoke();
     }
 
     @Override
-    public Object invokeFromTarget(final Object target, final Object... params) {
-        return getBeanClassAccessor().invokeFromTarget(target, params);
+    public Object invoke(final Object param1) {
+        return getBeanObjectAccessor().invoke(param1);
+    }
+
+    @Override
+    public Object invoke(final Object param1, final Object param2) {
+        return getBeanObjectAccessor().invoke(param1, param2);
+    }
+
+    @Override
+    public Object invoke(final Object param1, final Object param2, final Object param3) {
+        return getBeanObjectAccessor().invoke(param1, param2, param3);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object... params) {
+        return getBeanClassAccessor().invokeFromRoot(params);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root) {
+        return getBeanClassAccessor().invokeFromRoot(root);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1) {
+        return getBeanClassAccessor().invokeFromRoot(root, param1);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2) {
+        return getBeanClassAccessor().invokeFromRoot(root, param1, param2);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2, final Object param3) {
+        return getBeanClassAccessor().invokeFromRoot(root, param1, param2, param3);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object... params) {
+        return getBeanClassAccessor().invokeFromTarget(params);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target) {
+        return getBeanClassAccessor().invokeFromTarget(target);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1) {
+        return getBeanClassAccessor().invokeFromTarget(target, param1);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2) {
+        return getBeanClassAccessor().invokeFromTarget(target, param1, param2);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2, final Object param3) {
+        return getBeanClassAccessor().invokeFromTarget(target, param1, param2, param3);
     }
 
 }

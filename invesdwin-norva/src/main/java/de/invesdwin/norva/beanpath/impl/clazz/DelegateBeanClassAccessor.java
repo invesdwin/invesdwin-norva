@@ -1,6 +1,7 @@
 package de.invesdwin.norva.beanpath.impl.clazz;
 
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -36,13 +37,28 @@ public class DelegateBeanClassAccessor implements IBeanClassAccessor {
     }
 
     @Override
+    public MethodHandle getPublicActionMethodHandle() {
+        return delegate.getPublicActionMethodHandle();
+    }
+
+    @Override
     public Method getPublicGetterMethod() {
         return delegate.getPublicGetterMethod();
     }
 
     @Override
+    public MethodHandle getPublicGetterMethodHandle() {
+        return delegate.getPublicGetterMethodHandle();
+    }
+
+    @Override
     public Method getPublicSetterMethod() {
         return delegate.getPublicSetterMethod();
+    }
+
+    @Override
+    public MethodHandle getPublicSetterMethodHandle() {
+        return delegate.getPublicSetterMethodHandle();
     }
 
     @Override
@@ -53,6 +69,16 @@ public class DelegateBeanClassAccessor implements IBeanClassAccessor {
     @Override
     public Field getPublicField() {
         return delegate.getPublicField();
+    }
+
+    @Override
+    public MethodHandle getPublicFieldGetterHandle() {
+        return delegate.getPublicFieldGetterHandle();
+    }
+
+    @Override
+    public MethodHandle getPublicFieldSetterHandle() {
+        return delegate.getPublicFieldSetterHandle();
     }
 
     @Override
@@ -106,8 +132,28 @@ public class DelegateBeanClassAccessor implements IBeanClassAccessor {
     }
 
     @Override
-    public Object invokeFromTarget(final Object target, final Object... params) {
-        return delegate.invokeFromTarget(target, params);
+    public Object invokeFromTarget(final Object... params) {
+        return delegate.invokeFromTarget(params);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target) {
+        return delegate.invokeFromTarget(target);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1) {
+        return delegate.invokeFromTarget(target, param1);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2) {
+        return delegate.invokeFromTarget(target, param1, param2);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object param1, final Object param2, final Object param3) {
+        return delegate.invokeFromTarget(target, param1, param2, param3);
     }
 
     @Override
@@ -151,8 +197,28 @@ public class DelegateBeanClassAccessor implements IBeanClassAccessor {
     }
 
     @Override
-    public Object invokeFromRoot(final Object root, final Object... params) {
-        return delegate.invokeFromRoot(root, params);
+    public Object invokeFromRoot(final Object... params) {
+        return delegate.invokeFromRoot(params);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root) {
+        return delegate.invokeFromRoot(root);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1) {
+        return delegate.invokeFromRoot(root, param1);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2) {
+        return delegate.invokeFromRoot(root, param1, param2);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object param1, final Object param2, final Object param3) {
+        return delegate.invokeFromRoot(root, param1, param2, param3);
     }
 
     @Override
