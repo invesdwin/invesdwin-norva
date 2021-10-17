@@ -171,4 +171,13 @@ public class BeanObjectAccessor extends ABeanPathAccessor implements IBeanObject
         return beanClassAccessor.getPublicSetterName();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T unwrap(final Class<T> type) {
+        if (type.isAssignableFrom(getClass())) {
+            return (T) this;
+        }
+        return beanClassAccessor.unwrap(type);
+    }
+
 }

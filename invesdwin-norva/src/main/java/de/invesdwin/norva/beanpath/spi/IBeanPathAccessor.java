@@ -75,4 +75,6 @@ public interface IBeanPathAccessor {
 
     String getPublicActionName();
 
+    <T> T unwrap(Class<T> type);
+
 }

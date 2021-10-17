@@ -293,4 +293,13 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
         return internal.getPublicSetterName();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T unwrap(final Class<T> type) {
+        if (type.isAssignableFrom(getClass())) {
+            return (T) this;
+        }
+        return null;
+    }
+
 }

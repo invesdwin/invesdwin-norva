@@ -87,10 +87,7 @@ public class BeanObjectContainer extends ABeanPathContainer {
         if (type.isAssignableFrom(getClass())) {
             return (T) this;
         }
-        if (type.isAssignableFrom(beanClassContainer.getClass())) {
-            return (T) beanClassContainer;
-        }
-        return null;
+        return beanClassContainer.unwrap(type);
     }
 
 }

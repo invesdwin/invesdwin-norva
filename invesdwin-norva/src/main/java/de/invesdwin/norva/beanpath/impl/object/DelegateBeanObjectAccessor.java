@@ -156,4 +156,13 @@ public class DelegateBeanObjectAccessor implements IBeanObjectAccessor {
         return delegate.getPublicSetterName();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T unwrap(final Class<T> type) {
+        if (type.isAssignableFrom(getClass())) {
+            return (T) this;
+        }
+        return delegate.unwrap(type);
+    }
+
 }
