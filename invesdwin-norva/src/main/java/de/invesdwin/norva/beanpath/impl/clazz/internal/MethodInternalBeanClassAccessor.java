@@ -405,7 +405,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public boolean hasPublicGetterOrField() {
-        if (publicGetterMethod != null) {
+        if (publicGetterMethodHandle != null) {
             return true;
         } else if (fieldDelegate != null) {
             return fieldDelegate.hasPublicGetterOrField();
@@ -416,12 +416,12 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public boolean hasPublicGetter() {
-        return publicGetterMethod != null;
+        return publicGetterMethodHandle != null;
     }
 
     @Override
     public boolean hasPublicSetterOrField() {
-        if (publicSetterMethod != null) {
+        if (publicSetterMethodHandle != null) {
             return true;
         } else if (fieldDelegate != null) {
             return fieldDelegate.hasPublicSetterOrField();
@@ -432,7 +432,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public boolean hasPublicSetter() {
-        return publicSetterMethod != null;
+        return publicSetterMethodHandle != null;
     }
 
     @Override
@@ -446,7 +446,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public boolean hasPublicAction() {
-        return publicActionMethod != null;
+        return publicActionMethodHandle != null;
     }
 
     @Override

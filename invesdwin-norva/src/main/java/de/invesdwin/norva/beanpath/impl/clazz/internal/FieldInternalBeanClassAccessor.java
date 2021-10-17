@@ -31,7 +31,11 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
             try {
                 final Lookup lookup = MethodHandles.lookup();
                 publicFieldGetterHandle = lookup.unreflectGetter(publicField);
-                publicFieldSetterHandle = lookup.unreflectSetter(publicField);
+                if (!BeanPathReflections.isFinal(field)) {
+                    publicFieldSetterHandle = lookup.unreflectSetter(publicField);
+                } else {
+                    publicFieldSetterHandle = null;
+                }
             } catch (final IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -184,7 +188,7 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
 
     @Override
     public boolean hasPublicGetterOrField() {
-        return publicField != null;
+        return publicFieldGetterHandle != null;
     }
 
     @Override
@@ -194,7 +198,7 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
 
     @Override
     public boolean hasPublicSetterOrField() {
-        return publicField != null;
+        return publicFieldSetterHandle != null;
     }
 
     @Override

@@ -104,6 +104,11 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
         return Modifier.isPublic(method.getModifiers());
     }
 
+    public static boolean isFinal(final Field field) {
+        final int modifiers = field.getModifiers();
+        return Modifier.isFinal(modifiers);
+    }
+
     public static boolean isStatic(final Field field) {
         return Modifier.isStatic(field.getModifiers());
     }
