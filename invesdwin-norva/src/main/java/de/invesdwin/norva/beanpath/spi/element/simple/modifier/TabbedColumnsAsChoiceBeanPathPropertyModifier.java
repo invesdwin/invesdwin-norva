@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
+import de.invesdwin.norva.beanpath.impl.clazz.BeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassContext;
 import de.invesdwin.norva.beanpath.impl.clazz.IBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.object.BeanObjectContext;
@@ -93,7 +94,9 @@ public class TabbedColumnsAsChoiceBeanPathPropertyModifier implements IBeanPathP
     public List<?> getValueFromTarget(final Object target) {
         final List<Object> list = new ArrayList<Object>();
         for (final TabbedColumnBeanPathElement column : element.getColumnsFromTarget(target)) {
-            list.add(column.getModifier().getValueFromTarget(target));
+            final BeanClassAccessor accessor = column.getContainer().getAccessor().unwrap(BeanClassAccessor.class);
+            final Object columnTarget = accessor.getValueFromTarget(target);
+            list.add(column.getModifier().getValueFromTarget(columnTarget));
         }
         return list;
     }

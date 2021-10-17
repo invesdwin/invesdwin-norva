@@ -21,7 +21,7 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
     private final List<HiddenBeanPathElement> invalidColumns;
     private ColumnOrderBeanPathElement columnOrderElement;
     private ATableColumnOrderHelper<TabbedColumnBeanPathElement> columns;
-    private TabbedColumnsAsChoiceBeanPathPropertyModifier choiceModifier;
+    private IBeanPathPropertyModifier<List<?>> choiceModifier;
 
     public TabbedBeanPathElement(final SimplePropertyBeanPathElement simplePropertyElement,
             final List<TabbedColumnBeanPathElement> rawColumns, final List<HiddenBeanPathElement> invalidColumns) {
@@ -126,7 +126,13 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
     @Override
     public IBeanPathPropertyModifier<List<?>> getChoiceModifier() {
         if (choiceModifier == null) {
-            choiceModifier = new TabbedColumnsAsChoiceBeanPathPropertyModifier(this);
+            if (getAccessor().getRawType().isIterable() || getAccessor().getRawType().isArray()) {
+                //we already have a list
+                choiceModifier = super.getChoiceModifier();
+            } else {
+                //we need to convert the columns into a list
+                choiceModifier = new TabbedColumnsAsChoiceBeanPathPropertyModifier(this);
+            }
         }
         return choiceModifier;
     }
