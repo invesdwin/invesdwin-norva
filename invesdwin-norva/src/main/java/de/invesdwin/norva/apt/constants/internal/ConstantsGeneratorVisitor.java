@@ -28,12 +28,13 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
     private final BeanModelContext context;
     private final Element originatingElement;
-    private final List<IBeanPathElement> constants = new ArrayList<>();
+    private final List<IBeanPathElement> simpleConstants = new ArrayList<>();
     private final List<IBeanPathElement> getters = new ArrayList<>();
     private final List<IBeanPathElement> setters = new ArrayList<>();
     private final List<IBeanPathElement> fields = new ArrayList<>();
     private final List<IBeanPathElement> actions = new ArrayList<>();
-    private final List<IBeanPathElement> others = new ArrayList<>();
+    private final List<IBeanPathElement> methods = new ArrayList<>();
+    private final List<IBeanPathElement> constants = new ArrayList<>();
 
     public ConstantsGeneratorVisitor(final BeanModelContext context, final Element originatingElement) {
         this.context = context;
@@ -46,7 +47,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
     }
 
     private void add(final IBeanPathElement e) {
-        constants.add(e);
+        simpleConstants.add(e);
         addAccessor(e);
     }
 
@@ -57,13 +58,23 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
     private void addMethod(final IBeanPathElement e) {
         if (!e.getBeanPath().contains(BeanPathUtil.BEAN_PATH_SEPARATOR)) {
-            others.add(e);
+            methods.add(e);
+        }
+    }
+
+    private void addConstant(final IBeanPathElement e) {
+        if (!e.getBeanPath().contains(BeanPathUtil.BEAN_PATH_SEPARATOR)) {
+            constants.add(e);
         }
     }
 
     @Override
     public void visitInvalidAction(final SimpleActionBeanPathElement e) {
-        addMethod(e);
+        if (e.getAccessor().isStatic() && e.getAccessor().hasPublicField()) {
+            addConstant(e);
+        } else {
+            addMethod(e);
+        }
     }
 
     private void addAccessor(final IBeanPathElement e) {
@@ -143,8 +154,10 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         }
     }
 
+    //CHECKSTYLE:OFF
     protected String generateContent(final Collection<IBeanPathElement> elements, final String targetClassName,
             final String packageName) {
+        //CHECKSTYLE:ON
         final StringBuilder sb = new StringBuilder();
         sb.append("package ");
         sb.append(packageName);
@@ -160,7 +173,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         sb.append("() {}\n");
         //CHECKSTYLE:ON
         sb.append("\n");
-        for (final IBeanPathElement constant : constants) {
+        for (final IBeanPathElement constant : simpleConstants) {
             final String key = constant.getBeanPath().replace(BeanPathUtil.BEAN_PATH_SEPARATOR, "_");
             final String value = constant.getBeanPath();
             sb.append(generateConstant(constant, key, value, "\t"));
@@ -196,7 +209,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         }
 
         //invalid actions
-        if (!others.isEmpty()) {
+        if (!methods.isEmpty()) {
             final Function<IBeanPathElement, String> nameF = t -> {
                 final IBeanPathAccessor a = t.getAccessor();
                 if (a.hasPublicAction()) {
@@ -211,8 +224,15 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
                     return a.getRawName();
                 }
             };
-            final StringBuilder actionsStr = newAccessors("other", false, others, nameF, nameF);
+            final StringBuilder actionsStr = newAccessors("method", false, methods, nameF, nameF);
             sb.append(actionsStr);
+        }
+
+        //constants
+        if (!constants.isEmpty()) {
+            final Function<IBeanPathElement, String> nameF = t -> t.getAccessor().getPublicFieldName();
+            final StringBuilder constantsStr = newAccessors("constant", false, constants, nameF, nameF);
+            sb.append(constantsStr);
         }
 
         sb.append("}\n");
