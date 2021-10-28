@@ -33,7 +33,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
     private final List<IBeanPathElement> setters = new ArrayList<>();
     private final List<IBeanPathElement> fields = new ArrayList<>();
     private final List<IBeanPathElement> actions = new ArrayList<>();
-    private final List<IBeanPathElement> methods = new ArrayList<>();
+    private final List<IBeanPathElement> others = new ArrayList<>();
 
     public ConstantsGeneratorVisitor(final BeanModelContext context, final Element originatingElement) {
         this.context = context;
@@ -57,7 +57,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
     private void addMethod(final IBeanPathElement e) {
         if (!e.getBeanPath().contains(BeanPathUtil.BEAN_PATH_SEPARATOR)) {
-            methods.add(e);
+            others.add(e);
         }
     }
 
@@ -196,7 +196,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         }
 
         //invalid actions
-        if (!methods.isEmpty()) {
+        if (!others.isEmpty()) {
             final Function<IBeanPathElement, String> nameF = t -> {
                 final IBeanPathAccessor a = t.getAccessor();
                 if (a.hasPublicAction()) {
@@ -211,7 +211,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
                     return a.getRawName();
                 }
             };
-            final StringBuilder actionsStr = newAccessors("method", false, methods, nameF, nameF);
+            final StringBuilder actionsStr = newAccessors("other", false, others, nameF, nameF);
             sb.append(actionsStr);
         }
 
