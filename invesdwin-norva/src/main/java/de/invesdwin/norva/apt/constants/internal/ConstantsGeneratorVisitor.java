@@ -53,7 +53,11 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
     @Override
     public void visitInvalidProperty(final SimplePropertyBeanPathElement e) {
-        addMethod(e);
+        if (e.getAccessor().isStatic() && e.getAccessor().hasPublicField()) {
+            addConstant(e);
+        } else {
+            addMethod(e);
+        }
     }
 
     private void addMethod(final IBeanPathElement e) {
@@ -70,11 +74,7 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
 
     @Override
     public void visitInvalidAction(final SimpleActionBeanPathElement e) {
-        if (e.getAccessor().isStatic() && e.getAccessor().hasPublicField()) {
-            addConstant(e);
-        } else {
-            addMethod(e);
-        }
+        addMethod(e);
     }
 
     private void addAccessor(final IBeanPathElement e) {
