@@ -15,11 +15,11 @@ public class PrintVisitor extends ASimpleBeanPathVisitor {
     private int indentCount = 1;
     private boolean printInvalid = false;
 
-    public PrintVisitor withPrintInvalid() {
-        return withPrintInvalid(true);
+    public PrintVisitor setPrintInvalid() {
+        return setPrintInvalid(true);
     }
 
-    public PrintVisitor withPrintInvalid(final boolean printInvalid) {
+    public PrintVisitor setPrintInvalid(final boolean printInvalid) {
         this.printInvalid = printInvalid;
         return this;
     }

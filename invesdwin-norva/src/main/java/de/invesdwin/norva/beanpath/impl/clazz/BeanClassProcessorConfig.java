@@ -30,20 +30,20 @@ public class BeanClassProcessorConfig extends BeanPathProcessorConfig {
         return defaultEager;
     }
 
-    public BeanClassProcessorConfig withDefaultEager(final boolean defaultEager) {
+    public BeanClassProcessorConfig setDefaultEager(final boolean defaultEager) {
         this.defaultEager = defaultEager;
         return this;
     }
 
     @Override
-    public BeanClassProcessorConfig withIgnoreBeanPathEndPointAnnotation(
+    public BeanClassProcessorConfig setIgnoreBeanPathEndPointAnnotation(
             final boolean ignoreBeanPathEndPointAnnotation) {
-        return (BeanClassProcessorConfig) super.withIgnoreBeanPathEndPointAnnotation(ignoreBeanPathEndPointAnnotation);
+        return (BeanClassProcessorConfig) super.setIgnoreBeanPathEndPointAnnotation(ignoreBeanPathEndPointAnnotation);
     }
 
     @Override
-    public BeanClassProcessorConfig withShallowOnly() {
-        return (BeanClassProcessorConfig) super.withShallowOnly();
+    public BeanClassProcessorConfig setShallowOnly() {
+        return (BeanClassProcessorConfig) super.setShallowOnly();
     }
 
     @Override
@@ -92,16 +92,16 @@ public class BeanClassProcessorConfig extends BeanPathProcessorConfig {
     }
 
     public static BeanClassProcessorConfig getDefaultShallow(final Class<?> type) {
-        return DEFAULT_SHALLOW.computeIfAbsent(type, (c) -> new BeanClassProcessorConfig(c).withShallowOnly());
+        return DEFAULT_SHALLOW.computeIfAbsent(type, (c) -> new BeanClassProcessorConfig(c).setShallowOnly());
     }
 
     public static BeanClassProcessorConfig getDefaultEager(final Class<?> type) {
-        return DEFAULT_EAGER.computeIfAbsent(type, (c) -> new BeanClassProcessorConfig(c).withDefaultEager(true));
+        return DEFAULT_EAGER.computeIfAbsent(type, (c) -> new BeanClassProcessorConfig(c).setDefaultEager(true));
     }
 
     public static BeanClassProcessorConfig getDefaultIgnoreBeanPathEndpointAnnotation(final Class<?> type) {
         return DEFAULT_IGNOREBEANPATHENDPOINTANNOTATION.computeIfAbsent(type,
-                (c) -> new BeanClassProcessorConfig(c).withIgnoreBeanPathEndPointAnnotation(true));
+                (c) -> new BeanClassProcessorConfig(c).setIgnoreBeanPathEndPointAnnotation(true));
     }
 
 }

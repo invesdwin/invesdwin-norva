@@ -7,13 +7,13 @@ public class BeanPathProcessorConfig {
 
     private static class ReadOnlyBeanPathConfig extends BeanPathProcessorConfig {
         @Override
-        public BeanPathProcessorConfig withIgnoreBeanPathEndPointAnnotation(
+        public BeanPathProcessorConfig setIgnoreBeanPathEndPointAnnotation(
                 final boolean ignoreBeanPathEndPointAnnotation) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public BeanPathProcessorConfig withShallowOnly() {
+        public BeanPathProcessorConfig setShallowOnly() {
             throw new UnsupportedOperationException();
         }
     }
@@ -28,7 +28,7 @@ public class BeanPathProcessorConfig {
     protected boolean shallowOnly;
     protected boolean ignoreBeanPathEndPointAnnotation;
 
-    public BeanPathProcessorConfig withShallowOnly() {
+    public BeanPathProcessorConfig setShallowOnly() {
         this.shallowOnly = true;
         return this;
     }
@@ -41,7 +41,7 @@ public class BeanPathProcessorConfig {
         return ignoreBeanPathEndPointAnnotation;
     }
 
-    public BeanPathProcessorConfig withIgnoreBeanPathEndPointAnnotation(
+    public BeanPathProcessorConfig setIgnoreBeanPathEndPointAnnotation(
             final boolean ignoreBeanPathEndPointAnnotation) {
         this.ignoreBeanPathEndPointAnnotation = ignoreBeanPathEndPointAnnotation;
         return this;
