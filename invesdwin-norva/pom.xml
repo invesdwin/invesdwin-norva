@@ -66,6 +66,10 @@
 			<artifactId>commons-text</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.jboss.logging</groupId>
 			<artifactId>jboss-logging-generator</artifactId>
 			<version>${version.jboss-logging-generator}</version>

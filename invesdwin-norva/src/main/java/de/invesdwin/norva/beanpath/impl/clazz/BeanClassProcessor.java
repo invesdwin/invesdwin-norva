@@ -2,10 +2,11 @@ package de.invesdwin.norva.beanpath.impl.clazz;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.concurrent.NotThreadSafe;
+
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.spi.ABeanPathProcessor;
@@ -18,7 +19,11 @@ import de.invesdwin.norva.beanpath.spi.visitor.RecordingVisitor;
 @NotThreadSafe
 public final class BeanClassProcessor extends ABeanPathProcessor<BeanClassContext, BeanClassContainer> {
 
-    private static final ConcurrentMap<BeanClassProcessorConfig, RecordingVisitor> CACHE = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<BeanClassProcessorConfig, RecordingVisitor> CACHE = Caffeine.newBuilder()
+            .maximumSize(100)
+            .softValues()
+            .<BeanClassProcessorConfig, RecordingVisitor> build()
+            .asMap();
 
     @SafeVarargs
     private BeanClassProcessor(final BeanClassProcessorConfig config, final BeanClassContext context,
