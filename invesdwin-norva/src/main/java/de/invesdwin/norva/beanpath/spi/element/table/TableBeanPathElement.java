@@ -1,7 +1,6 @@
 package de.invesdwin.norva.beanpath.spi.element.table;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -31,12 +30,12 @@ public class TableBeanPathElement extends ATableBeanPathElement {
 
     @Override
     public List<TableTextColumnBeanPathElement> getTextColumns() {
-        return Collections.unmodifiableList(textColumns);
+        return java.util.Collections.unmodifiableList(textColumns);
     }
 
     @Override
     public List<TableButtonColumnBeanPathElement> getButtonColumns() {
-        return Collections.unmodifiableList(buttonColumns);
+        return java.util.Collections.unmodifiableList(buttonColumns);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class TableBeanPathElement extends ATableBeanPathElement {
         }
         textColumns.clear();
         textColumns.addAll(filteredTextColumns);
-        Collections.sort(textColumns, ABeanPathElement.COMPARATOR);
+        java.util.Collections.sort(textColumns, ABeanPathElement.COMPARATOR);
         final List<TableButtonColumnBeanPathElement> filteredButtonColumns = new ArrayList<TableButtonColumnBeanPathElement>();
         for (final TableButtonColumnBeanPathElement buttonColumn : buttonColumns) {
             if (getContext().getElementRegistry().getElement(buttonColumn.getBeanPath()) == null
@@ -70,7 +69,7 @@ public class TableBeanPathElement extends ATableBeanPathElement {
         }
         buttonColumns.clear();
         buttonColumns.addAll(filteredButtonColumns);
-        Collections.sort(buttonColumns, ABeanPathElement.COMPARATOR);
+        java.util.Collections.sort(buttonColumns, ABeanPathElement.COMPARATOR);
     }
 
     @Override
@@ -91,7 +90,7 @@ public class TableBeanPathElement extends ATableBeanPathElement {
                 rawColumns.add(getRemoveFromButtonColumn());
             }
         }
-        return Collections.unmodifiableList(rawColumns);
+        return java.util.Collections.unmodifiableList(rawColumns);
     }
 
     @Override

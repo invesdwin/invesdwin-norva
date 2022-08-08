@@ -2,7 +2,6 @@ package de.invesdwin.norva.beanpath.spi;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -462,9 +461,9 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
          * Ensures that the generated output does not differ too much each time.
          */
         public void sort() {
-            Collections.sort(propertyMethods, ABeanPathElement.COMPARATOR);
-            Collections.sort(propertyFields, ABeanPathElement.COMPARATOR);
-            Collections.sort(actionMethods, ABeanPathElement.COMPARATOR);
+            java.util.Collections.sort(propertyMethods, ABeanPathElement.COMPARATOR);
+            java.util.Collections.sort(propertyFields, ABeanPathElement.COMPARATOR);
+            java.util.Collections.sort(actionMethods, ABeanPathElement.COMPARATOR);
         }
 
         public List<SimplePropertyBeanPathElement> getProperties() {
@@ -472,11 +471,11 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
             properties.addAll(propertyMethods);
             //fields have a lower priority than methods
             properties.addAll(propertyFields);
-            return Collections.unmodifiableList(properties);
+            return java.util.Collections.unmodifiableList(properties);
         }
 
         public List<SimpleActionBeanPathElement> getActions() {
-            return Collections.unmodifiableList(actionMethods);
+            return java.util.Collections.unmodifiableList(actionMethods);
         }
     }
 }

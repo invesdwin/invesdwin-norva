@@ -1,7 +1,6 @@
 package de.invesdwin.norva.beanpath.spi.element.table;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -38,18 +37,18 @@ public abstract class ATableBeanPathElement extends AChoiceBeanPathElement {
     public abstract List<ITableColumnBeanPathElement> getRawColumns();
 
     public List<ITableColumnBeanPathElement> getColumns() {
-        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumns());
+        return java.util.Collections.unmodifiableList(getColumnsHelper().getOrderedColumns());
     }
 
     /**
      * These columns are ordered and filtered according to @ColumnOrder or a columnOrder() method.
      */
     public List<ITableColumnBeanPathElement> getColumnsFromTarget(final Object target) {
-        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromTarget(target));
+        return java.util.Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromTarget(target));
     }
 
     public List<ITableColumnBeanPathElement> getColumnsFromRoot(final Object root) {
-        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromRoot(root));
+        return java.util.Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromRoot(root));
     }
 
     private ATableColumnOrderHelper<ITableColumnBeanPathElement> getColumnsHelper() {

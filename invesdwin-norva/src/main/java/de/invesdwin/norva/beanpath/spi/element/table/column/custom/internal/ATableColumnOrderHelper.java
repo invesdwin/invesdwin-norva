@@ -1,9 +1,7 @@
 package de.invesdwin.norva.beanpath.spi.element.table.column.custom.internal;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -75,7 +73,7 @@ public abstract class ATableColumnOrderHelper<E> {
         if (target instanceof ICustomTableColumnProvider) {
             final ICustomTableColumnProvider customTableColumnProvider = (ICustomTableColumnProvider) target;
             final ATableBeanPathElement cElement = (ATableBeanPathElement) element;
-            final List<ITableColumnBeanPathElement> cOrderedColumns = (List<ITableColumnBeanPathElement>) Collections
+            final List<ITableColumnBeanPathElement> cOrderedColumns = (List<ITableColumnBeanPathElement>) java.util.Collections
                     .unmodifiableList(orderedColumns);
             return (List<E>) customTableColumnProvider.customize(cElement, cOrderedColumns);
         } else {
@@ -98,7 +96,7 @@ public abstract class ATableColumnOrderHelper<E> {
             if (columnOrderElement != null) {
                 beanPathFragments = columnOrderAccessor.get();
             } else if (annotation != null) {
-                beanPathFragments = Arrays.asList(annotation.value());
+                beanPathFragments = java.util.Arrays.asList(annotation.value());
             } else {
                 throw new IllegalStateException("Should have used unfiltered columns instead of going here!");
             }

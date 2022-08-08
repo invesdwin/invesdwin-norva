@@ -2,8 +2,6 @@ package de.invesdwin.norva.beanpath;
 
 import javax.annotation.concurrent.Immutable;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 @Immutable
 public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils {
 
@@ -210,7 +208,7 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
     }
 
     public static boolean endsWithAnyIgnoreCase(final CharSequence sequence, final CharSequence... searchStrings) {
-        if (isEmpty(sequence) || ArrayUtils.isEmpty(searchStrings)) {
+        if (isEmpty(sequence) || org.apache.commons.lang3.ArrayUtils.isEmpty(searchStrings)) {
             return false;
         }
         for (final CharSequence searchString : searchStrings) {

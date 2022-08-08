@@ -2,7 +2,6 @@ package de.invesdwin.norva.beanpath.spi.element.simple.modifier;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -97,7 +96,7 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
                 return new ArrayList<Object>();
             }
         }
-        final List<Object> list = new ArrayList<Object>(Arrays.asList(array));
+        final List<Object> list = new ArrayList<Object>(java.util.Arrays.asList(array));
         if (invalidChoices != null) {
             final List<Object> filtedInvalidChoices = new ArrayList<Object>();
             for (final Object invalidChoice : invalidChoices) {

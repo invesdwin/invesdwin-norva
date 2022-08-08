@@ -1,6 +1,5 @@
 package de.invesdwin.norva.beanpath.spi.element;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -39,7 +38,7 @@ public abstract class AChoiceBeanPathElement extends APropertyBeanPathElement {
     public IBeanPathPropertyModifier<List<?>> getSelectionModifier() {
         if (isChoiceOnly()) {
             //we have to return empty here, otherwise "all" choices would always be selected in UI, though we do not support selection
-            return new FixedValueBeanPathModifier<List<?>>(getAccessor(), Collections.emptyList());
+            return new FixedValueBeanPathModifier<List<?>>(getAccessor(), java.util.Collections.emptyList());
         } else {
             if (selectionModifier == null) {
                 selectionModifier = new SelectionBeanPathPropertyModifier(getAccessor());

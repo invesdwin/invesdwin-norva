@@ -1,7 +1,6 @@
 package de.invesdwin.norva.beanpath.spi.element;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -65,18 +64,18 @@ public final class ChoiceAsTableBeanPathElement extends ATableBeanPathElement {
     @Override
     public List<TableTextColumnBeanPathElement> getTextColumns() {
         //only used in real tables
-        return Collections.emptyList();
+        return java.util.Collections.emptyList();
     }
 
     @Override
     public List<TableButtonColumnBeanPathElement> getButtonColumns() {
         //only used in real tables
-        return Collections.emptyList();
+        return java.util.Collections.emptyList();
     }
 
     @Override
     public List<ITableColumnBeanPathElement> getRawColumns() {
-        return Collections.unmodifiableList(rawColumns);
+        return java.util.Collections.unmodifiableList(rawColumns);
     }
 
     @Override

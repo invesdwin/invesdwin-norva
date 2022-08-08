@@ -1,7 +1,6 @@
 package de.invesdwin.norva.beanpath.spi.element.simple.modifier;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -49,7 +48,7 @@ public class EnumConstantsBeanPathPropertyModifier implements IBeanPathPropertyM
         if (getAccessor().isNullable()) {
             list.add(null);
         }
-        list.addAll(Arrays.asList(array));
+        list.addAll(java.util.Arrays.asList(array));
         return list;
     }
 

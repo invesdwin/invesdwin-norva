@@ -246,6 +246,8 @@ public class StaticFacadeGenerator implements Runnable {
 
     private String newUniqueMethodSignature(final ExecutableElement m, final List<? extends VariableElement> params) {
         final StringBuilder sb = new StringBuilder();
+        sb.append(generateGenericTypeArguments(m));
+        sb.append("#");
         sb.append(m.getSimpleName() + "(");
         for (int i = 0; i < params.size(); i++) {
             final boolean isVarArgsParam = m.isVarArgs() && i == params.size() - 1;

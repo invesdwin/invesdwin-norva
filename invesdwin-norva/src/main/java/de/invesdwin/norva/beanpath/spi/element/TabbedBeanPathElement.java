@@ -2,7 +2,6 @@ package de.invesdwin.norva.beanpath.spi.element;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -51,7 +50,7 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
         }
         rawColumns.clear();
         rawColumns.addAll(filteredRawColumns);
-        Collections.sort(rawColumns, ABeanPathElement.COMPARATOR);
+        java.util.Collections.sort(rawColumns, ABeanPathElement.COMPARATOR);
     }
 
     @Override
@@ -64,22 +63,22 @@ public class TabbedBeanPathElement extends AChoiceBeanPathElement {
     }
 
     public List<TabbedColumnBeanPathElement> getRawColumns() {
-        return Collections.unmodifiableList(rawColumns);
+        return java.util.Collections.unmodifiableList(rawColumns);
     }
 
     /**
      * These columns are ordered and filtered according to @ColumnOrder or a columnOrder() method.
      */
     public List<TabbedColumnBeanPathElement> getColumns() {
-        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumns());
+        return java.util.Collections.unmodifiableList(getColumnsHelper().getOrderedColumns());
     }
 
     public List<TabbedColumnBeanPathElement> getColumnsFromRoot(final Object root) {
-        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromRoot(root));
+        return java.util.Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromRoot(root));
     }
 
     public List<TabbedColumnBeanPathElement> getColumnsFromTarget(final Object target) {
-        return Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromTarget(target));
+        return java.util.Collections.unmodifiableList(getColumnsHelper().getOrderedColumnsFromTarget(target));
     }
 
     private ATableColumnOrderHelper<TabbedColumnBeanPathElement> getColumnsHelper() {
