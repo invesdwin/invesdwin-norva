@@ -1,6 +1,5 @@
 package de.invesdwin.norva.beanpath.spi.element.simple.modifier;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +79,8 @@ public class ArrayBeanPathPropertyModifier implements IBeanPathPropertyModifier<
             return null;
         } else {
             try {
-                final Object[] newArray = (Object[]) Array.newInstance(getBeanClassAccessor().getType().getType(), 0);
+                final Object[] newArray = (Object[]) java.lang.reflect.Array
+                        .newInstance(getBeanClassAccessor().getType().getType(), 0);
                 return value.toArray(newArray);
             } catch (final Exception e) {
                 throw new RuntimeException(e);
