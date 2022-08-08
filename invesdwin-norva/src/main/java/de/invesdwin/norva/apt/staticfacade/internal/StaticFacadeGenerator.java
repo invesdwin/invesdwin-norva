@@ -123,7 +123,8 @@ public class StaticFacadeGenerator implements Runnable {
                 }
             }
 
-            if (duplicateMethodSignatureFilter.add(methodSignature)) {
+            final String uniqueMethodSignature = newUniqueMethodSignature(m, params);
+            if (duplicateMethodSignatureFilter.add(uniqueMethodSignature)) {
                 addMethodSignature(sb, targetClass, m, params, methodSignature, seeMethodSignature, paramNames);
             }
         }
@@ -231,6 +232,21 @@ public class StaticFacadeGenerator implements Runnable {
             final List<? extends VariableElement> params) {
         final StringBuilder sb = new StringBuilder();
         sb.append(targetClass.getQualifiedName() + "#" + m.getSimpleName() + "(");
+        for (int i = 0; i < params.size(); i++) {
+            final boolean isVarArgsParam = m.isVarArgs() && i == params.size() - 1;
+            sb.append(BeanPathObjects
+                    .removeGenericsFromQualifiedName(typeToString(params.get(i).asType(), isVarArgsParam)));
+            if (i < params.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append(")");
+        return sb.toString();
+    }
+
+    private String newUniqueMethodSignature(final ExecutableElement m, final List<? extends VariableElement> params) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(m.getSimpleName() + "(");
         for (int i = 0; i < params.size(); i++) {
             final boolean isVarArgsParam = m.isVarArgs() && i == params.size() - 1;
             sb.append(BeanPathObjects
