@@ -251,8 +251,7 @@ public abstract class ABeanPathElement implements IBeanPathElement {
     /**
      * Can be overriden to do additional things after first accept.
      */
-    protected void afterFirstAccept(final IBeanPathVisitor... visitors) {
-    }
+    protected void afterFirstAccept(final IBeanPathVisitor... visitors) {}
 
     protected boolean shouldAttachToContainerTitleElement() {
         return true;
@@ -306,31 +305,30 @@ public abstract class ABeanPathElement implements IBeanPathElement {
         if (getTitleElement() != null && getTitleElement().isInvokerAvailable() && target != null) {
             final Object returnValue = getTitleElement().getInvoker().invokeFromTarget(target);
             final String title = BeanPathStrings.asString(returnValue);
-            if (BeanPathStrings.isNotBlank(title)) {
+            if (title != null) {
                 return title;
             }
         }
         //2. title annotation on property
         final Title titlePropertyAnnotation = getAccessor().getAnnotation(Title.class);
         if (titlePropertyAnnotation != null) {
-            BeanPathAssertions.checkState(BeanPathStrings.isNotBlank(titlePropertyAnnotation.value()),
-                    "@%s value on property [%s] must not be blank!", Title.class.getSimpleName(), getBeanPath());
+            BeanPathAssertions.checkNotNull(titlePropertyAnnotation.value(),
+                    "@%s value on property [%s] must not be null!", Title.class.getSimpleName(), getBeanPath());
             return titlePropertyAnnotation.value();
         }
         //3. title action on type
         if (getContainerTitleElement() != null && getContainerTitleElement().isInvokerAvailable() && target != null) {
             final Object returnValue = getContainerTitleElement().getInvoker().invokeFromTarget(target);
             final String title = BeanPathStrings.asString(returnValue);
-            if (BeanPathStrings.isNotBlank(title)) {
+            if (title != null) {
                 return title;
             }
         }
         //4. title annotation on type
         final Title titleTypeAnnotation = getAccessor().getType().getAnnotation(Title.class);
         if (titleTypeAnnotation != null) {
-            BeanPathAssertions.checkState(BeanPathStrings.isNotBlank(titleTypeAnnotation.value()),
-                    "@%s value on type [%s:%s] must not be blank!", Title.class.getSimpleName(), getBeanPath(),
-                    getAccessor().getType().getSimpleName());
+            BeanPathAssertions.checkNotNull(titleTypeAnnotation.value(), "@%s value on type [%s:%s] must not be null!",
+                    Title.class.getSimpleName(), getBeanPath(), getAccessor().getType().getSimpleName());
             return titleTypeAnnotation.value();
         }
         return getVisibleName();
