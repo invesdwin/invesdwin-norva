@@ -8,6 +8,7 @@ import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 import de.invesdwin.norva.beanpath.spi.IBeanPathContainer;
 import de.invesdwin.norva.beanpath.spi.element.APropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IBeanPathPropertyModifier;
+import de.invesdwin.norva.beanpath.spi.element.simple.modifier.IndexedBeanPathPropertyModifier;
 import de.invesdwin.norva.beanpath.spi.element.table.ATableBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.column.ITableColumnPropertyBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.table.column.custom.internal.ACustomTableColumnModifier;
@@ -57,8 +58,7 @@ public abstract class ACustomTableColumn<M, V> extends APropertyBeanPathElement
 
     @Override
     public final IBeanPathPropertyModifier<Object> getModifier(final int index) {
-        return new de.invesdwin.norva.beanpath.spi.element.simple.modifier.IndexedBeanPathPropertyModifier(
-                getTableElement().getChoiceModifier(), index, getModifier());
+        return new IndexedBeanPathPropertyModifier(getTableElement().getChoiceModifier(), index, getModifier());
     }
 
     @Override
