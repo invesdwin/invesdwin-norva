@@ -74,23 +74,28 @@ public class TableBeanPathElement extends ATableBeanPathElement {
 
     @Override
     public List<ITableColumnBeanPathElement> getRawColumns() {
-        if (rawColumns == null) {
-            rawColumns = new ArrayList<ITableColumnBeanPathElement>();
-            if (getSelectionButtonColumn() != null) {
-                rawColumns.add(getSelectionButtonColumn());
-            }
-            //use alphabetically sorted order with text first, then buttons
-            for (final TableTextColumnBeanPathElement textColumn : getTextColumns()) {
-                rawColumns.add(textColumn);
-            }
-            for (final TableButtonColumnBeanPathElement buttonColumn : getButtonColumns()) {
-                rawColumns.add(buttonColumn);
-            }
-            if (getRemoveFromButtonColumn() != null) {
-                rawColumns.add(getRemoveFromButtonColumn());
+        if (this.rawColumns == null) {
+            synchronized (this) {
+                if (this.rawColumns == null) {
+                    final List<ITableColumnBeanPathElement> rawColumns = new ArrayList<ITableColumnBeanPathElement>();
+                    if (getSelectionButtonColumn() != null) {
+                        rawColumns.add(getSelectionButtonColumn());
+                    }
+                    //use alphabetically sorted order with text first, then buttons
+                    for (final TableTextColumnBeanPathElement textColumn : getTextColumns()) {
+                        rawColumns.add(textColumn);
+                    }
+                    for (final TableButtonColumnBeanPathElement buttonColumn : getButtonColumns()) {
+                        rawColumns.add(buttonColumn);
+                    }
+                    if (getRemoveFromButtonColumn() != null) {
+                        rawColumns.add(getRemoveFromButtonColumn());
+                    }
+                    this.rawColumns = java.util.Collections.unmodifiableList(rawColumns);
+                }
             }
         }
-        return java.util.Collections.unmodifiableList(rawColumns);
+        return this.rawColumns;
     }
 
     @Override
