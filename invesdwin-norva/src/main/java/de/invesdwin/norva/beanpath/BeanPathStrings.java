@@ -5,8 +5,7 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils {
 
-    private BeanPathStrings() {
-    }
+    private BeanPathStrings() {}
 
     public static String putSuffix(final String s, final String suffix) {
         if (s == null) {
@@ -120,8 +119,33 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         if (o == null) {
             return null;
         } else {
-            return o.toString();
+            return asStringNotNull(o);
         }
+    }
+
+    public static String asStringNotNull(final Object o) {
+        if (o != null && o.getClass().isArray()) {
+            if (o instanceof boolean[]) {
+                return java.util.Arrays.toString((boolean[]) o);
+            } else if (o instanceof byte[]) {
+                return java.util.Arrays.toString((byte[]) o);
+            } else if (o instanceof char[]) {
+                return java.util.Arrays.toString((char[]) o);
+            } else if (o instanceof double[]) {
+                return java.util.Arrays.toString((double[]) o);
+            } else if (o instanceof float[]) {
+                return java.util.Arrays.toString((float[]) o);
+            } else if (o instanceof int[]) {
+                return java.util.Arrays.toString((int[]) o);
+            } else if (o instanceof long[]) {
+                return java.util.Arrays.toString((long[]) o);
+            } else if (o instanceof short[]) {
+                return java.util.Arrays.toString((short[]) o);
+            } else if (o instanceof Object[]) {
+                return java.util.Arrays.toString((Object[]) o);
+            }
+        }
+        return o.toString();
     }
 
     public static boolean startsWithAny(final String s, final String... possiblePrefixes) {
