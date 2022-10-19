@@ -4,7 +4,7 @@ pipeline {
     stage('Build and test') {
       steps{
         withMaven {
-          sh 'mvn clean install -f invesdwin-norva/pom.xml -T4'
+          sh 'mvn clean deploy -f invesdwin-norva/pom.xml -T4'
         }  
       }
     }
