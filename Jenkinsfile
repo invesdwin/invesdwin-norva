@@ -1,3 +1,3 @@
 @Library('global-shared-library') _
 
-buildTestDeploy(pomFolderPath: "invesdwin-norva")
+buildTestDeployTriggerRemoteJenkins(pomFolderPath: "invesdwin-norva")
