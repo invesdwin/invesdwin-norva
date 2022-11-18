@@ -1,10 +1,11 @@
 package de.invesdwin.norva.beanpath.spi;
 
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
 
 @NotThreadSafe
 public abstract class ABeanPathAccessor implements IBeanPathAccessor {
