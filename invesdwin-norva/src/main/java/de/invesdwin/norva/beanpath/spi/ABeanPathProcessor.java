@@ -48,7 +48,7 @@ import de.invesdwin.norva.beanpath.spi.visitor.IBeanPathVisitor;
 public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends IBeanPathContainer> {
     //CS:ON ClassDataAbstraction
 
-    private static final String[] ELEMENT_NAME_BLACKLIST = { "getClass", "hashCode", "clone", "equals", "toString",
+    public static final String[] ELEMENT_NAME_BLACKLIST = { "getClass", "hashCode", "clone", "equals", "toString",
             "compareTo", "wait", "notify", "notifyAll", "readResolve", "afterPropertiesSet" };
 
     private final BeanPathProcessorConfig config;
@@ -383,10 +383,10 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
             return false;
         }
 
-        for (final String blacklistedElementName : ELEMENT_NAME_BLACKLIST) {
-            if (blacklistedElementName.equals(element.getAccessor().getRawName())) {
-                return false;
-            }
+        final int indexOf = org.apache.commons.lang3.ArrayUtils.indexOf(ELEMENT_NAME_BLACKLIST,
+                element.getAccessor().getRawName());
+        if (indexOf >= 0) {
+            return false;
         }
         return true;
     }
