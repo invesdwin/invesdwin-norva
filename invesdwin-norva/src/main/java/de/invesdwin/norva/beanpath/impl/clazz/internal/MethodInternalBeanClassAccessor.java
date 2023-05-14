@@ -282,7 +282,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     public Object invokeFromTarget(final Object... params) {
         try {
             if (publicActionMethodHandle != null) {
-                return publicActionMethodHandle.invoke(params);
+                return publicActionMethodHandle.invokeWithArguments(params);
             } else {
                 throw new UnsupportedOperationException("No public action method exists");
             }
