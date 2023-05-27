@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -42,8 +43,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
     public static final Class<?>[] TYPES_DATE = { Date.class, Calendar.class, IDate.class };
     public static final Class<?>[] TYPES_STRING = { CharSequence.class };
 
-    private BeanPathReflections() {
-    }
+    private BeanPathReflections() {}
 
     public static boolean isVoid(final Class<?> type) {
         return type == Void.class || type == void.class || type == SerializableVoid.class;
@@ -119,6 +119,10 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
 
     public static boolean isAbstract(final Class<?> type) {
         return Modifier.isAbstract(type.getModifiers());
+    }
+
+    public static <T extends Annotation> T getAnnotation(final Parameter parameter, final Class<T> annotationType) {
+        return getAnnotationRecursive(parameter.getAnnotations(), annotationType);
     }
 
     public static <T extends Annotation> T getAnnotation(final Method method, final Class<T> annotationType) {
