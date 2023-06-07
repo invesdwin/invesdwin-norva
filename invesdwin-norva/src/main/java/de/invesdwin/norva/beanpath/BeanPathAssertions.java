@@ -5,8 +5,7 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class BeanPathAssertions {
 
-    private BeanPathAssertions() {
-    }
+    private BeanPathAssertions() {}
 
     public static void checkArgument(final boolean expression) {
         if (!expression) {

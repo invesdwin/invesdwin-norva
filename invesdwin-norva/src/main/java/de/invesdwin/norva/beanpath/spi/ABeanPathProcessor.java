@@ -89,9 +89,7 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
         }
     }
 
-    //CHECKSTYLE:OFF
     private boolean scanContainer(final IBeanPathElement parentElement, final C container) {
-        //CHECKSTYLE:ON
         if (container != context.getRootContainer() && container.getType().isAbstract()) {
             return false;
         }

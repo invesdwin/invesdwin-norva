@@ -154,10 +154,8 @@ public class ConstantsGeneratorVisitor extends SimpleBeanPathVisitorSupport {
         }
     }
 
-    //CHECKSTYLE:OFF
     protected String generateContent(final Collection<IBeanPathElement> elements, final String targetClassName,
             final String packageName) {
-        //CHECKSTYLE:ON
         final StringBuilder sb = new StringBuilder();
         sb.append("package ");
         sb.append(packageName);
