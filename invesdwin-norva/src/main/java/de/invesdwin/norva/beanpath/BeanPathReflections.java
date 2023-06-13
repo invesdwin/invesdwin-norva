@@ -6,6 +6,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -316,6 +320,30 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
             }
         }
         return methodName;
+    }
+
+    public static Class<?> determineClassType(final Type genericType) {
+        final Class<?> classType;
+        if (genericType instanceof ParameterizedType) {
+            final ParameterizedType parameterizedType = (ParameterizedType) genericType;
+            classType = (Class<?>) parameterizedType.getRawType();
+        } else if (genericType instanceof TypeVariable) {
+            final TypeVariable<?> typeVariable = (TypeVariable<?>) genericType;
+            if (typeVariable.getGenericDeclaration() instanceof Class<?>) {
+                classType = (Class<?>) typeVariable.getGenericDeclaration();
+            } else {
+                final Type[] bounds = typeVariable.getBounds();
+                BeanPathAssertions.checkArgument(bounds.length == 1);
+                final Type bound = bounds[0];
+                return determineClassType(bound);
+            }
+        } else if (genericType instanceof WildcardType) {
+            //fallback to neutral type since wildcard cannot be traversed
+            return Object.class;
+        } else {
+            classType = (Class<?>) genericType;
+        }
+        return classType;
     }
 
 }

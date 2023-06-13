@@ -7,13 +7,11 @@ import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.lang.reflect.WildcardType;
 
 import javax.annotation.concurrent.Immutable;
 
-import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.BeanPathObjects;
+import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.impl.clazz.internal.FieldInternalBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.clazz.internal.IInternalBeanClassAccessor;
 import de.invesdwin.norva.beanpath.impl.clazz.internal.MethodInternalBeanClassAccessor;
@@ -66,32 +64,8 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
             genericType = getRawType().getGenericType();
         }
 
-        final Class<?> classType = determineClassType(genericType);
+        final Class<?> classType = BeanPathReflections.determineClassType(genericType);
         return new BeanClassType(classType, genericType);
-    }
-
-    private Class<?> determineClassType(final Type genericType) {
-        final Class<?> classType;
-        if (genericType instanceof ParameterizedType) {
-            final ParameterizedType parameterizedType = (ParameterizedType) genericType;
-            classType = (Class<?>) parameterizedType.getRawType();
-        } else if (genericType instanceof TypeVariable) {
-            final TypeVariable<?> typeVariable = (TypeVariable<?>) genericType;
-            if (typeVariable.getGenericDeclaration() instanceof Class<?>) {
-                classType = (Class<?>) typeVariable.getGenericDeclaration();
-            } else {
-                final Type[] bounds = typeVariable.getBounds();
-                BeanPathAssertions.checkArgument(bounds.length == 1);
-                final Type bound = bounds[0];
-                return determineClassType(bound);
-            }
-        } else if (genericType instanceof WildcardType) {
-            //fallback to neutral type since wildcard cannot be traversed
-            return Object.class;
-        } else {
-            classType = (Class<?>) genericType;
-        }
-        return classType;
     }
 
     @Override
