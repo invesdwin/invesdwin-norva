@@ -27,6 +27,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
+import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.marker.IDate;
 import de.invesdwin.norva.marker.IDecimal;
 import de.invesdwin.norva.marker.SerializableVoid;
@@ -344,6 +345,24 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
             classType = (Class<?>) genericType;
         }
         return classType;
+    }
+
+    public static <V> V getBeanPathValue(final Object rootObject, final String beanPath) {
+        Object targetObject = rootObject;
+        Class<?> aClass = targetObject.getClass();
+        for (final String n : beanPath.split(BeanPathUtil.BEAN_PATH_SEPARATOR)) {
+            final Field f = findField(aClass, n);
+            try {
+                targetObject = f.get(targetObject);
+                if (targetObject == null) {
+                    return null;
+                }
+            } catch (IllegalAccessException | IllegalArgumentException e) {
+                throw new AssertionError(e);
+            }
+            aClass = targetObject.getClass();
+        }
+        return (V) targetObject;
     }
 
 }
