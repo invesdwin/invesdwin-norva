@@ -350,9 +350,18 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
     public static <V> V getBeanPathValue(final Object rootObject, final String beanPath) {
         Object targetObject = rootObject;
         Class<?> aClass = targetObject.getClass();
-        for (final String n : beanPath.split(BeanPathUtil.BEAN_PATH_SEPARATOR)) {
+        final String[] split = BeanPathStrings.splitPreserveAllTokens(beanPath, BeanPathUtil.BEAN_PATH_SEPARATOR);
+        if (split.length == 0) {
+            return null;
+        }
+        for (int i = 0; i < split.length; i++) {
+            final String n = split[i];
             final Field f = findField(aClass, n);
+            if (f == null) {
+                throw new NullPointerException("[" + aClass.getName() + "] has no field [" + n + "]");
+            }
             try {
+                makeAccessible(f);
                 targetObject = f.get(targetObject);
                 if (targetObject == null) {
                     return null;
