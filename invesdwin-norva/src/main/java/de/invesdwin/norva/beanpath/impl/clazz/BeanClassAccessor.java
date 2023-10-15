@@ -5,8 +5,6 @@ import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -38,34 +36,7 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
         this.context = context;
         this.container = container;
         this.internal = internal;
-        this.type = determineType();
-    }
-
-    private BeanClassType determineType() {
-        Type genericType = null;
-        if (getRawType().isArray()) {
-            if (getRawType().getGenericType() instanceof GenericArrayType) {
-                final GenericArrayType genericArrayType = (GenericArrayType) getRawType().getGenericType();
-                genericType = genericArrayType.getGenericComponentType();
-            } else {
-                genericType = getRawType().getType().getComponentType();
-            }
-        } else if (getRawType().isIterable() && getRawType().getGenericType() instanceof ParameterizedType) {
-            final ParameterizedType parameterizedType = (ParameterizedType) getRawType().getGenericType();
-            final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-            if (actualTypeArguments.length == 1) {
-                genericType = actualTypeArguments[0];
-            } else {
-                //fallback to rawType, since this is not a generic iterable collection
-                genericType = getRawType().getGenericType();
-            }
-        } else {
-            //fallback to rawType, since this is not an array or generic
-            genericType = getRawType().getGenericType();
-        }
-
-        final Class<?> classType = BeanPathReflections.determineClassType(genericType);
-        return new BeanClassType(classType, genericType);
+        this.type = BeanPathReflections.determineGenercType(getRawType());
     }
 
     @Override

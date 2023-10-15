@@ -3,6 +3,7 @@ package de.invesdwin.norva.beanpath;
 import java.beans.Introspector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
@@ -27,6 +28,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
+import de.invesdwin.norva.beanpath.impl.clazz.BeanClassType;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.marker.IDate;
 import de.invesdwin.norva.marker.IDecimal;
@@ -321,6 +323,33 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
             }
         }
         return methodName;
+    }
+
+    public static BeanClassType determineGenercType(final BeanClassType rawType) {
+        Type genericType = null;
+        if (rawType.isArray()) {
+            if (rawType.getGenericType() instanceof GenericArrayType) {
+                final GenericArrayType genericArrayType = (GenericArrayType) rawType.getGenericType();
+                genericType = genericArrayType.getGenericComponentType();
+            } else {
+                genericType = rawType.getType().getComponentType();
+            }
+        } else if (rawType.isIterable() && rawType.getGenericType() instanceof ParameterizedType) {
+            final ParameterizedType parameterizedType = (ParameterizedType) rawType.getGenericType();
+            final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+            if (actualTypeArguments.length == 1) {
+                genericType = actualTypeArguments[0];
+            } else {
+                //fallback to rawType, since this is not a generic iterable collection
+                genericType = rawType.getGenericType();
+            }
+        } else {
+            //fallback to rawType, since this is not an array or generic
+            genericType = rawType.getGenericType();
+        }
+
+        final Class<?> classType = BeanPathReflections.determineClassType(genericType);
+        return new BeanClassType(classType, genericType);
     }
 
     public static Class<?> determineClassType(final Type genericType) {
