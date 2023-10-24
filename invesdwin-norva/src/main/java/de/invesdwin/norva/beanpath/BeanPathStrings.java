@@ -261,4 +261,63 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         return ret;
     }
 
+    /**
+     * Gets the substring before the first occurrence of a separator, including the separator.
+     * <p>
+     * A {@code null} string input will return {@code null}. An empty ("") string input will return the empty string.
+     *
+     * <p>
+     * If nothing is found, the empty string is returned.
+     * </p>
+     *
+     * @param str
+     *            the String to get a substring from, may be null
+     * @param separator
+     *            the character to search.
+     * @return the substring before the first occurrence of the separator, including the separator. {@code null} if null
+     *         String input
+     */
+    public static String substringBeforeInclusive(final String str, final String separator) {
+        if (isEmpty(str) || separator == null) {
+            return str;
+        }
+        if (separator.isEmpty()) {
+            return EMPTY;
+        }
+        final int pos = str.indexOf(separator);
+        if (pos == INDEX_NOT_FOUND) {
+            return str;
+        }
+        return str.substring(0, pos + separator.length());
+    }
+
+    /**
+     * Gets the after before the first occurrence of a separator, including the separator.
+     * <p>
+     * A {@code null} string input will return {@code null}. An empty ("") string input will return the empty string.
+     *
+     * <p>
+     * If nothing is found, the empty string is returned.
+     * </p>
+     *
+     * @param str
+     *            the String to get a substring from, may be null
+     * @param separator
+     *            the character to search.
+     * @return the substring after the first occurrence of the separator, including the separator. {@code null} if null
+     *         String input
+     */
+    public static String substringAfterInclusive(final String str, final String separator) {
+        if (isEmpty(str)) {
+            return str;
+        }
+        if (separator == null) {
+            return EMPTY;
+        }
+        final int pos = str.indexOf(separator);
+        if (pos == INDEX_NOT_FOUND) {
+            return EMPTY;
+        }
+        return str.substring(pos);
+    }
 }
