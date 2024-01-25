@@ -2,6 +2,7 @@ package de.invesdwin.norva.beanpath;
 
 import java.beans.Introspector;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Method;
@@ -225,6 +226,24 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
             if (method.getName().equals(methodName)
                     && (countParams == null || method.getParameterTypes().length == countParams)) {
                 return method;
+            }
+        }
+        return null;
+    }
+
+    public static Constructor<?> findConstructor(final Class<?> type, final Integer countParams) {
+        for (final Constructor<?> constructor : type.getConstructors()) {
+            if (countParams == null || constructor.getParameterTypes().length == countParams) {
+                return constructor;
+            }
+        }
+        return null;
+    }
+
+    public static Constructor<?> findDeclaredConstructor(final Class<?> type, final Integer countParams) {
+        for (final Constructor<?> constructor : type.getDeclaredConstructors()) {
+            if (countParams == null || constructor.getParameterTypes().length == countParams) {
+                return constructor;
             }
         }
         return null;
