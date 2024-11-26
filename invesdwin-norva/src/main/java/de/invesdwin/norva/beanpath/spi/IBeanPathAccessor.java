@@ -7,7 +7,7 @@ import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 /**
  * This represents a field or a method that gives access to a class or object.
  */
-public interface IBeanPathAccessor {
+public interface IBeanPathAccessor extends IUnwrap {
 
     ABeanPathContext getContext();
 
@@ -74,7 +74,5 @@ public interface IBeanPathAccessor {
     String getPublicFieldName();
 
     String getPublicActionName();
-
-    <T> T unwrap(Class<T> type);
 
 }

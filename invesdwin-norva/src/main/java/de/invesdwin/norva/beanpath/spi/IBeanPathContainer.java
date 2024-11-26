@@ -1,6 +1,6 @@
 package de.invesdwin.norva.beanpath.spi;
 
-public interface IBeanPathContainer extends IBeanPathFragment {
+public interface IBeanPathContainer extends IBeanPathFragment, IUnwrap {
 
     IBeanPathAccessor getAccessor();
 
@@ -12,7 +12,5 @@ public interface IBeanPathContainer extends IBeanPathFragment {
 
     @Override
     String toString();
-
-    <T> T unwrap(Class<T> type);
 
 }
