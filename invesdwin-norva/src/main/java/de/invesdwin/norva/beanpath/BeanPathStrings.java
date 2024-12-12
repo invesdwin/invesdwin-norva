@@ -33,7 +33,7 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
         if (s == null) {
             return null;
         }
-        if (prefix == null || s.startsWith(prefix)) {
+        if (prefix == null || prefix.length() == 0 || s.startsWith(prefix)) {
             return s;
         } else {
             return prefix + s;
