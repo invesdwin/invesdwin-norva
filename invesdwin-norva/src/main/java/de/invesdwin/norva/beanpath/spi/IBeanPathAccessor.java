@@ -2,12 +2,13 @@ package de.invesdwin.norva.beanpath.spi;
 
 import java.lang.annotation.Annotation;
 
+import de.invesdwin.norva.beanpath.spi.annotation.IBeanPathAnnotationProvider;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 
 /**
  * This represents a field or a method that gives access to a class or object.
  */
-public interface IBeanPathAccessor extends IUnwrap {
+public interface IBeanPathAccessor extends IUnwrap, IBeanPathAnnotationProvider {
 
     ABeanPathContext getContext();
 
@@ -34,6 +35,7 @@ public interface IBeanPathAccessor extends IUnwrap {
      * Checks the action method, getter method, setter method and field of this accessor in that order to find the given
      * annotation.
      */
+    @Override
     <T extends Annotation> T getAnnotation(Class<T> annotationType);
 
     Integer getPublicSetterParameterCount();

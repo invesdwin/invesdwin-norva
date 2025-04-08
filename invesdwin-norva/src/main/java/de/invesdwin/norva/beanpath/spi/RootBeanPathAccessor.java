@@ -52,7 +52,7 @@ public class RootBeanPathAccessor implements IBeanPathAccessor {
 
     @Override
     public <T extends Annotation> T getAnnotation(final Class<T> annotationType) {
-        return (T) null;
+        return null;
     }
 
     @Override

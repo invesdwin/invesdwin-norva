@@ -1,8 +1,8 @@
 package de.invesdwin.norva.beanpath.spi;
 
-import java.lang.annotation.Annotation;
+import de.invesdwin.norva.beanpath.spi.annotation.IBeanPathAnnotationProvider;
 
-public interface IBeanPathType {
+public interface IBeanPathType extends IBeanPathAnnotationProvider {
 
     String getSimpleName();
 
@@ -35,7 +35,5 @@ public interface IBeanPathType {
     boolean isJavaType();
 
     boolean isString();
-
-    <T extends Annotation> T getAnnotation(Class<T> annotationType);
 
 }

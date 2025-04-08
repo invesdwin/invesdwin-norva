@@ -1,13 +1,13 @@
 package de.invesdwin.norva.beanpath.impl.clazz.internal;
 
-import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassType;
+import de.invesdwin.norva.beanpath.spi.annotation.IBeanPathAnnotationProvider;
 
-public interface IInternalBeanClassAccessor {
+public interface IInternalBeanClassAccessor extends IBeanPathAnnotationProvider {
 
     Method getRawMethod();
 
@@ -54,8 +54,6 @@ public interface IInternalBeanClassAccessor {
     Object invokeFromTarget(Object target, Object param1, Object param2, Object param3);
 
     String getRawName();
-
-    <T extends Annotation> T getAnnotation(Class<T> annotationType);
 
     boolean hasPublicGetterOrField();
 

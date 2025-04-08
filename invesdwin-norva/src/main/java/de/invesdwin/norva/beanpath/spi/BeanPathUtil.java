@@ -15,7 +15,11 @@ public final class BeanPathUtil {
     private BeanPathUtil() {}
 
     public static String newBeanPath(final IBeanPathContainer container, final IBeanPathAccessor accessor) {
-        return newPath(container.getBeanPath(), BEAN_PATH_SEPARATOR, accessor.getBeanPathFragment());
+        return newBeanPath(container.getBeanPath(), accessor.getBeanPathFragment());
+    }
+
+    public static String newBeanPath(final String pathPrefix, final String newPathFragment) {
+        return newPath(pathPrefix, BEAN_PATH_SEPARATOR, newPathFragment);
     }
 
     public static boolean isShallowBeanPath(final String beanPath) {
@@ -23,7 +27,11 @@ public final class BeanPathUtil {
     }
 
     public static String newTypePath(final IBeanPathContainer container, final IBeanPathAccessor accessor) {
-        return newPath(container.getTypePath(), TYPE_PATH_SEPARATOR, accessor.getTypePathFragment());
+        return newTypePath(container.getTypePath(), accessor.getTypePathFragment());
+    }
+
+    public static String newTypePath(final String pathPrefix, final String newPathFragment) {
+        return newPath(pathPrefix, TYPE_PATH_SEPARATOR, newPathFragment);
     }
 
     private static String newPath(final String pathPrefix, final String separator, final String newPathFragment) {

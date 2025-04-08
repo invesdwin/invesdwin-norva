@@ -51,6 +51,12 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
     public static final Class<?>[] TYPES_DATE = { Date.class, Calendar.class, IDate.class };
     public static final Class<?>[] TYPES_STRING = { CharSequence.class };
 
+    public static final Annotation[] ANNOTATION_EMPTY_ARRAY = new Annotation[0];
+    @SuppressWarnings("rawtypes")
+    public static final Class[] CLASS_EMPTY_ARRAY = new Class[0];
+    public static final Field[] FIELD_EMPTY_ARRAY = new Field[0];
+    public static final Method[] METGOD_EMPTY_ARRAY = new Method[0];
+
     private BeanPathReflections() {}
 
     public static boolean isVoid(final Class<?> type) {
@@ -158,7 +164,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
         return null;
     }
 
-    private static <T extends Annotation> T getAnnotationRecursive(final Annotation[] annotations,
+    public static <T extends Annotation> T getAnnotationRecursive(final Annotation[] annotations,
             final Class<T> annotationType) {
         return getAnnotationRecursive(annotations, annotationType, new HashSet<String>());
     }
