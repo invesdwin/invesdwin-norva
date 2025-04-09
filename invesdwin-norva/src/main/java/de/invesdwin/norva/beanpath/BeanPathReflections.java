@@ -127,6 +127,10 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
         return Modifier.isStatic(field.getModifiers());
     }
 
+    public static boolean isTransient(final Field field) {
+        return Modifier.isTransient(field.getModifiers());
+    }
+
     public static boolean isStatic(final Method method) {
         return Modifier.isStatic(method.getModifiers());
     }
