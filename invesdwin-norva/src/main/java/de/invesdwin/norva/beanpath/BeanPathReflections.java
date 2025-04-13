@@ -55,7 +55,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
     @SuppressWarnings("rawtypes")
     public static final Class[] CLASS_EMPTY_ARRAY = new Class[0];
     public static final Field[] FIELD_EMPTY_ARRAY = new Field[0];
-    public static final Method[] METGOD_EMPTY_ARRAY = new Method[0];
+    public static final Method[] METHOD_EMPTY_ARRAY = new Method[0];
 
     private BeanPathReflections() {}
 
