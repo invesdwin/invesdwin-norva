@@ -124,7 +124,7 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
     }
 
     public static String asStringNotNull(final Object o) {
-        if (o != null && o.getClass().isArray()) {
+        if (o.getClass().isArray()) {
             if (o instanceof boolean[]) {
                 return java.util.Arrays.toString((boolean[]) o);
             } else if (o instanceof byte[]) {
