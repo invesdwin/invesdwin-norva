@@ -142,7 +142,7 @@ public final class BeanPathStrings extends org.apache.commons.lang3.StringUtils 
             } else if (o instanceof short[]) {
                 return java.util.Arrays.toString((short[]) o);
             } else if (o instanceof Object[]) {
-                return java.util.Arrays.toString((Object[]) o);
+                return java.util.Arrays.deepToString((Object[]) o);
             }
         }
         return o.toString();
