@@ -31,6 +31,10 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     public MethodInternalBeanClassAccessor(final BeanClassContainer container, final Method method) {
         this.rawMethod = method;
+        /*
+         * an alternative to reflection might be mhLookup.unreflect(method).asFixedArity() and always calling via
+         * invokeWithArguments, though dunno if that would be much faster or stable
+         */
         this.reflectionFallback = method.isVarArgs();
         this.rawType = determineRawType();
         this.publicActionMethod = determinePublicActionMethod();
