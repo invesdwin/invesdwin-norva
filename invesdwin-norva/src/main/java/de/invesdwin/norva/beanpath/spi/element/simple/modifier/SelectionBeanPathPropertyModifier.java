@@ -153,6 +153,22 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
         return new IBeanPathActionInvoker() {
 
             @Override
+            public Object invokeFromTargetViaReflection(final Object target, final Object... params) {
+                BeanPathAssertions.checkArgument(params.length == 1);
+                toggleSelectionFromTarget(target, params[0]);
+                //no page redirect here
+                return null;
+            }
+
+            @Override
+            public Object invokeFromTarget(final Object target, final Object... params) {
+                BeanPathAssertions.checkArgument(params.length == 1);
+                toggleSelectionFromTarget(target, params[0]);
+                //no page redirect here
+                return null;
+            }
+
+            @Override
             public Object invokeFromTarget(final Object... params) {
                 BeanPathAssertions.checkArgument(params.length == 2);
                 toggleSelectionFromTarget(params[0], params[1]);
@@ -183,6 +199,16 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
             }
 
             @Override
+            public Object invokeFromRootViaReflection(final Object root, final Object... params) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invokeFromRoot(final Object root, final Object... params) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
             public Object invokeFromRoot(final Object... params) {
                 throw new UnsupportedOperationException();
             }
@@ -205,6 +231,11 @@ public class SelectionBeanPathPropertyModifier extends DelegateBeanPathPropertyM
             @Override
             public Object invokeFromRoot(final Object root, final Object param1, final Object param2,
                     final Object param3) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Object invokeViaReflection(final Object... params) {
                 throw new UnsupportedOperationException();
             }
 

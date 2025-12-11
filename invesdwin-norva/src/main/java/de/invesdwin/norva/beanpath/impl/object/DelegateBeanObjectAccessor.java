@@ -127,6 +127,11 @@ public class DelegateBeanObjectAccessor implements IBeanObjectAccessor {
     }
 
     @Override
+    public Object invokeViaReflection(final Object... params) {
+        return delegate.invokeViaReflection(params);
+    }
+
+    @Override
     public Object invoke(final Object... params) {
         return delegate.invoke(params);
     }

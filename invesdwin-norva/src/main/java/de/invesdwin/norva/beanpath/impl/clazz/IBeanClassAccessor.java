@@ -5,6 +5,10 @@ import de.invesdwin.norva.beanpath.spi.IBeanPathAccessor;
 
 public interface IBeanClassAccessor extends IInternalBeanClassAccessor, IBeanPathAccessor {
 
+    Object invokeFromRootViaReflection(Object root, Object... params);
+
+    Object invokeFromRoot(Object root, Object... params);
+
     Object invokeFromRoot(Object... params);
 
     Object invokeFromRoot(Object root);

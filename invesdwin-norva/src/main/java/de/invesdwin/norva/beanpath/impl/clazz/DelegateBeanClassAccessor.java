@@ -132,6 +132,16 @@ public class DelegateBeanClassAccessor implements IBeanClassAccessor {
     }
 
     @Override
+    public Object invokeFromTargetViaReflection(final Object target, final Object... params) {
+        return delegate.invokeFromTargetViaReflection(target, params);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object... params) {
+        return delegate.invokeFromTarget(target, params);
+    }
+
+    @Override
     public Object invokeFromTarget(final Object... params) {
         return delegate.invokeFromTarget(params);
     }
@@ -194,6 +204,16 @@ public class DelegateBeanClassAccessor implements IBeanClassAccessor {
     @Override
     public boolean hasPublicAction() {
         return delegate.hasPublicAction();
+    }
+
+    @Override
+    public Object invokeFromRootViaReflection(final Object root, final Object... params) {
+        return delegate.invokeFromRootViaReflection(root, params);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object... params) {
+        return delegate.invokeFromRoot(root, params);
     }
 
     @Override

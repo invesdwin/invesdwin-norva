@@ -39,23 +39,15 @@ public class IndexedBeanPathActionInvoker implements IBeanPathActionInvoker {
     }
 
     @Override
+    public Object invokeViaReflection(final Object... params) {
+        final Object targetObject = getIndexedTarget(choiceModifier.getValue());
+        return delegate.invokeFromTargetViaReflection(targetObject, params);
+    }
+
+    @Override
     public Object invoke(final Object... params) {
         final Object targetObject = getIndexedTarget(choiceModifier.getValue());
-        switch (params.length) {
-        case 0:
-            return delegate.invokeFromTarget(targetObject);
-        case 1:
-            return delegate.invokeFromTarget(targetObject, params[0]);
-        case 2:
-            return delegate.invokeFromTarget(targetObject, params[0], params[1]);
-        case 3:
-            return delegate.invokeFromTarget(targetObject, params[0], params[1], params[2]);
-        default:
-            final Object[] args = new Object[params.length + 1];
-            System.arraycopy(params, 0, args, 1, params.length);
-            args[0] = targetObject;
-            return delegate.invokeFromTarget(args);
-        }
+        return delegate.invokeFromTarget(targetObject, params);
     }
 
     @Override
@@ -80,6 +72,18 @@ public class IndexedBeanPathActionInvoker implements IBeanPathActionInvoker {
     public Object invoke(final Object param1, final Object param2, final Object param3) {
         final Object targetObject = getIndexedTarget(choiceModifier.getValue());
         return delegate.invokeFromTarget(targetObject, param1, param2, param3);
+    }
+
+    @Override
+    public Object invokeFromRootViaReflection(final Object root, final Object... params) {
+        final Object target = getIndexedTarget(choiceModifier.getValueFromRoot(root));
+        return invokeFromTargetViaReflection(target, params);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object... params) {
+        final Object target = getIndexedTarget(choiceModifier.getValueFromRoot(root));
+        return invokeFromTarget(target, params);
     }
 
     @Override
@@ -115,6 +119,16 @@ public class IndexedBeanPathActionInvoker implements IBeanPathActionInvoker {
 
     private Object getIndexedTarget(final List<?> value) {
         return value.get(index);
+    }
+
+    @Override
+    public Object invokeFromTargetViaReflection(final Object target, final Object... params) {
+        return delegate.invokeFromTargetViaReflection(target, params);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object... params) {
+        return delegate.invokeFromTarget(target, params);
     }
 
     @Override

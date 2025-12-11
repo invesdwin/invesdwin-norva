@@ -31,6 +31,11 @@ public class NoObjectBeanPathActionInvoker implements IBeanPathActionInvoker {
     }
 
     @Override
+    public Object invokeViaReflection(final Object... params) {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
     public Object invoke(final Object... params) {
         throw newUnsupportedOperationException();
     }
@@ -61,6 +66,16 @@ public class NoObjectBeanPathActionInvoker implements IBeanPathActionInvoker {
     }
 
     @Override
+    public Object invokeFromRootViaReflection(final Object root, final Object... params) {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object... params) {
+        throw newUnsupportedOperationException();
+    }
+
+    @Override
     public Object invokeFromRoot(final Object... params) {
         throw newUnsupportedOperationException();
     }
@@ -83,6 +98,16 @@ public class NoObjectBeanPathActionInvoker implements IBeanPathActionInvoker {
     @Override
     public Object invokeFromRoot(final Object root, final Object param1, final Object param2, final Object param3) {
         throw newUnsupportedOperationException();
+    }
+
+    @Override
+    public Object invokeFromTargetViaReflection(final Object target, final Object... params) {
+        return delegate.invokeFromTargetViaReflection(target, params);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object... params) {
+        return delegate.invokeFromTarget(target, params);
     }
 
     @Override

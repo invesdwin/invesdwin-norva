@@ -18,6 +18,8 @@ public interface IBeanObjectAccessor extends IBeanPathAccessor {
 
     void setValue(Object value);
 
+    Object invokeViaReflection(Object... params);
+
     Object invoke(Object... params);
 
     Object invoke();

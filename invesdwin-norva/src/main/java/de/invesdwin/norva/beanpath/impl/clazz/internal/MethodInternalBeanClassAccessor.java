@@ -27,6 +27,7 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     private final Method publicSetterMethod;
     private final MethodHandle publicSetterMethodHandle;
     private final FieldInternalBeanClassAccessor fieldDelegate;
+    private boolean reflectionFallback;
 
     public MethodInternalBeanClassAccessor(final BeanClassContainer container, final Method method) {
         this.rawMethod = method;
@@ -279,6 +280,53 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     }
 
     @Override
+    public Object invokeFromTargetViaReflection(final Object target, final Object... params) {
+        try {
+            if (publicActionMethod != null) {
+                return publicActionMethod.invoke(target, params);
+            } else {
+                throw new UnsupportedOperationException("No public action method exists");
+            }
+        } catch (final ClassCastException e) {
+            throw e;
+        } catch (final UndeclaredThrowableException e) {
+            throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
+                    newInvokeFromTargetExceptionMessage(params[0]));
+        } catch (final Exception e) {
+            throw new UndeclaredThrowableException(e, newInvokeFromTargetExceptionMessage(params[0]));
+        } catch (final Throwable t) {
+            throw new RuntimeException(newInvokeFromTargetExceptionMessage(params[0]), t);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object... params) {
+        if (reflectionFallback) {
+            return invokeFromTargetViaReflection(target, params);
+        }
+        try {
+            switch (params.length) {
+            case 0:
+                return invokeFromTarget(target);
+            case 1:
+                return invokeFromTarget(target, params[0]);
+            case 2:
+                return invokeFromTarget(target, params[0], params[1]);
+            case 3:
+                return invokeFromTarget(target, params[0], params[1], params[2]);
+            default:
+                final Object[] args = new Object[params.length + 1];
+                System.arraycopy(params, 0, args, 1, params.length);
+                args[0] = target;
+                return invokeFromTarget(args);
+            }
+        } catch (final ClassCastException e) {
+            reflectionFallback = true;
+            return invokeFromTargetViaReflection(target, params);
+        }
+    }
+
+    @Override
     public Object invokeFromTarget(final Object... params) {
         try {
             if (publicActionMethodHandle != null) {
@@ -286,6 +334,8 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
             } else {
                 throw new UnsupportedOperationException("No public action method exists");
             }
+        } catch (final ClassCastException e) {
+            throw e;
         } catch (final UndeclaredThrowableException e) {
             throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
                     newInvokeFromTargetExceptionMessage(params[0]));
@@ -304,6 +354,8 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
             } else {
                 throw new UnsupportedOperationException("No public action method exists");
             }
+        } catch (final ClassCastException e) {
+            throw e;
         } catch (final UndeclaredThrowableException e) {
             throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
                     newInvokeFromTargetExceptionMessage(target));
@@ -322,6 +374,8 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
             } else {
                 throw new UnsupportedOperationException("No public action method exists");
             }
+        } catch (final ClassCastException e) {
+            throw e;
         } catch (final UndeclaredThrowableException e) {
             throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
                     newInvokeFromTargetExceptionMessage(target));
@@ -340,6 +394,8 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
             } else {
                 throw new UnsupportedOperationException("No public action method exists");
             }
+        } catch (final ClassCastException e) {
+            throw e;
         } catch (final UndeclaredThrowableException e) {
             throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
                     newInvokeFromTargetExceptionMessage(target));
@@ -358,6 +414,8 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
             } else {
                 throw new UnsupportedOperationException("No public action method exists");
             }
+        } catch (final ClassCastException e) {
+            throw e;
         } catch (final UndeclaredThrowableException e) {
             throw new UndeclaredThrowableException(e.getUndeclaredThrowable(),
                     newInvokeFromTargetExceptionMessage(target));

@@ -43,6 +43,10 @@ public interface IInternalBeanClassAccessor extends IBeanPathAnnotationProvider 
 
     void setValueFromTarget(Object target, Object value);
 
+    Object invokeFromTargetViaReflection(Object target, Object... params);
+
+    Object invokeFromTarget(Object target, Object... params);
+
     Object invokeFromTarget(Object... params);
 
     Object invokeFromTarget(Object target);

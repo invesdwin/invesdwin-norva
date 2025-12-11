@@ -51,6 +51,11 @@ public class BeanPathActionInvoker implements IBeanPathActionInvoker {
     }
 
     @Override
+    public Object invokeViaReflection(final Object... params) {
+        return getBeanObjectAccessor().invokeViaReflection(params);
+    }
+
+    @Override
     public Object invoke(final Object... params) {
         return getBeanObjectAccessor().invoke(params);
     }
@@ -76,6 +81,16 @@ public class BeanPathActionInvoker implements IBeanPathActionInvoker {
     }
 
     @Override
+    public Object invokeFromRootViaReflection(final Object root, final Object... params) {
+        return getBeanClassAccessor().invokeFromRootViaReflection(root, params);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object... params) {
+        return getBeanClassAccessor().invokeFromRoot(root, params);
+    }
+
+    @Override
     public Object invokeFromRoot(final Object... params) {
         return getBeanClassAccessor().invokeFromRoot(params);
     }
@@ -98,6 +113,16 @@ public class BeanPathActionInvoker implements IBeanPathActionInvoker {
     @Override
     public Object invokeFromRoot(final Object root, final Object param1, final Object param2, final Object param3) {
         return getBeanClassAccessor().invokeFromRoot(root, param1, param2, param3);
+    }
+
+    @Override
+    public Object invokeFromTargetViaReflection(final Object target, final Object... params) {
+        return getBeanClassAccessor().invokeFromTargetViaReflection(target, params);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object... params) {
+        return getBeanClassAccessor().invokeFromTarget(target, params);
     }
 
     @Override

@@ -25,6 +25,11 @@ public interface IBeanPathActionInvoker {
      */
     Object invoke(Object... params);
 
+    /**
+     * No object is given here
+     */
+    Object invokeViaReflection(Object... params);
+
     Object invokeFromRoot(Object root);
 
     Object invokeFromRoot(Object root, Object param1);
@@ -39,23 +44,9 @@ public interface IBeanPathActionInvoker {
      */
     Object invokeFromRoot(Object... params);
 
-    default Object invokeFromRoot(final Object root, final Object... params) {
-        switch (params.length) {
-        case 0:
-            return invokeFromRoot(root);
-        case 1:
-            return invokeFromRoot(root, params[0]);
-        case 2:
-            return invokeFromRoot(root, params[0], params[1]);
-        case 3:
-            return invokeFromRoot(root, params[0], params[1], params[2]);
-        default:
-            final Object[] args = new Object[params.length + 1];
-            System.arraycopy(params, 0, args, 1, params.length);
-            args[0] = root;
-            return invokeFromRoot(args);
-        }
-    }
+    Object invokeFromRootViaReflection(Object root, Object... params);
+
+    Object invokeFromRoot(Object root, Object... params);
 
     Object invokeFromTarget(Object target);
 
@@ -71,22 +62,8 @@ public interface IBeanPathActionInvoker {
      */
     Object invokeFromTarget(Object... params);
 
-    default Object invokeFromTarget(final Object target, final Object... params) {
-        switch (params.length) {
-        case 0:
-            return invokeFromTarget(target);
-        case 1:
-            return invokeFromTarget(target, params[0]);
-        case 2:
-            return invokeFromTarget(target, params[0], params[1]);
-        case 3:
-            return invokeFromTarget(target, params[0], params[1], params[2]);
-        default:
-            final Object[] args = new Object[params.length + 1];
-            System.arraycopy(params, 0, args, 1, params.length);
-            args[0] = target;
-            return invokeFromTarget(args);
-        }
-    }
+    Object invokeFromTargetViaReflection(Object target, Object... params);
+
+    Object invokeFromTarget(Object target, Object... params);
 
 }

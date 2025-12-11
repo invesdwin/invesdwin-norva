@@ -32,8 +32,14 @@ public class PropertyGetterInvoker implements IBeanPathActionInvoker {
     }
 
     @Override
+    public Object invokeViaReflection(final Object... params) {
+        assertNoParamsVarArgsViaReflection(params);
+        return modifier.getValue();
+    }
+
+    @Override
     public Object invoke(final Object... params) {
-        assertNoParamsVarArgs(params);
+        assertNoParamsVarArgsViaReflection(params);
         return modifier.getValue();
     }
 
@@ -55,6 +61,18 @@ public class PropertyGetterInvoker implements IBeanPathActionInvoker {
     @Override
     public Object invoke(final Object param1, final Object param2, final Object param3) {
         throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromRootViaReflection(final Object root, final Object... params) {
+        assertNoParamsVarArgsViaReflection(params);
+        return modifier.getValueFromRoot(root);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object... params) {
+        assertNoParamsVarArgsViaReflection(params);
+        return modifier.getValueFromRoot(root);
     }
 
     @Override
@@ -81,6 +99,18 @@ public class PropertyGetterInvoker implements IBeanPathActionInvoker {
     @Override
     public Object invokeFromRoot(final Object root, final Object param1, final Object param2, final Object param3) {
         throw newParametersNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromTargetViaReflection(final Object target, final Object... params) {
+        assertNoParamsVarArgsViaReflection(params);
+        return modifier.getValueFromTarget(target);
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object... params) {
+        assertNoParamsVarArgsViaReflection(params);
+        return modifier.getValueFromTarget(target);
     }
 
     @Override
@@ -111,6 +141,12 @@ public class PropertyGetterInvoker implements IBeanPathActionInvoker {
 
     private void assertNoParamsVarArgs(final Object... params) {
         if (params.length != 1) {
+            throw newParametersNotSupportedException();
+        }
+    }
+
+    private void assertNoParamsVarArgsViaReflection(final Object... params) {
+        if (params.length != 0) {
             throw newParametersNotSupportedException();
         }
     }

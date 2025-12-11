@@ -153,6 +153,16 @@ public class FieldInternalBeanClassAccessor implements IInternalBeanClassAccesso
     }
 
     @Override
+    public Object invokeFromTargetViaReflection(final Object target, final Object... params) {
+        throw newInvokeNotSupportedException();
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object... params) {
+        throw newInvokeNotSupportedException();
+    }
+
+    @Override
     public Object invokeFromTarget(final Object... params) {
         throw newInvokeNotSupportedException();
     }

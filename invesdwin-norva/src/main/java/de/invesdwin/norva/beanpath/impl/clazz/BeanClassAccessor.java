@@ -80,6 +80,18 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
     }
 
     @Override
+    public Object invokeFromRootViaReflection(final Object root, final Object... params) {
+        final Object targetObject = container.getTargetFromRoot(root);
+        return invokeFromTargetViaReflection(targetObject, params);
+    }
+
+    @Override
+    public Object invokeFromRoot(final Object root, final Object... params) {
+        final Object targetObject = container.getTargetFromRoot(root);
+        return invokeFromTarget(targetObject, params);
+    }
+
+    @Override
     public Object invokeFromRoot(final Object... params) {
         final Object targetObject = container.getTargetFromRoot(params[0]);
         params[0] = targetObject;
@@ -108,6 +120,24 @@ public class BeanClassAccessor extends ABeanPathAccessor implements IBeanClassAc
     public Object invokeFromRoot(final Object root, final Object param1, final Object param2, final Object param3) {
         final Object targetObject = container.getTargetFromRoot(root);
         return invokeFromTarget(targetObject, param1, param2, param3);
+    }
+
+    @Override
+    public Object invokeFromTargetViaReflection(final Object target, final Object... params) {
+        if (target == null) {
+            return null;
+        } else {
+            return internal.invokeFromTargetViaReflection(target, params);
+        }
+    }
+
+    @Override
+    public Object invokeFromTarget(final Object target, final Object... params) {
+        if (target == null) {
+            return null;
+        } else {
+            return internal.invokeFromTarget(target, params);
+        }
     }
 
     @Override
