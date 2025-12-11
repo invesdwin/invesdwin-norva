@@ -27,10 +27,11 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
     private final Method publicSetterMethod;
     private final MethodHandle publicSetterMethodHandle;
     private final FieldInternalBeanClassAccessor fieldDelegate;
-    private boolean reflectionFallback;
+    private final boolean reflectionFallback;
 
     public MethodInternalBeanClassAccessor(final BeanClassContainer container, final Method method) {
         this.rawMethod = method;
+        this.reflectionFallback = method.isVarArgs();
         this.rawType = determineRawType();
         this.publicActionMethod = determinePublicActionMethod();
         this.publicGetterMethod = determinePublicGetterMethod(container);
@@ -304,30 +305,33 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
         if (reflectionFallback) {
             return invokeFromTargetViaReflection(target, params);
         }
-        try {
-            switch (params.length) {
-            case 0:
-                return invokeFromTarget(target);
-            case 1:
-                return invokeFromTarget(target, params[0]);
-            case 2:
-                return invokeFromTarget(target, params[0], params[1]);
-            case 3:
-                return invokeFromTarget(target, params[0], params[1], params[2]);
-            default:
-                final Object[] args = new Object[params.length + 1];
-                System.arraycopy(params, 0, args, 1, params.length);
-                args[0] = target;
-                return invokeFromTarget(args);
-            }
-        } catch (final ClassCastException e) {
-            reflectionFallback = true;
-            return invokeFromTargetViaReflection(target, params);
+        switch (params.length) {
+        case 0:
+            return invokeFromTarget(target);
+        case 1:
+            return invokeFromTarget(target, params[0]);
+        case 2:
+            return invokeFromTarget(target, params[0], params[1]);
+        case 3:
+            return invokeFromTarget(target, params[0], params[1], params[2]);
+        default:
+            final Object[] args = new Object[params.length + 1];
+            System.arraycopy(params, 0, args, 1, params.length);
+            args[0] = target;
+            return invokeFromTarget(args);
         }
     }
 
     @Override
     public Object invokeFromTarget(final Object... params) {
+        if (reflectionFallback) {
+            if (params.length == 1) {
+                return invokeFromTargetViaReflection(params[0]);
+            } else {
+                final Object[] args = java.util.Arrays.copyOfRange(params, 1, params.length);
+                return invokeFromTargetViaReflection(params[0], args);
+            }
+        }
         try {
             if (publicActionMethodHandle != null) {
                 return publicActionMethodHandle.invokeWithArguments(params);
@@ -348,6 +352,9 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public Object invokeFromTarget(final Object target) {
+        if (reflectionFallback) {
+            return invokeFromTargetViaReflection(target);
+        }
         try {
             if (publicActionMethodHandle != null) {
                 return publicActionMethodHandle.invoke(target);
@@ -368,6 +375,9 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public Object invokeFromTarget(final Object target, final Object param1) {
+        if (reflectionFallback) {
+            return invokeFromTargetViaReflection(target, param1);
+        }
         try {
             if (publicActionMethodHandle != null) {
                 return publicActionMethodHandle.invoke(target, param1);
@@ -388,6 +398,9 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public Object invokeFromTarget(final Object target, final Object param1, final Object param2) {
+        if (reflectionFallback) {
+            return invokeFromTargetViaReflection(target, param1, param2);
+        }
         try {
             if (publicActionMethodHandle != null) {
                 return publicActionMethodHandle.invoke(target, param1, param2);
@@ -408,6 +421,9 @@ public class MethodInternalBeanClassAccessor implements IInternalBeanClassAccess
 
     @Override
     public Object invokeFromTarget(final Object target, final Object param1, final Object param2, final Object param3) {
+        if (reflectionFallback) {
+            return invokeFromTargetViaReflection(target, param1, param2, param3);
+        }
         try {
             if (publicActionMethodHandle != null) {
                 return publicActionMethodHandle.invoke(target, param1, param2, param3);
