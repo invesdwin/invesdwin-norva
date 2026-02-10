@@ -1,7 +1,6 @@
 package de.invesdwin.norva.beanpath.spi.context;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -10,6 +9,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.annotation.BeanPathRedirect;
+import de.invesdwin.norva.beanpath.collection.BeanPathCollections;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.beanpath.spi.element.IBeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.utility.ChoiceBeanPathElement;
@@ -26,8 +26,8 @@ import de.invesdwin.norva.beanpath.spi.element.utility.ValidateBeanPathElement;
 @NotThreadSafe
 public class BeanPathElementRegistry {
 
-    private final Map<String, IBeanPathElement> beanPath_element = new HashMap<String, IBeanPathElement>();
-    private final Map<String, IBeanPathElement> beanPath_redirect = new HashMap<String, IBeanPathElement>();
+    private final Map<String, IBeanPathElement> beanPath_element = BeanPathCollections.getProvider().newMap();
+    private final Map<String, IBeanPathElement> beanPath_redirect = BeanPathCollections.getProvider().newMap();
 
     public void addElement(final IBeanPathElement e) {
         final IBeanPathElement oldElement = beanPath_element.put(e.getBeanPath(), e);

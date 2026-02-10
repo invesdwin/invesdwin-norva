@@ -1,10 +1,10 @@
 package de.invesdwin.norva.beanpath;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+import de.invesdwin.norva.beanpath.collection.BeanPathCollections;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassProcessor;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassProcessorConfig;
 import de.invesdwin.norva.beanpath.spi.element.IPropertyBeanPathElement;
@@ -13,7 +13,7 @@ import de.invesdwin.norva.beanpath.spi.visitor.SimpleBeanPathVisitorSupport;
 @NotThreadSafe
 public class SettingsBackup {
 
-    private final Map<String, Object> backup = new HashMap<>();
+    private final Map<String, Object> backup = BeanPathCollections.getProvider().newMap();
 
     public Object put(final String key, final Object value) {
         return backup.put(key, value);

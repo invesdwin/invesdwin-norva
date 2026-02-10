@@ -1,19 +1,24 @@
 package de.invesdwin.norva.beanpath.impl.clazz;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.Map;
 
 import javax.annotation.concurrent.Immutable;
 
+import de.invesdwin.norva.beanpath.collection.BeanPathCollections;
 import de.invesdwin.norva.beanpath.spi.BeanPathProcessorConfig;
 
 @Immutable
 public final class BeanClassProcessorConfig extends BeanPathProcessorConfig {
 
-    private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT = new ConcurrentHashMap<>();
-    private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT_SHALLOW = new ConcurrentHashMap<>();
-    private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT_EAGER = new ConcurrentHashMap<>();
-    private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT_IGNOREBEANPATHENDPOINTANNOTATION = new ConcurrentHashMap<>();
+    private static final Map<Class<?>, BeanClassProcessorConfig> DEFAULT = BeanPathCollections.getProvider()
+            .newConcurrentMap();
+    private static final Map<Class<?>, BeanClassProcessorConfig> DEFAULT_SHALLOW = BeanPathCollections.getProvider()
+            .newConcurrentMap();
+    private static final Map<Class<?>, BeanClassProcessorConfig> DEFAULT_EAGER = BeanPathCollections.getProvider()
+            .newConcurrentMap();
+    private static final Map<Class<?>, BeanClassProcessorConfig> DEFAULT_IGNOREBEANPATHENDPOINTANNOTATION = BeanPathCollections
+            .getProvider()
+            .newConcurrentMap();
 
     private final Class<?> type;
     private boolean defaultEager;
