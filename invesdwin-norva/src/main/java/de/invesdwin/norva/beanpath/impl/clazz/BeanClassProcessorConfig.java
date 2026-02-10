@@ -8,7 +8,7 @@ import javax.annotation.concurrent.Immutable;
 import de.invesdwin.norva.beanpath.spi.BeanPathProcessorConfig;
 
 @Immutable
-public class BeanClassProcessorConfig extends BeanPathProcessorConfig {
+public final class BeanClassProcessorConfig extends BeanPathProcessorConfig {
 
     private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT = new ConcurrentHashMap<>();
     private static final ConcurrentMap<Class<?>, BeanClassProcessorConfig> DEFAULT_SHALLOW = new ConcurrentHashMap<>();
@@ -18,7 +18,7 @@ public class BeanClassProcessorConfig extends BeanPathProcessorConfig {
     private final Class<?> type;
     private boolean defaultEager;
 
-    public BeanClassProcessorConfig(final Class<?> type) {
+    private BeanClassProcessorConfig(final Class<?> type) {
         this.type = type;
     }
 

@@ -25,7 +25,7 @@ public class SettingsBackup {
     }
 
     public void backupPropertiesShallow(final Object obj) {
-        BeanClassProcessor.process(new BeanClassProcessorConfig(obj.getClass()).setShallowOnly(),
+        BeanClassProcessor.process(BeanClassProcessorConfig.getDefault(obj.getClass()).setShallowOnly(),
                 new SimpleBeanPathVisitorSupport() {
                     @Override
                     public void visitProperty(final IPropertyBeanPathElement e) {
@@ -38,7 +38,7 @@ public class SettingsBackup {
     }
 
     public void restorePropertiesShallow(final Object obj) {
-        BeanClassProcessor.process(new BeanClassProcessorConfig(obj.getClass()).setShallowOnly(),
+        BeanClassProcessor.process(BeanClassProcessorConfig.getDefault(obj.getClass()).setShallowOnly(),
                 new SimpleBeanPathVisitorSupport() {
                     @Override
                     public void visitProperty(final IPropertyBeanPathElement e) {
@@ -51,27 +51,29 @@ public class SettingsBackup {
     }
 
     public void backupProperties(final Object obj) {
-        BeanClassProcessor.process(new BeanClassProcessorConfig(obj.getClass()), new SimpleBeanPathVisitorSupport() {
-            @Override
-            public void visitProperty(final IPropertyBeanPathElement e) {
-                if (e.getAccessor().hasPublicSetterOrField()) {
-                    final Object value = e.getModifier().getValueFromRoot(obj);
-                    backup.put(obj.getClass().getSimpleName() + "_" + e.getBeanPath(), value);
-                }
-            }
-        });
+        BeanClassProcessor.process(BeanClassProcessorConfig.getDefault(obj.getClass()),
+                new SimpleBeanPathVisitorSupport() {
+                    @Override
+                    public void visitProperty(final IPropertyBeanPathElement e) {
+                        if (e.getAccessor().hasPublicSetterOrField()) {
+                            final Object value = e.getModifier().getValueFromRoot(obj);
+                            backup.put(obj.getClass().getSimpleName() + "_" + e.getBeanPath(), value);
+                        }
+                    }
+                });
     }
 
     public void restoreProperties(final Object obj) {
-        BeanClassProcessor.process(new BeanClassProcessorConfig(obj.getClass()), new SimpleBeanPathVisitorSupport() {
-            @Override
-            public void visitProperty(final IPropertyBeanPathElement e) {
-                if (e.getAccessor().hasPublicSetterOrField()) {
-                    final Object value = backup.get(obj.getClass().getSimpleName() + "_" + e.getBeanPath());
-                    e.getModifier().setValueFromRoot(obj, value);
-                }
-            }
-        });
+        BeanClassProcessor.process(BeanClassProcessorConfig.getDefault(obj.getClass()),
+                new SimpleBeanPathVisitorSupport() {
+                    @Override
+                    public void visitProperty(final IPropertyBeanPathElement e) {
+                        if (e.getAccessor().hasPublicSetterOrField()) {
+                            final Object value = backup.get(obj.getClass().getSimpleName() + "_" + e.getBeanPath());
+                            e.getModifier().setValueFromRoot(obj, value);
+                        }
+                    }
+                });
     }
 
     public void clear() {
