@@ -3,7 +3,6 @@ package de.invesdwin.norva.apt.staticfacade.internal;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +25,7 @@ import de.invesdwin.norva.apt.staticfacade.StaticFacadeDefinition;
 import de.invesdwin.norva.beanpath.BeanPathObjects;
 import de.invesdwin.norva.beanpath.BeanPathReflections;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
+import de.invesdwin.norva.beanpath.collection.BeanPathCollections;
 
 @NotThreadSafe
 public class StaticFacadeGenerator implements Runnable {
@@ -77,7 +77,7 @@ public class StaticFacadeGenerator implements Runnable {
         sb.append("public abstract class " + staticFacadeClassName + " {\n");
         sb.append("\n");
 
-        final Set<String> duplicateMethodSignatureFilter = new HashSet<String>();
+        final Set<String> duplicateMethodSignatureFilter = BeanPathCollections.getProvider().newSet();
         for (final TypeMirror targetClassTypeMirror : targetClasses) {
             final TypeElement targetClass = (TypeElement) env.getTypeUtils().asElement(targetClassTypeMirror);
             sb.append("    ///////////// static facade methods for " + targetClass.getQualifiedName()

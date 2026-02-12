@@ -2,7 +2,6 @@ package de.invesdwin.norva.beanpath.spi;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +11,7 @@ import de.invesdwin.norva.beanpath.BeanPathAssertions;
 import de.invesdwin.norva.beanpath.BeanPathStrings;
 import de.invesdwin.norva.beanpath.annotation.BeanPathEndPoint;
 import de.invesdwin.norva.beanpath.annotation.Tabbed;
+import de.invesdwin.norva.beanpath.collection.BeanPathCollections;
 import de.invesdwin.norva.beanpath.spi.context.ABeanPathContext;
 import de.invesdwin.norva.beanpath.spi.element.ABeanPathElement;
 import de.invesdwin.norva.beanpath.spi.element.ButtonBeanPathElement;
@@ -54,8 +54,8 @@ public abstract class ABeanPathProcessor<X extends ABeanPathContext, C extends I
     private final BeanPathProcessorConfig config;
     private final X context;
     private final IBeanPathVisitor[] visitors;
-    private final Set<String> duplicateBeanPathsFilter = new HashSet<String>();
-    private final Set<String> duplicateInvalidBeanPathsFilter = new HashSet<String>();
+    private final Set<String> duplicateBeanPathsFilter = BeanPathCollections.getProvider().newSet();
+    private final Set<String> duplicateInvalidBeanPathsFilter = BeanPathCollections.getProvider().newSet();
 
     @SafeVarargs
     public ABeanPathProcessor(final BeanPathProcessorConfig config, final X context,

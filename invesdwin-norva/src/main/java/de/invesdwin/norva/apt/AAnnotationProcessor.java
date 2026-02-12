@@ -1,7 +1,6 @@
 package de.invesdwin.norva.apt;
 
 import java.lang.annotation.Annotation;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +12,8 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
+
+import de.invesdwin.norva.beanpath.collection.BeanPathCollections;
 
 /**
  * All implementations need the annotation:
@@ -42,12 +43,13 @@ public abstract class AAnnotationProcessor extends AbstractProcessor {
     }
 
     protected <T extends Annotation> T getAnnotation(final TypeElement typeElement, final Class<T> annotationType) {
-        final T annotation = getAnnotationElementRecursive(typeElement, annotationType, new HashSet<String>());
+        final T annotation = getAnnotationElementRecursive(typeElement, annotationType,
+                BeanPathCollections.getProvider().newSet());
         if (annotation != null) {
             return annotation;
         }
-        final List<? extends TypeMirror> supertypes = processingEnv.getTypeUtils().directSupertypes(
-                processingEnv.getTypeUtils().getDeclaredType(typeElement));
+        final List<? extends TypeMirror> supertypes = processingEnv.getTypeUtils()
+                .directSupertypes(processingEnv.getTypeUtils().getDeclaredType(typeElement));
         return getAnnotationTypeRecursive(supertypes, annotationType);
     }
 
@@ -55,7 +57,8 @@ public abstract class AAnnotationProcessor extends AbstractProcessor {
             final Class<T> annotationType) {
         for (final TypeMirror supertype : supertypes) {
             final Element element = processingEnv.getTypeUtils().asElement(supertype);
-            T annotation = getAnnotationElementRecursive(element, annotationType, new HashSet<String>());
+            T annotation = getAnnotationElementRecursive(element, annotationType,
+                    BeanPathCollections.getProvider().newSet());
             if (annotation != null) {
                 return annotation;
             }
@@ -65,11 +68,11 @@ public abstract class AAnnotationProcessor extends AbstractProcessor {
                 return annotation;
             }
         }
-        return (T) null;
+        return null;
     }
 
-    private <T extends Annotation> T getAnnotationElementRecursive(final Element element,
-            final Class<T> annotationType, final Set<String> stackOverflowFilter) {
+    private <T extends Annotation> T getAnnotationElementRecursive(final Element element, final Class<T> annotationType,
+            final Set<String> stackOverflowFilter) {
         final T annotation = element.getAnnotation(annotationType);
         if (annotation != null) {
             return annotation;
@@ -87,7 +90,7 @@ public abstract class AAnnotationProcessor extends AbstractProcessor {
                 }
             }
         }
-        return (T) null;
+        return null;
     }
 
 }

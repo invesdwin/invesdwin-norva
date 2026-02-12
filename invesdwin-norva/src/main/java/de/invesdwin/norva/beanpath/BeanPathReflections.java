@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +28,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
+import de.invesdwin.norva.beanpath.collection.BeanPathCollections;
 import de.invesdwin.norva.beanpath.impl.clazz.BeanClassType;
 import de.invesdwin.norva.beanpath.spi.BeanPathUtil;
 import de.invesdwin.norva.marker.IDate;
@@ -170,7 +170,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
 
     public static <T extends Annotation> T getAnnotationRecursive(final Annotation[] annotations,
             final Class<T> annotationType) {
-        return getAnnotationRecursive(annotations, annotationType, new HashSet<String>());
+        return getAnnotationRecursive(annotations, annotationType, BeanPathCollections.getProvider().newSet());
     }
 
     @SuppressWarnings("unchecked")
@@ -199,7 +199,7 @@ public final class BeanPathReflections extends org.springframework.util.Reflecti
 
     public static <A extends Annotation> A getAnnotation(final ProcessingEnvironment env, final Element element,
             final Class<A> annotationType) {
-        return getAnnotationRecursive(env, element, annotationType, new HashSet<String>());
+        return getAnnotationRecursive(env, element, annotationType, BeanPathCollections.getProvider().newSet());
     }
 
     private static <A extends Annotation> A getAnnotationRecursive(final ProcessingEnvironment env,
