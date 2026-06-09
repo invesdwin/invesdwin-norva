@@ -98,6 +98,9 @@ public class BeanModelType implements IBeanPathType {
         if (getTypeElement() == null) {
             return false;
         }
+        if (isDate()) {
+            return false;
+        }
         return ElementHelper.isAssignableFrom(Number.class, getTypeElement()) || isIntegralNumber()
                 || isDecimalNumber();
     }
